@@ -7,8 +7,8 @@ import router from './router'
 import VueI18n from 'vue-i18n'
 import messages from './locales'
 
-import Mint from 'mint-ui';
-import 'mint-ui/lib/style.css';
+import Mint from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import './assets/css/icon.css'
 
 Vue.use(Mint);

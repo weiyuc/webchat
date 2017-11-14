@@ -5,9 +5,9 @@
             <mt-tab-container v-model="active">
                 <mt-tab-container-item id="message">
                     <mt-search
-                            v-model="searchWord"
-                            :cancel-text='$t("msg.cancel")'
-                            :placeholder='$t("msg.search")'>
+                        v-model="searchWord"
+                        :cancel-text='$t("msg.cancel")'
+                        :placeholder='$t("msg.search")'>
                     </mt-search>
                     <mt-cell title="msg"></mt-cell>
                 </mt-tab-container-item>
