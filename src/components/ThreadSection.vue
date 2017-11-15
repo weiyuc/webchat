@@ -29,8 +29,7 @@
         computed: {
             ...mapGetters([
                 'threads',
-                'currentThread',
-                'messages'
+                'currentThread'
             ])
         },
         methods: {
