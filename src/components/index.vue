@@ -4,12 +4,7 @@
         <div class="content">
             <mt-tab-container v-model="active">
                 <mt-tab-container-item id="message">
-                    <mt-search
-                        v-model="searchWord"
-                        :cancel-text='$t("msg.cancel")'
-                        :placeholder='$t("msg.search")'>
-                    </mt-search>
-                    <mt-cell title="msg"></mt-cell>
+                    <thread-section></thread-section>
                 </mt-tab-container-item>
                 <mt-tab-container-item id="contact">
                     <mt-cell title="contact"></mt-cell>
@@ -21,6 +16,7 @@
         </div>
         <mt-tabbar v-model="active">
             <mt-tab-item id="message">
+                <mt-badge size="small" color="red" v-show="unreadCount">{{ unreadCount }}</mt-badge>
                 <i slot="icon" class="icon icon-bubble2"></i>
                 {{ $t("msg.message") }}
             </mt-tab-item>
@@ -36,13 +32,35 @@
     </div>
 </template>
 <script>
+    import ThreadSection from './ThreadSection.vue'
+    import MessageSection from './MessageSection.vue'
+    import {mapGetters} from 'vuex'
+
     export default {
-        name: 'index',
+        name: 'wc-index',
+        components: {
+            ThreadSection,
+            MessageSection
+        },
         data() {
             return {
                 title: 'msg.message',
                 active: 'message',
                 searchWord: '',
+                messages: []
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'threads'
+            ]),
+            unreadCount () {
+                const threads = this.threads
+                return Object.keys(threads).reduce((count, id) => {
+                    return threads[id].lastMessage.isRead
+                        ? count
+                        : count + 1
+                }, 0)
             }
         },
         watch: {
@@ -52,6 +70,17 @@
                 },
                 immediate: true
             }
+        },
+        created() {
+
+            setInterval(() => {
+                this.messages.push({
+                    title: `消息${this.messages.length}`,
+                    content: `hello${this.messages.length}`,
+                    time: new Date().getTime()
+                })
+            }, 1000);
+
         }
     }
 </script>
@@ -75,11 +104,17 @@
                     >.content {
                         width: 100%;
                         height: calc(100% - 95px);
+                        max-height: calc(100% - 95px);
                         padding: 40px 0 55px 0;
                         background-color: #f8f8f8;
-                        .mint-search {
-                            height: 52px;
-                            width: 100%;
+                        overflow-y:auto;
+                    }
+                    .mint-tab-item-label {
+                        position: relative;
+                        .mint-badge {
+                            position: absolute;
+                            top: -38px;
+                            right: 35px;
                         }
                     }
                 }

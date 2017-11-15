@@ -5,7 +5,9 @@ export default {
             contact: "联系人",
             me: "我",
             cancel: "取消",
-            search: "搜索"
+            search: "搜索",
+            noData: "暂无数据",
+            noMessage: "暂无消息"
         }
     },
     en: {
@@ -14,7 +16,9 @@ export default {
             contact: "Contact",
             me: "Me",
             cancel: "cancel",
-            search: "search"
+            search: "search",
+            noData: "No data",
+            noMessage: "No message"
         }
     }
 }
