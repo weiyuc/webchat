@@ -2,13 +2,6 @@
     <div class="thread-section">
         <mt-search :model="searchValue">
         </mt-search>
-        <!--
-        <div class="thread-count">
-            <span v-show="unreadCount">
-                Unread threads: {{ unreadCount }}
-            </span>
-        </div>
-        -->
         <ul class="thread-list">
             <thread
                 v-for="thread in threads"
@@ -36,20 +29,14 @@
         computed: {
             ...mapGetters([
                 'threads',
-                'currentThread'
-            ]),
-            unreadCount () {
-                const threads = this.threads
-                return Object.keys(threads).reduce((count, id) => {
-                    return threads[id].lastMessage.isRead
-                        ? count
-                        : count + 1
-                }, 0)
-            }
+                'currentThread',
+                'messages'
+            ])
         },
         methods: {
             switchThread (id) {
                 this.$store.dispatch('switchThread', {id})
+                this.$router.push({path: '/messageSection'})
             }
         }
     }

@@ -19,18 +19,18 @@ import { getAllMessages } from './store/actions'
 Vue.use(Mint);
 Vue.use(VueI18n);
 
-Vue.filter('time', timestamp => {
-    return new Date(timestamp).toLocaleTimeString()
-})
-
 if (localStorage) {
     if (!localStorage.lang) {
-        localStorage.lang = 'zh_cn';
+        localStorage.lang = 'zh';
     }
     Vue.config.lang = localStorage.lang;
 } else {
-    Vue.config.lang = 'zh_cn';
+    Vue.config.lang = 'zh';
 }
+
+Vue.filter('time', timestamp => {
+    return new Date(timestamp).toLocaleTimeString(Vue.config.lang)
+})
 
 
 const i18n = new VueI18n({

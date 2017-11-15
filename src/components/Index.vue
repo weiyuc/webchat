@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wc-index">
         <mt-header fixed :title="$t(title)"></mt-header>
         <div class="content">
             <mt-tab-container v-model="active">
@@ -57,9 +57,7 @@
             unreadCount () {
                 const threads = this.threads
                 return Object.keys(threads).reduce((count, id) => {
-                    return threads[id].lastMessage.isRead
-                        ? count
-                        : count + 1
+                    return count += threads[id].unreadCount
                 }, 0)
             }
         },
@@ -70,54 +68,27 @@
                 },
                 immediate: true
             }
-        },
-        created() {
-
-            setInterval(() => {
-                this.messages.push({
-                    title: `消息${this.messages.length}`,
-                    content: `hello${this.messages.length}`,
-                    time: new Date().getTime()
-                })
-            }, 1000);
-
         }
     }
 </script>
 <style lang="scss">
-    html {
+    .wc-index {
         width: 100%;
         height: 100%;
-        body {
+        > .content {
             width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: "Microsoft Sans Serif";
-            font-size: 14px;
-            >div {
-                width: 100%;
-                height: 100%;
-                >div {
-                    width: 100%;
-                    height: 100%;
-                    >.content {
-                        width: 100%;
-                        height: calc(100% - 95px);
-                        max-height: calc(100% - 95px);
-                        padding: 40px 0 55px 0;
-                        background-color: #f8f8f8;
-                        overflow-y:auto;
-                    }
-                    .mint-tab-item-label {
-                        position: relative;
-                        .mint-badge {
-                            position: absolute;
-                            top: -38px;
-                            right: 35px;
-                        }
-                    }
-                }
+            height: calc(100% - 95px);
+            max-height: calc(100% - 95px);
+            padding: 40px 0 55px 0;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+        }
+        .mint-tab-item-label {
+            position: relative;
+            .mint-badge {
+                position: absolute;
+                top: -38px;
+                right: 35px;
             }
         }
     }

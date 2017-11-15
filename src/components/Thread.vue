@@ -11,6 +11,7 @@
             {{ thread.lastMessage.text }}
 
         </div>
+        <mt-badge size="small" color="red" v-show="thread.unreadCount">{{ thread.unreadCount }}</mt-badge>
     </li>
 </template>
 

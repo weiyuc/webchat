@@ -1,5 +1,5 @@
 import data from './mock-data'
-const LATENCY = 16
+const LATENCY = 1000
 
 export default {
     getAllMessages (cb) {
