@@ -1,17 +1,17 @@
 <template>
-    <li class="thread-list-item"
+    <li class="session-list-item"
         :class="{ active: active }"
-        @click="$emit('switch-thread', thread.id)">
-        <h5 class="thread-name">{{ thread.name }}</h5>
-        <div class="thread-time">
-            {{ thread.lastMessage.timestamp | time }}
+        @click="$emit('switch-session', session.id)">
+        <h5 class="session-name">{{ session.name }}</h5>
+        <div class="session-time">
+            {{ session.lastMessage.timestamp | time }}
 
         </div>
-        <div class="thread-last-message">
-            {{ thread.lastMessage.text }}
+        <div class="session-last-message">
+            {{ session.lastMessage.text }}
 
         </div>
-        <mt-badge size="small" color="red" v-show="thread.unreadCount">{{ thread.unreadCount }}</mt-badge>
+        <mt-badge size="small" color="red" v-show="session.unreadCount">{{ session.unreadCount }}</mt-badge>
     </li>
 </template>
 
@@ -19,7 +19,7 @@
     export default {
         name: 'Session',
         props: {
-            thread: Object,
+            session: Object,
             active: Boolean
         }
     }

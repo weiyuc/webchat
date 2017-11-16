@@ -10,9 +10,9 @@ export const getAllMessages = ({commit}) => {
 }
 
 export const getMessages = ({commit}) => {
-    api.getMessages(messages => {
+    api.getMessages(message => {
         commit(types.RECEIVE_MESSAGE, {
-            messages
+            message
         })
     })
 }
@@ -25,6 +25,6 @@ export const sendMessage = ({commit}, payload) => {
     })
 }
 
-export const switchThread = ({commit}, payload) => {
-    commit(types.SWITCH_THREAD, payload)
+export const switchSession = ({commit}, payload) => {
+    commit(types.SWITCH_SESSION, payload)
 }

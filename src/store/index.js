@@ -7,8 +7,8 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-    currentThreadID: null,
-    threads: {},
+    currentSessionID: null,
+    sessions: {},
     messages: {},
     unreadCount: 0
 }

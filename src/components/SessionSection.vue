@@ -1,14 +1,14 @@
 <template>
-    <div class="thread-section">
+    <div class="session-section">
         <mt-search :model="searchValue">
         </mt-search>
-        <ul class="thread-list">
+        <ul class="session-list">
             <session
-                v-for="thread in threads"
-                :key="thread.id"
-                :thread="thread"
-                :active="thread.id === currentThread.id"
-                @switch-thread="switchThread">
+                v-for="session in sessions"
+                :key="session.id"
+                :session="session"
+                :active="session.id === currentSession.id"
+                @switch-session="switchSession">
             </session>
         </ul>
     </div>
@@ -27,13 +27,13 @@
         components: {Session},
         computed: {
             ...mapGetters([
-                'threads',
-                'currentThread'
+                'sessions',
+                'currentSession'
             ])
         },
         methods: {
-            switchThread (id) {
-                this.$store.dispatch('switchThread', {id})
+            switchSession (id) {
+                this.$store.dispatch('switchSession', {id})
                 this.$router.push({path: '/messageSection'})
             }
         }

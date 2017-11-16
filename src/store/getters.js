@@ -1,14 +1,14 @@
-export const threads = state => state.threads
+export const sessions = state => state.sessions
 
-export const currentThread = state => {
-    return state.currentThreadID
-        ? state.threads[state.currentThreadID]
+export const currentSession = state => {
+    return state.currentSessionID
+        ? state.sessions[state.currentSessionID]
         : {}
 }
 
 export const currentMessages = state => {
-    const thread = currentThread(state)
-    return thread.messages
-        ? thread.messages.map(id => state.messages[id])
+    const session = currentSession(state)
+    return session.messages
+        ? session.messages.map(id => state.messages[id])
         : []
 }

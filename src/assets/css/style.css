@@ -21,7 +21,7 @@
     width: 100%;
     height: 100%;
 }
-.message-list, .thread-list {
+.message-list, .session-list {
     font-size: 16px;
     height: calc(100% - 89px);
     margin: 0;
@@ -32,52 +32,52 @@
     padding-top: 40px;
 }
 
-.message-thread-heading,
-.thread-count {
+.message-session-heading,
+.session-count {
     height: 40px;
     margin: 0;
 }
 
-.message-list-item, .thread-list-item {
+.message-list-item, .session-list-item {
     list-style: none;
     padding: 12px 14px 14px;
 }
 
-.thread-list-item {
+.session-list-item {
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
 
-.thread-list:hover .thread-list-item:hover {
+.session-list:hover .session-list-item:hover {
     background-color: #f8f8ff;
 }
 
-.thread-list:hover .thread-list-item {
+.session-list:hover .session-list-item {
     background-color: #fff;
 }
 
-.thread-list-item.active,
-.thread-list:hover .thread-list-item.active,
-.thread-list:hover .thread-list-item.active:hover {
+.session-list-item.active,
+.session-list:hover .session-list-item.active,
+.session-list:hover .session-list-item.active:hover {
     background-color: #efefff;
     cursor: default;
 }
 
 .message-author-name,
-.thread-name {
+.session-name {
     color: #66c;
     float: left;
     font-size: 13px;
     margin: 0;
 }
 
-.message-time, .thread-time {
+.message-time, .session-time {
     color: #aad;
     float: right;
     font-size: 12px;
 }
 
-.message-text, .thread-last-message {
+.message-text, .session-last-message {
     clear: both;
     font-size: 14px;
     padding-top: 10px;

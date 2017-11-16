@@ -12,8 +12,8 @@ export default {
             let random = Math.floor(Math.random() * 5)
             let t = {
                     id: `m_${new Date().getTime()}`,
-                    threadID: data[random].threadID,
-                    threadName: data[random].threadName,
+                    sessionID: data[random].sessionID,
+                    sessionName: data[random].sessionName,
                     authorName: data[random].authorName,
                     text: `hello ${Date.now()}`,
                     timestamp: Date.now()
@@ -21,17 +21,18 @@ export default {
             cb(t)
         }, LATENCY)
     },
-    createMessage ({text, thread}, cb) {
+    createMessage ({text, session}, cb) {
         const timestamp = Date.now()
         const id = 'm_' + timestamp
         const message = {
             id,
             text,
             timestamp,
-            threadID: thread.id,
-            threadName: thread.name,
+            sessionID: session.id,
+            sessionName: session.name,
             authorName: 'Evan'
         }
+        console.log('message', message);
         setTimeout(function () {
             cb(message)
         }, LATENCY)

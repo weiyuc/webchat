@@ -1,6 +1,6 @@
 <template>
     <div class="message-section">
-        <mt-header fixed :title="thread.name">
+        <mt-header fixed :title="session.name">
             <router-link to="/" slot="left">
                 <mt-button icon="back">{{$t('msg.back')}}</mt-button>
             </router-link>
@@ -32,7 +32,7 @@
         },
         computed: {
             ...mapGetters({
-                thread: 'currentThread',
+                session: 'currentSession',
                 messages: 'currentMessages'
             }),
             sortedMessages () {
@@ -42,7 +42,7 @@
             }
         },
         watch: {
-            'thread.lastMessage': function () {
+            'session.lastMessage': function () {
                 this.$nextTick(() => {
                     const ul = this.$refs.list
                     ul.scrollTop = ul.scrollHeight
@@ -54,7 +54,7 @@
                 if (this.msg) {
                     this.$store.dispatch('sendMessage', {
                         text: this.msg,
-                        thread: this.thread
+                        session: this.session
                     })
                     this.msg = ''
                 }
