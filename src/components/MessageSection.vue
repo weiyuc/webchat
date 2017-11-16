@@ -1,7 +1,7 @@
 <template>
     <div class="message-section">
         <mt-header fixed :title="session.name">
-            <a href="javascript:;" slot="left" @click="$store.dispatch('clearSession');$router.push({path: '/'})">
+            <a href="javascript:;" slot="left" @click="back">
                 <mt-button icon="back">{{$t('msg.back')}}</mt-button>
             </a>
         </mt-header>
@@ -58,6 +58,10 @@
                     })
                     this.msg = ''
                 }
+            },
+            back() {
+                this.$store.dispatch('clearSession')
+                this.$router.push({path: '/'})
             }
         }
     }

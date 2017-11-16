@@ -11,7 +11,9 @@
             {{ session.lastMessage.text }}
 
         </div>
-        <mt-badge size="small" color="red" v-show="session.unreadCount">{{ session.unreadCount }}</mt-badge>
+        <mt-badge size="small" color="red" v-show="session.unreadCount">
+            {{ session.unreadCount > 99 ? '99+' : session.unreadCount}}
+        </mt-badge>
     </li>
 </template>
 

@@ -16,7 +16,9 @@
         </div>
         <mt-tabbar v-model="active">
             <mt-tab-item id="message">
-                <mt-badge size="small" color="red" v-show="$store.state.unreadCount">{{ $store.state.unreadCount }}</mt-badge>
+                <mt-badge size="small" color="red" v-show="$store.state.unreadCount">
+                    {{ $store.state.unreadCount > 99 ? '99+' : $store.state.unreadCount}}
+                </mt-badge>
                 <i slot="icon" class="icon icon-bubble2"></i>
                 {{ $t("msg.message") }}
             </mt-tab-item>
@@ -32,7 +34,7 @@
     </div>
 </template>
 <script>
-    import SessionSection from './SessionSection.vue'
+    import SessionSection from '../components/SessionSection.vue'
 
     export default {
         name: 'wc-index',
@@ -41,18 +43,14 @@
         },
         data() {
             return {
-                title: 'msg.message',
                 active: 'message',
                 searchWord: '',
                 messages: []
             }
         },
-        watch: {
-            active: {
-                handler: function (val, oldVal) {
-                    this.title = `msg.${val}`;
-                },
-                immediate: true
+        computed: {
+            title: function() {
+                return `msg.${this.active}`
             }
         }
     }
