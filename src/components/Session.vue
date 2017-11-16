@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: 'Thread',
+        name: 'Session',
         props: {
             thread: Object,
             active: Boolean

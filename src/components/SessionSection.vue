@@ -3,29 +3,28 @@
         <mt-search :model="searchValue">
         </mt-search>
         <ul class="thread-list">
-            <thread
+            <session
                 v-for="thread in threads"
                 :key="thread.id"
                 :thread="thread"
                 :active="thread.id === currentThread.id"
                 @switch-thread="switchThread">
-            </thread>
+            </session>
         </ul>
     </div>
 </template>
 <script>
-    import Thread from './Thread.vue'
+    import Session from './Session.vue'
     import {mapGetters} from 'vuex'
-    import MtSearch from "../../node_modules/mint-ui/packages/search/src/search";
 
     export default {
-        name: 'ThreadSection',
+        name: 'SessionSection',
         data() {
             return {
                 searchValue: ''
             }
         },
-        components: {MtSearch, Thread},
+        components: {Session},
         computed: {
             ...mapGetters([
                 'threads',

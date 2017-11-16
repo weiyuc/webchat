@@ -4,7 +4,7 @@
         <div class="content">
             <mt-tab-container v-model="active">
                 <mt-tab-container-item id="message">
-                    <thread-section></thread-section>
+                    <session-section></session-section>
                 </mt-tab-container-item>
                 <mt-tab-container-item id="contact">
                     <mt-cell title="contact"></mt-cell>
@@ -32,15 +32,12 @@
     </div>
 </template>
 <script>
-    import ThreadSection from './ThreadSection.vue'
-    import MessageSection from './MessageSection.vue'
-    import {mapGetters} from 'vuex'
+    import SessionSection from './SessionSection.vue'
 
     export default {
         name: 'wc-index',
         components: {
-            ThreadSection,
-            MessageSection
+            SessionSection
         },
         data() {
             return {
@@ -50,30 +47,12 @@
                 messages: []
             }
         },
-        computed: {
-            ...mapGetters([
-                'threads'
-            ]),
-            unreadCount () {
-                const threads = this.threads
-                return Object.keys(threads).reduce((count, id) => {
-                    return count += threads[id].unreadCount
-                }, 0)
-            }
-        },
         watch: {
             active: {
                 handler: function (val, oldVal) {
                     this.title = `msg.${val}`;
                 },
                 immediate: true
-            },
-            unreadCount: {
-                handler: function (val, oldVal) {
-                    console.log('unreadCount:', val);
-                },
-                immediate: true,
-                deep: true
             }
         }
     }

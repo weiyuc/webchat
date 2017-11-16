@@ -32,7 +32,8 @@ function createThread(state, id, name) {
         id,
         name,
         messages: [],
-        lastMessage: null
+        lastMessage: null,
+        unreadCount: 0
     })
 }
 
@@ -46,12 +47,8 @@ function addMessage(state, message) {
         thread.lastMessage = message
     }
     if (!message.isRead) {
-        if (thread.unreadCount) {
-            thread.unreadCount += 1
-        } else {
-            thread.unreadCount = 1
-        }
-        state.unreadCount += 1
+        ++thread.unreadCount
+        ++state.unreadCount
     }
     // add it to the messages map
     Vue.set(state.messages, message.id, message)
