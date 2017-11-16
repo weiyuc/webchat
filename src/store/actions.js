@@ -9,6 +9,14 @@ export const getAllMessages = ({commit}) => {
     })
 }
 
+export const getMessages = ({commit}) => {
+    api.getMessages(messages => {
+        commit(types.RECEIVE_MESSAGE, {
+            messages
+        })
+    })
+}
+
 export const sendMessage = ({commit}, payload) => {
     api.createMessage(payload, message => {
         commit(types.RECEIVE_MESSAGE, {

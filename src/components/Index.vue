@@ -16,7 +16,7 @@
         </div>
         <mt-tabbar v-model="active">
             <mt-tab-item id="message">
-                <mt-badge size="small" color="red" v-show="unreadCount">{{ unreadCount }}</mt-badge>
+                <mt-badge size="small" color="red" v-show="$store.state.unreadCount">{{ $store.state.unreadCount }}</mt-badge>
                 <i slot="icon" class="icon icon-bubble2"></i>
                 {{ $t("msg.message") }}
             </mt-tab-item>
@@ -67,6 +67,13 @@
                     this.title = `msg.${val}`;
                 },
                 immediate: true
+            },
+            unreadCount: {
+                handler: function (val, oldVal) {
+                    console.log('unreadCount:', val);
+                },
+                immediate: true,
+                deep: true
             }
         }
     }

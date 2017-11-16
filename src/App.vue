@@ -5,11 +5,14 @@
 </template>
 
 <script>
-    import { getAllMessages } from './store/actions'
+    import store from './store'
+    import { getMessages } from './store/actions'
     export default {
         name: 'app',
         created() {
-
+            setInterval(() => {
+                getMessages(store)
+            }, 5000)
         }
     }
 </script>

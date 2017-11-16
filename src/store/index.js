@@ -9,7 +9,8 @@ Vue.use(Vuex)
 const state = {
     currentThreadID: null,
     threads: {},
-    messages: {}
+    messages: {},
+    unreadCount: 0
 }
 
 export default new Vuex.Store({

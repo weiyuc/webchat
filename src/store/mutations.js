@@ -18,8 +18,8 @@ export default {
         })
     },
 
-    [types.RECEIVE_MESSAGE] (state, {message}) {
-        addMessage(state, message)
+    [types.RECEIVE_MESSAGE] (state, {messages}) {
+        addMessage(state, messages)
     },
 
     [types.SWITCH_THREAD] (state, {id}) {
@@ -47,10 +47,11 @@ function addMessage(state, message) {
     }
     if (!message.isRead) {
         if (thread.unreadCount) {
-            ++thread.unreadCount
+            thread.unreadCount += 1
         } else {
             thread.unreadCount = 1
         }
+        state.unreadCount += 1
     }
     // add it to the messages map
     Vue.set(state.messages, message.id, message)
@@ -63,5 +64,6 @@ function setCurrentThread(state, id) {
     }
     // mark thread as read
     state.threads[id].lastMessage.isRead = true
-    state.threads[id].unreadCount = 0;
+    state.unreadCount -= state.threads[id].unreadCount
+    state.threads[id].unreadCount = 0
 }
