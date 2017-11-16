@@ -76,6 +76,9 @@
     float: right;
     font-size: 12px;
 }
+.session-time {
+    margin-right: 20px;
+}
 
 .message-text, .session-last-message {
     clear: both;

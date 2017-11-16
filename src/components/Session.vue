@@ -24,3 +24,13 @@
         }
     }
 </script>
+<style lang="scss">
+    .session-list-item {
+        position: relative;
+        >.mint-badge {
+            position: absolute;
+            top: 6px;
+            right: 3px;
+        }
+    }
+</style>
