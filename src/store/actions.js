@@ -28,3 +28,8 @@ export const sendMessage = ({commit}, payload) => {
 export const switchSession = ({commit}, payload) => {
     commit(types.SWITCH_SESSION, payload)
 }
+
+export const clearSession = ({commit}) => {
+    commit(types.CLEAR_SESSION)
+}
+

@@ -1,9 +1,9 @@
 <template>
     <div class="message-section">
         <mt-header fixed :title="session.name">
-            <router-link to="/" slot="left">
+            <a href="javascript:;" slot="left" @click="$store.dispatch('clearSession');$router.push({path: '/'})">
                 <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-            </router-link>
+            </a>
         </mt-header>
         <ul class="message-list" ref="list">
             <message

@@ -24,6 +24,10 @@ export default {
 
     [types.SWITCH_SESSION] (state, {id}) {
         setCurrentSession(state, id)
+    },
+
+    [types.CLEAR_SESSION] (state) {
+        state.currentSessionID = null
     }
 }
 
