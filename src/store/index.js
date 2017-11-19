@@ -10,7 +10,8 @@ const state = {
     currentSessionID: null,
     sessions: {},
     messages: {},
-    unreadCount: 0
+    unreadCount: 0,
+    contacts: {}
 }
 
 export default new Vuex.Store({

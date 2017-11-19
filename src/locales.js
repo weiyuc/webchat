@@ -9,20 +9,30 @@ export default {
             noData: "暂无数据",
             noMessage: "暂无消息",
             back: "返回",
-            send: "发送"
+            send: "发送",
+            newFriends: "新的朋友",
+            lang: '语言',
+            zh: '中文',
+            en: '英文',
+            nearBy: '附近朋友'
         }
     },
     en: {
         msg: {
-            message: "Message",
-            contact: "Contact",
+            message: "Messages",
+            contact: "Contacts",
             me: "Me",
             cancel: "cancel",
             search: "search",
             noData: "No data",
             noMessage: "No message",
             back: "back",
-            send: "send"
+            send: "send",
+            newFriends: "New Friends",
+            lang: 'Language',
+            zh: 'Chinese',
+            en: 'English',
+            nearBy: 'People NearBy'
         }
     }
 }

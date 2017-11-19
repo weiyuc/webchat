@@ -1,7 +1,9 @@
 <template>
     <div class="session-section">
+        <!--
         <mt-search :model="searchValue">
         </mt-search>
+        -->
         <ul class="session-list">
             <session
                 v-for="session in sessions"

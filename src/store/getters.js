@@ -12,3 +12,5 @@ export const currentMessages = state => {
         ? session.messages.map(id => state.messages[id])
         : []
 }
+
+export const contacts = state => state.contacts

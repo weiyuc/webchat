@@ -1,18 +1,22 @@
 <template>
-    <div class="message-section">
+    <div class="message">
         <mt-header fixed :title="session.name">
             <a href="javascript:;" slot="left" @click="back">
                 <mt-button icon="back">{{$t('msg.back')}}</mt-button>
             </a>
         </mt-header>
-        <ul class="message-list" ref="list">
-            <message
-                    v-for="message in sortedMessages"
-                    :key="message.id"
-                    :message="message">
-            </message>
-        </ul>
-        <mt-field v-model="msg" @keyup.enter="sendMessage">
+        <div class="message-section">
+
+            <ul class="message-list" ref="list">
+                <message
+                        v-for="message in sortedMessages"
+                        :key="message.id"
+                        :message="message">
+                </message>
+            </ul>
+
+        </div>
+        <mt-field v-model="msg" @keyup.enter="sendMessage" class="bottom-input">
             <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
         </mt-field>
     </div>
@@ -67,12 +71,23 @@
     }
 </script>
 <style lang="scss">
-    .message-section {
-        >.mint-cell {
+    .message{
+        width: 100%;
+        height: 100%;
+        .message-section {
+            padding: 40px 0 48px 0;
+            height: calc(100% - 89px);
+            max-height: calc(100% - 89px);
+            .message-list {
+                height: 100%;
+                overflow-y: auto;
+            }
+        }
+        .bottom-input {
+            border-top: 1px solid #ccc;
+            width: 100%;
             position: fixed;
             bottom: 0;
-            width: 100%;
-            border-top: 1px solid #ccc;
         }
     }
 </style>

@@ -1,16 +1,16 @@
 <template>
     <div class="wc-index">
         <mt-header fixed :title="$t(title)"></mt-header>
-        <div class="content">
+        <div class="content" ref="content">
             <mt-tab-container v-model="active">
                 <mt-tab-container-item id="message">
                     <session-section></session-section>
                 </mt-tab-container-item>
                 <mt-tab-container-item id="contact">
-                    <mt-cell title="contact"></mt-cell>
+                    <contact-section :height="height"></contact-section>
                 </mt-tab-container-item>
                 <mt-tab-container-item id="me">
-                    <mt-cell title="me"></mt-cell>
+                    <me-section></me-section>
                 </mt-tab-container-item>
             </mt-tab-container>
         </div>
@@ -35,23 +35,29 @@
 </template>
 <script>
     import SessionSection from '../components/SessionSection.vue'
+    import ContactSection from "../components/ContactSection";
+    import MeSection from "../components/MeSection";
 
     export default {
         name: 'wc-index',
         components: {
-            SessionSection
+            MeSection, ContactSection, SessionSection
         },
         data() {
             return {
                 active: 'message',
                 searchWord: '',
-                messages: []
+                messages: [],
+                height: 0
             }
         },
         computed: {
             title: function() {
                 return `msg.${this.active}`
             }
+        },
+        mounted() {
+            this.height = this.$refs.content.clientHeight
         }
     }
 </script>
@@ -61,9 +67,10 @@
         height: 100%;
         > .content {
             width: 100%;
+            position: fixed;
+            top: 40px;
+            bottom: 55px;
             height: calc(100% - 95px);
-            max-height: calc(100% - 95px);
-            padding: 40px 0 55px 0;
             background-color: #f8f8f8;
             overflow-y: auto;
         }
@@ -74,6 +81,9 @@
                 top: -38px;
                 right: 35px;
             }
+        }
+        .mint-tabbar {
+            position: fixed !important;
         }
     }
 </style>
