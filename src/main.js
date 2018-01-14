@@ -7,48 +7,75 @@ import App from './App'
 import router from './router'
 
 import VueI18n from 'vue-i18n'
+
 import messages from './locales'
 
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
+
+import {Toast, Indicator} from 'mint-ui'
+import axios from 'axios'
+
 import './assets/css/style.css'
 import './assets/css/icon.css'
 import store from './store'
-import { getAllMessages } from './store/actions'
+import {getAllMessages} from './store/actions'
 
-Vue.use(Mint);
-Vue.use(VueI18n);
+Vue.use(Mint)
+Vue.use(VueI18n)
+
+axios.interceptors.request.use(function (config) {
+  Indicator.open()
+  return config
+}, function (error) {
+  Indicator.open()
+  console.error(error)
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(function (res) {
+  Indicator.close()
+  if (res.data.responseCode != 0) {
+    Toast(res.data.responseMsg)
+    return
+  }
+  return res.data
+}, function (error) {
+  Indicator.close()
+  console.error(error)
+  return Promise.reject(error)
+})
+
+Vue.prototype.$http = axios
 
 if (localStorage) {
-    if (!localStorage.lang) {
-        localStorage.lang = 'zh';
-    }
-    Vue.config.lang = localStorage.lang;
+  if (!localStorage.lang) {
+    localStorage.lang = 'zh'
+  }
+  Vue.config.lang = localStorage.lang
 } else {
-    Vue.config.lang = 'zh';
+  Vue.config.lang = 'zh'
 }
 
 Vue.filter('time', timestamp => {
-    return new Date(timestamp).toLocaleTimeString(Vue.config.lang)
+  return new Date(timestamp).toLocaleTimeString(Vue.config.lang)
 })
 
 
 const i18n = new VueI18n({
-    locale: Vue.config.lang,
-    messages,
+  locale: Vue.config.lang,
+  messages,
 })
-
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
-    el: '#app',
-    router,
-    store,
-    i18n,
-    template: '<App/>',
-    components: {App}
+  el: '#app',
+  router,
+  store,
+  i18n,
+  template: '<App/>',
+  components: {App}
 })
 
 getAllMessages(store)

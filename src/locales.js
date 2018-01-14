@@ -14,7 +14,13 @@ export default {
             lang: '语言',
             zh: '中文',
             en: '英文',
-            nearBy: '附近朋友'
+            nearBy: '附近朋友',
+            login: '登录',
+            register: '注册',
+            username: '用户名',
+            password: '密码',
+            unameMsg: '请输入用户名',
+            passwdMsg: '请输入密码'
         }
     },
     en: {
@@ -32,7 +38,13 @@ export default {
             lang: 'Language',
             zh: 'Chinese',
             en: 'English',
-            nearBy: 'People NearBy'
+            nearBy: 'People NearBy',
+            login: 'Login',
+            register: 'Register',
+            username: 'Username',
+            password: 'Password',
+            unameMsg: 'Please enter username',
+            passwdMsg: 'Please enter password'
         }
     }
 }

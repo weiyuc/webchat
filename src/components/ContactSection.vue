@@ -29,7 +29,6 @@
                 <mt-cell title="Eraden"></mt-cell>
             </mt-index-section>
 
-
             <mt-index-section index="F">
                 <mt-cell title="Aaron"></mt-cell>
                 <mt-cell title="Alden"></mt-cell>
