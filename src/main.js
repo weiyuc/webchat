@@ -19,29 +19,31 @@ import axios from 'axios'
 import './assets/css/style.css'
 import './assets/css/icon.css'
 import store from './store'
-import {getAllMessages} from './store/actions'
 
 Vue.use(Mint)
 Vue.use(VueI18n)
 
 axios.interceptors.request.use(function (config) {
-  Indicator.open()
+  config.headers.token = store.getters.token
   return config
 }, function (error) {
-  Indicator.open()
-  console.error(error)
   return Promise.reject(error)
 })
 
 axios.interceptors.response.use(function (res) {
-  Indicator.close()
-  if (res.data.responseCode != 0) {
+  if (res.data.responseCode !== 0) {
+    if (~[4003, 403].indexOf(res.data.responseCode)) {
+      Toast(res.data.responseMsg)
+      store.dispatch('logout').then(() => {
+        router.push({path: '/login'})
+      })
+      return Promise.reject(res.data)
+    }
     Toast(res.data.responseMsg)
-    return
+    return Promise.reject(res.data)
   }
   return res.data
 }, function (error) {
-  Indicator.close()
   console.error(error)
   return Promise.reject(error)
 })
@@ -69,6 +71,16 @@ const i18n = new VueI18n({
 
 Vue.config.productionTip = false
 
+if (store.getters.isLogin) {
+  store.dispatch('getContacts').then(
+    () => {
+      store.dispatch('getUnReadMessages').then(
+        //do nothing
+      )
+    }
+  )
+}
+
 new Vue({
   el: '#app',
   router,
@@ -77,5 +89,3 @@ new Vue({
   template: '<App/>',
   components: {App}
 })
-
-getAllMessages(store)

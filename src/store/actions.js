@@ -1,20 +1,81 @@
 import api from '../api'
 import * as types from './mutation-types'
 
-export const getAllMessages = ({commit}) => {
-  api.getAllMessages(messages => {
-    commit(types.RECEIVE_ALL, {
-      messages
+export const login = ({commit}, payload) => {
+  return new Promise((resolve, reject) => {
+    api.login(payload, userToken => {
+      if (userToken && userToken.accessToken) {
+        commit(types.LOGIN, userToken)
+        resolve(userToken)
+      } else {
+        reject()
+      }
     })
   })
 }
 
-export const getMessages = ({commit}) => {
-  api.getMessages(message => {
-    commit(types.RECEIVE_MESSAGE, {
-      message
+export const subscribe = ({commit}, payload) => {
+  return new Promise((resolve) => {
+    api.subscribe(payload, () => {
+      this.getUnreadFriendReq({commit})
+      resolve()
     })
   })
+}
+
+export const getContacts = ({commit}) => {
+  api.getContacts(contacts => {
+    if (contacts) {
+      commit(types.GET_CONTACTS, contacts)
+    }
+  })
+}
+
+export const logout = ({commit}) => {
+  api.logout(() => {
+    commit(types.LOGOUT)
+  })
+}
+
+export const setRemark = ({commit}, payload) => {
+  api.setRemark(payload, (res) => {
+    if (res) {
+      commit(types.SET_MASK, payload)
+    }
+  })
+}
+
+export const getUnreadFriendReq = ({commit}) => {
+  api.getUnreadFriendReq((data) => {
+    commit(types.ADD_REQ_CONTACT, data)
+  })
+}
+
+export const getUnReadMessages = ({commit}) => {
+  api.getUnReadMessages(messages => {
+    if (messages && messages.length > 0) {
+      commit(types.RECEIVE_ALL, {messages})
+    }
+  })
+}
+
+export const dealFriendReq = ({commit}, payload) => {
+  return new Promise((resolve) => {
+    api.dealFriendReq(payload, (res) => {
+      if (res && payload.status !== 4) {
+        commit(types.DEAL_FREIND_REQ, payload.friendName)
+      }
+      resolve()
+    })
+  })
+}
+
+export const createSession = ({commit}, payload) => {
+  commit(types.CREATE_SESSION, payload)
+}
+
+export const onMessage = ({commit}, payload) => {
+  commit(types.RECEIVE_MESSAGE, payload)
 }
 
 export const sendMessage = ({commit}, payload) => {
@@ -31,13 +92,5 @@ export const switchSession = ({commit}, payload) => {
 
 export const clearSession = ({commit}) => {
   commit(types.CLEAR_SESSION)
-}
-
-export const login = ({commit}, payload) => {
-  commit(types.LOGIN, payload)
-}
-
-export const logout = ({commit}) => {
-  commit(types.LOGOUT)
 }
 

@@ -1,15 +1,12 @@
 <template>
   <div class="session-section">
-    <!--
-    <mt-search :model="searchValue">
-    </mt-search>
-    -->
     <ul class="session-list">
       <session
         v-for="session in sessions"
-        :key="session.id"
+        v-if="session.lastMessage"
+        :key="session.from"
         :session="session"
-        :active="session.id === currentSession.id"
+        :active="session.from === currentSession.from"
         @switch-session="switchSession">
       </session>
     </ul>
@@ -34,8 +31,8 @@
       ])
     },
     methods: {
-      switchSession (id) {
-        this.$store.dispatch('switchSession', {id}).then(() => {
+      switchSession (from) {
+        this.$store.dispatch('switchSession', {from}).then(() => {
           this.$router.push({path: '/messageSection'})
         })
       }

@@ -16,14 +16,17 @@
     </div>
     <mt-tabbar v-model="active">
       <mt-tab-item id="message">
-        <mt-badge size="small" color="red" v-show="$store.state.unreadCount">
-          {{ $store.state.unreadCount > 99 ? '99+' : $store.state.unreadCount}}
+        <mt-badge size="small" color="red" v-show="unreadMsgCount">
+          {{ unreadMsgCount }}
         </mt-badge>
         <i slot="icon" class="icon icon-bubble2"></i>
         {{ $t("msg.message") }}
       </mt-tab-item>
       <mt-tab-item id="contact">
         <i slot="icon" class="icon icon-users"></i>
+        <mt-badge size="small" color="red" v-show="unreadReqCount">
+          {{ unreadReqCount }}
+        </mt-badge>
         {{ $t("msg.contact") }}
       </mt-tab-item>
       <mt-tab-item id="me">
@@ -34,9 +37,9 @@
   </div>
 </template>
 <script>
-  import SessionSection from '../components/SessionSection.vue'
-  import ContactSection from "../components/ContactSection";
-  import MeSection from "../components/MeSection";
+  import SessionSection from '../components/SessionSection'
+  import ContactSection from "../components/ContactSection"
+  import MeSection from "../components/MeSection"
 
   export default {
     name: 'wc-index',
@@ -45,15 +48,28 @@
     },
     data() {
       return {
-        active: 'message',
         searchWord: '',
         messages: [],
         height: 0
       }
     },
     computed: {
-      title: function () {
+      title() {
         return `msg.${this.active}`
+      },
+      unreadMsgCount() {
+        return this.$store.state.unreadMsgCount > 99 ? '99+' : this.$store.state.unreadMsgCount
+      },
+      unreadReqCount() {
+        return this.$store.state.unreadReqCount > 99 ? '99+' : this.$store.state.unreadReqCount
+      },
+      active: {
+        get () {
+          return this.$store.state.active
+        },
+        set (value) {
+          this.$store.commit('setActive', value)
+        }
       }
     },
     mounted() {

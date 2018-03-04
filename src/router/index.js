@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
+import Login from '@/views/Login'
 import Index from '@/views/Index'
-import MessageSection from '@/components/MessageSection'
+import MessageSection from '@/views/MessageSection'
+import NewFriend from '@/views/NewFriend'
+import Search from '@/views/Search'
+import FriendCard from '@/views/FriendCard'
+
 import store from '../store'
 
 Vue.use(Router)
@@ -23,28 +27,53 @@ const router = new Router({
       path: '/messageSection',
       name: 'messageSection',
       component: MessageSection
+    },
+    {
+      path: '/newFriend',
+      name: 'newFriend',
+      component: NewFriend
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search
+    },
+    {
+      path: '/friendCard',
+      name: 'friendCard',
+      component: FriendCard,
+      props: (route) => ({
+        group: route.query.group,
+        index: parseInt(route.query.index)
+      })
+
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.fullPath != '/login') {
-
-    if (!store.state.token) {
-      next({path: '/login'})
+  if (to.fullPath !== '/login') {
+    if (!store.getters.token) {
+      return next({path: '/login'})
     }
-    if (store.state.expiredTime < Date.now()) {
+    if (!store.getters.expiredTime || store.getters.expiredTime < Date.now()) {
       store.dispatch('logout').then(() => {
-        next({path: '/login'})
+        return next({path: '/login'})
       })
     } else {
-      next()
+      if (!store.getters.connected) {
+        store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then()
+      }
+      return next()
     }
   } else {
-    if (store.state.token && store.state.expiredTime > Date.now()) {
-      next({path: '/'})
+    if (store.getters.token && store.getters.expiredTime > Date.now()) {
+      if (!store.getters.connected) {
+        store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then()
+      }
+      return next({path: '/'})
     }
-    next()
+    return next()
   }
 })
 

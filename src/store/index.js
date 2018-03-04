@@ -7,15 +7,18 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  currentSessionID: null,
+  currentFrom: null,
   sessions: {},
   messages: {},
-  unreadCount: 0,
+  unreadMsgCount: 0,
+  unreadReqCount: 0,
   contacts: {},
-  username: '',
-  token: '',
-  expiredTime: 0,
-  websocketSession: null
+  requestContacts: [],
+  username: localStorage ? localStorage.username : '',
+  token: localStorage ? localStorage.token : '',
+  expiredTime: localStorage ? localStorage.expiredTime : 0,
+  connected: false,
+  active: 'message'
 }
 
 export default new Vuex.Store({

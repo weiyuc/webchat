@@ -1,6 +1,6 @@
 <template>
   <div class="message">
-    <mt-header fixed :title="session.name">
+    <mt-header fixed :title="session.remark || session.from">
       <a href="javascript:;" slot="left" @click="back">
         <mt-button icon="back">{{$t('msg.back')}}</mt-button>
       </a>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import Message from './Message.vue'
+  import Message from '../components/Message.vue'
   import {mapGetters} from 'vuex'
 
   export default {
@@ -55,7 +55,7 @@
       sendMessage () {
         if (this.msg) {
           this.$store.dispatch('sendMessage', {
-            text: this.msg,
+            content: this.msg,
             session: this.session
           }).then(() => {
             this.msg = ''
@@ -67,9 +67,16 @@
       back() {
         this.$store.dispatch('clearSession').then(
           () => {
-            this.$router.push({path: '/'})
+            window.history.length > 1
+              ? this.$router.go(-1)
+              : this.$router.push('/')
           }
         )
+      }
+    },
+    mounted() {
+      if (!this.session || Object.keys(this.session).length === 0) {
+        this.$router.push('/')
       }
     }
   }

@@ -18,8 +18,9 @@
   </div>
 </template>
 <script>
-  import {Toast} from 'mint-ui'
-  import {mapGetters} from 'vuex'
+  import {Toast, Indicator} from 'mint-ui'
+  import api from '../api'
+
   export default {
     name: 'login',
     data() {
@@ -31,42 +32,59 @@
         }
       }
     },
-    computed: {
-      ...mapGetters({
-        token: 'token',
-        expiredTime: 'expiredTime'
-      })
-    },
     methods: {
       doCheck() {
         if (!$.trim(this.form.username)) {
           Toast("用户名不能为空")
-          return false;
+          return false
         }
         if (!$.trim(this.form.password)) {
           Toast("密码不能为空")
-          return false;
+          return false
         }
-        return true;
+        return true
       },
       login() {
         if (this.doCheck()) {
-          this.$http.post('/apis/user/login', this.form).then(
-            res => {
-              this.$store.dispatch('login', res.responseData).then(
-                () => {
-                  this.$router.push({path: '/'})
-                }
-              )
+          let username = this.form.username
+          let password = this.form.password
+          Indicator.open()
+          this.$store.dispatch('login', {username, password}).then(
+            (res) => {
+              this.$store.dispatch('subscribe', res).then(() => {
+                this.$store.dispatch('getContacts').then(
+                  () => {
+                    this.$store.dispatch('getUnReadMessages').then(
+                      () => {
+                        Indicator.close()
+                        this.$router.push({path: '/'})
+                      }
+                    )
+                  }
+                )
+              })
+            },
+            () => {
+              Indicator.close()
+              //ignore
             }
-          );
+          )
         }
       },
       reg() {
         if (this.doCheck()) {
-          setTimeout(() => {
-            this.$router.push({path: '/'})
-          }, 1500)
+          let username = this.form.username
+          let password = this.form.password
+          Indicator.open()
+          api.register({username, password}).then(
+            () => {
+              Indicator.close()
+              Toast('注册成功')
+            },
+            () => {
+              //Do nothing
+            }
+          )
         }
       }
     }

@@ -6,17 +6,14 @@
 
 <script>
   import store from './store'
-  import {getMessages} from './store/actions'
   export default {
-    name: 'app',
-    created() {
-      setInterval(() => {
-        getMessages(store)
-      }, 5000)
-    }
+    name: 'app'
   }
 </script>
 <style lang="scss">
+  * {
+    font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  }
   html {
     width: 100%;
     height: 100%;
@@ -25,7 +22,6 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: "Microsoft Sans Serif";
       font-size: 14px;
       > #app {
         width: 100%;

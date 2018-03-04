@@ -1,16 +1,16 @@
 <template>
   <li class="session-list-item"
       :class="{ active: active }"
-      @click="$emit('switch-session', session.id)">
-    <h5 class="session-name">{{ session.name }}</h5>
+      @click="$emit('switch-session', session.from)">
+    <h5 class="session-name">{{ session.remark || session.from }}</h5>
     <div class="session-time">
       {{ session.lastMessage.timestamp | time }}
     </div>
     <div class="session-last-message">
-      {{ session.lastMessage.text }}
+      {{ session.lastMessage.content }}
     </div>
-    <mt-badge size="small" color="red" v-show="session.unreadCount">
-      {{ session.unreadCount > 99 ? '99+' : session.unreadCount}}
+    <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
+      {{ session.unreadMsgCount > 99 ? '99+' : session.unreadMsgCount}}
     </mt-badge>
   </li>
 </template>

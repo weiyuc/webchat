@@ -22,3 +22,15 @@ export const DELETE_FRIEND = 'DELETE_FRIEND'
  * 挤下线
  */
 export const PUSH_OUT = 'PUSH_OUT'
+
+/**
+ * 消息已读
+ * @type {string}
+ */
+export const HAS_READ = 'HAS_READ'
+
+/**
+ * 好友请求已同意
+ * @type {string}
+ */
+export const ACCEPTED_FRIEND_REQ = 'ACCEPTED_FRIEND_REQ'

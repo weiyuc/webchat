@@ -15,6 +15,10 @@ module.exports = {
         target: "http://localhost:8085",
         pathRewrite: {'^/apis': ''},
         secure: false
+      },
+      "/webchat": {
+        target: "http://localhost:8085",
+        secure: false
       }
     },
     // Various Dev Server settings
