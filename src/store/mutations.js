@@ -86,6 +86,9 @@ export default {
       Vue.set(state.contacts, message.content, removed)
     }
   },
+  [types.LOST_CONNECT] (state, lost) {
+    state.lostConnect = lost
+  },
   setActive(state, active) {
     state.active = active
   }

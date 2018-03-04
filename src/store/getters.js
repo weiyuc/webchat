@@ -27,6 +27,8 @@ export const username = state => state.username
 
 export const connected = state => state.connected
 
+export const lostConnect = state => state.lostConnect
+
 export const isLogin = state => {
   return state.token && state.expiredTime && state.expiredTime > Date.now()
 }

@@ -18,7 +18,8 @@ const state = {
   token: localStorage ? localStorage.token : '',
   expiredTime: localStorage ? localStorage.expiredTime : 0,
   connected: false,
-  active: 'message'
+  active: 'message',
+  lostConnect: false
 }
 
 export default new Vuex.Store({

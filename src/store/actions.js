@@ -15,10 +15,14 @@ export const login = ({commit}, payload) => {
 }
 
 export const subscribe = ({commit}, payload) => {
-  return new Promise((resolve) => {
-    api.subscribe(payload, () => {
-      this.getUnreadFriendReq({commit})
-      resolve()
+  return new Promise((resolve, reject) => {
+    api.subscribe(payload, (connected) => {
+      if (connected) {
+        this.getUnreadFriendReq({commit})
+        resolve()
+      } else {
+        reject()
+      }
     })
   })
 }

@@ -69,23 +69,48 @@ let api = {
     )
   },
   subscribe(userToken, cb) {
-    let vm = this
     let sockJs = new SockJS('/webchat')
-    vm.webSocket = Stomp.over(sockJs)
+    this.webSocket = Stomp.over(sockJs)
     const headers = {}
     headers['token'] = userToken.accessToken
-    vm.webSocket.connect(headers, function () {
-      store.commit(mutationTypes.SET_CONNECTED, true)
-      if (cb && typeof cb === 'function') {
-        cb()
-      }
-      vm.webSocket.subscribe('/message/' + userToken.username, function (res) {
-        if (res.body) {
-          let message = $.parseJSON(res.body)
-          vm.onMessage(message)
-        }
-      })
+    let vm = this
+    this.webSocket.connect(headers, function() {
+      vm.connectCallback(userToken, cb)
+    }, function() {
+      cb(false)
+      vm.errorCallback()
     })
+  },
+  connectCallback(userToken, cb) {
+    let vm = this
+    store.commit(mutationTypes.SET_CONNECTED, true)
+    if (cb && typeof cb === 'function') {
+      cb(true)
+    }
+    vm.webSocket.subscribe('/message/' + userToken.username, function (res) {
+      if (res.body) {
+        let message = $.parseJSON(res.body)
+        vm.onMessage(message)
+      }
+    })
+  },
+  errorCallback() {
+    store.commit(mutationTypes.LOST_CONNECT, true)
+    const cleanId = setInterval(() => {
+      store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then(() => {
+        store.commit(mutationTypes.LOST_CONNECT, false)
+        store.dispatch('getContacts').then(
+          () => {
+            store.dispatch('getUnReadMessages').then(
+              //do nothing
+            )
+          }
+        )
+        clearInterval(cleanId)
+      }).catch(() => {
+        //ignore
+      })
+    }, 1000 * 60)
   },
   onMessage(message) {
     if (debug) {

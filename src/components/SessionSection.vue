@@ -1,5 +1,8 @@
 <template>
   <div class="session-section">
+    <div class="lost-msg" v-if="lostConnect">
+      <p>{{ $t('msg.lostConnect') }}</p>
+     </div>
     <ul class="session-list">
       <session
         v-for="session in sessions"
@@ -27,7 +30,8 @@
     computed: {
       ...mapGetters([
         'sessions',
-        'currentSession'
+        'currentSession',
+        'lostConnect'
       ])
     },
     methods: {
@@ -40,8 +44,17 @@
   }
 </script>
 <style lang="scss">
-  .mint-search {
-    height: 52px;
-    width: 100%;
+  .session-section {
+    .lost-msg {
+      width: 100%;
+      height: 30px;
+      background-color: #fdf6ec;
+      color: #e6a23c;
+      > p {
+        margin: 0;
+        padding: 5px 0;
+        text-align: center;
+      }
+    }
   }
 </style>

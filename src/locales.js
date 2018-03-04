@@ -42,7 +42,8 @@ export default {
       hasRefused: '已拒绝',
       hasAdded: '已添加',
       hasDeleted: '已删除',
-      confirmDeleteFriend: '确定删除好友'
+      confirmDeleteFriend: '确定删除好友',
+      lostConnect: '正在尝试重新连接...'
     }
   },
   en: {
@@ -88,7 +89,8 @@ export default {
       hasRefused: 'Has refused',
       hasAdded: 'Has added',
       hasDeleted: 'Has deleted',
-      confirmDeleteFriend: 'Do you want to delete friend'
+      confirmDeleteFriend: 'Do you want to delete friend',
+      lostConnect: 'Trying to reconnect...'
     }
   }
 }
