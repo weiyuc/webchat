@@ -98,6 +98,7 @@ let api = {
     store.commit(mutationTypes.LOST_CONNECT, true)
     const cleanId = setInterval(() => {
       store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then(() => {
+        clearInterval(cleanId)
         store.commit(mutationTypes.LOST_CONNECT, false)
         store.dispatch('getContacts').then(
           () => {
@@ -106,11 +107,10 @@ let api = {
             )
           }
         )
-        clearInterval(cleanId)
       }).catch(() => {
         //ignore
       })
-    }, 1000 * 60)
+    }, 1000 * 30)
   },
   onMessage(message) {
     if (debug) {
