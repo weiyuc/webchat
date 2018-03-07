@@ -18,7 +18,7 @@ export const subscribe = ({commit}, payload) => {
   return new Promise((resolve, reject) => {
     api.subscribe(payload, (connected) => {
       if (connected) {
-        this.getUnreadFriendReq({commit})
+        getUnreadFriendReq({commit})
         resolve()
       } else {
         reject()
