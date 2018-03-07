@@ -17,6 +17,9 @@
   html {
     width: 100%;
     height: 100%;
+    input,input:focus,input:active {
+      user-select: text;
+    }
     body {
       width: 100%;
       height: 100%;
