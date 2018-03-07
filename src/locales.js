@@ -43,7 +43,8 @@ export default {
       hasAdded: '已添加',
       hasDeleted: '已删除',
       confirmDeleteFriend: '确定删除好友',
-      lostConnect: '正在尝试重新连接...'
+      lostConnect: '正在尝试重新连接...',
+      accountLoginOthPlace: '账号在其它地方登录'
     }
   },
   en: {
@@ -90,7 +91,8 @@ export default {
       hasAdded: 'Has added',
       hasDeleted: 'Has deleted',
       confirmDeleteFriend: 'Do you want to delete friend',
-      lostConnect: 'Trying to reconnect...'
+      lostConnect: 'Trying to reconnect...',
+      accountLoginOthPlace: 'The account is logged in elsewhere'
     }
   }
 }

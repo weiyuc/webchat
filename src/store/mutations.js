@@ -105,9 +105,8 @@ function createSession(state, from, remark) {
 }
 
 function addMessage(state, message) {
-  // add a `isRead` field before adding the message
-  console.log(message)
 
+  // add a `isRead` field before adding the message
   let from = message.isMe ? message.to : message.from
   message.isRead = from === state.currentFrom
   // add it to the session it belongs to
@@ -123,11 +122,9 @@ function addMessage(state, message) {
   }
 
   if (!message.isMe && message.isRead) {
-    console.log('remarkHasRead: ', from)
     apis.remarkHasRead(from)
   }
 
-  console.log(session)
   // add it to the messages map
   Vue.set(state.messages, message.id, message)
 }
@@ -143,7 +140,6 @@ function setCurrentSession(state, from, remark) {
   }
   state.unreadMsgCount -= state.sessions[from].unreadMsgCount
   if (state.sessions[from].unreadMsgCount > 0) {
-      console.log('remarkHasRead: ', from)
       apis.remarkHasRead(from)
   }
 

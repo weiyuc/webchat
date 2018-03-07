@@ -13,6 +13,10 @@ export const currentMessages = state => {
     : []
 }
 
+export const unreadReqCount = state => state.unreadReqCount
+
+export const unreadMsgCount = state => state.unreadMsgCount
+
 export const contacts = state => state.contacts
 
 export const requestContacts = state => state.requestContacts

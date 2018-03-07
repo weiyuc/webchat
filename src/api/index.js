@@ -1,14 +1,11 @@
-import data from './mock-data'
-const LATENCY = 10
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import * as messageType from './messageType'
-import * as mutationType from '../store/mutation-types'
-import { MessageBox, Toast } from 'mint-ui'
 import * as mutationTypes from '../store/mutation-types'
+import { MessageBox, Toast } from 'mint-ui'
 import store from '../store'
-
 import axios from 'axios'
+import i18n from '../i18n'
 
 const debug = true
 
@@ -24,7 +21,7 @@ let api = {
       }
     )
   },
-  logout(cb) {
+  disconnect(cb) {
     if (this.webSocket) {
       const headers = {};
       headers['token'] = store.getters.token
@@ -95,21 +92,21 @@ let api = {
     })
   },
   errorCallback() {
-    store.commit(mutationTypes.LOST_CONNECT, true)
-    const cleanId = setInterval(() => {
-      store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then(() => {
-        clearInterval(cleanId)
-        store.commit(mutationTypes.LOST_CONNECT, false)
-        store.dispatch('getContacts').then(
-          () => {
-            store.dispatch('getUnReadMessages').then(
-              //do nothing
-            )
-          }
-        )
-      }).catch(() => {
-        //ignore
-      })
+    setTimeout(() => {
+      store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then(
+        () => {
+          store.commit(mutationTypes.LOST_CONNECT, false)
+          store.dispatch('getContacts').then(
+            () => {
+              store.dispatch('getUnReadMessages').then(
+                //do nothing
+              )
+            }
+          )
+        }).catch(() => {
+          //ignore
+        }
+      )
     }, 1000 * 30)
   },
   onMessage(message) {
@@ -120,7 +117,7 @@ let api = {
 
     switch (type) {
       case messageType.DELETE_FRIEND:
-        store.commit(mutationType.DELETE_FRIEND, message)
+        store.commit(mutationTypes.DELETE_FRIEND, message)
         return
         break
       case messageType.ADD_FRIEND:
@@ -134,13 +131,32 @@ let api = {
         return
         break
       case messageType.PUSH_OUT:
+        const vm = this
+        MessageBox.close()
+        let config = {
+          confirmButtonText: i18n.t('msg.confirm'),
+          cancelButtonText: i18n.t('msg.cancel')
+        }
+        MessageBox.alert(
+          i18n.t('msg.accountLoginOthPlace'),
+          i18n.t('msg.tips'),
+          config
+        ).then(
+          () => {
+            store.commit(mutationTypes.LOGOUT)
+            if (vm.webSocket) {
+              vm.webSocket.unsubscribe()
+            }
+            window.location.reload()
+          }
+        )
         return
         break
       case messageType.DEAL_ADD_FRIEND_REQ:
         return
         break
       case messageType.ACCEPTED_FRIEND_REQ:
-        store.commit(mutationType.ACCEPTED_FRIEND_REQ, message)
+        store.commit(mutationTypes.ACCEPTED_FRIEND_REQ, message)
         return
         break
       default:
@@ -181,25 +197,6 @@ let api = {
       }
     )
   },
-  getAllMessages (cb) {
-    setTimeout(() => {
-      cb(data)
-    }, LATENCY)
-  },
-  getMessages (cb) {
-    setTimeout(() => {
-      let random = Math.floor(Math.random() * 5)
-      let t = {
-        id: `m_${new Date().getTime()}`,
-        sessionID: data[random].sessionID,
-        sessionName: data[random].sessionName,
-        authorName: data[random].authorName,
-        text: `hello ${Date.now()}`,
-        timestamp: Date.now()
-      }
-      cb(t)
-    }, LATENCY)
-  },
   createMessage ({content, session}, cb) {
     const message = {
       id: 'm_' + Math.random() * Math.random(),
@@ -221,7 +218,7 @@ let api = {
 }
 
 window.onbeforeunload = function() {
-  api.logout()
+  api.disconnect()
 }
 
 export default api

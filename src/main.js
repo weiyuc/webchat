@@ -5,10 +5,7 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-import VueI18n from 'vue-i18n'
-
-import messages from './locales'
+import i18n from './i18n'
 
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
@@ -21,7 +18,6 @@ import './assets/css/icon.css'
 import store from './store'
 
 Vue.use(Mint)
-Vue.use(VueI18n)
 
 axios.interceptors.request.use(function (config) {
   config.headers.token = store.getters.token
@@ -50,24 +46,11 @@ axios.interceptors.response.use(function (res) {
 
 Vue.prototype.$http = axios
 
-if (localStorage) {
-  if (!localStorage.lang) {
-    localStorage.lang = 'zh'
-  }
-  Vue.config.lang = localStorage.lang
-} else {
-  Vue.config.lang = 'zh'
-}
-
 Vue.filter('time', timestamp => {
   return new Date(timestamp).toLocaleTimeString(Vue.config.lang)
 })
 
 
-const i18n = new VueI18n({
-  locale: Vue.config.lang,
-  messages,
-})
 
 Vue.config.productionTip = false
 

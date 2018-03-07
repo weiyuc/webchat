@@ -17,13 +17,15 @@
     name: "me-section",
     data() {
       return {
-        lang: localStorage.lang,
+        lang: window.localStorage ? window.localStorage.lang : 'zh',
       }
     },
     watch: {
       lang: function (newLang) {
         this.$i18n.locale = newLang
-        localStorage.lang = newLang
+        if (window.localStorage) {
+          window.localStorage.lang = newLang
+        }
       }
     }
   }

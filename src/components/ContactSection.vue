@@ -7,7 +7,7 @@
             <img src="../assets/img/newFriends.png"/>
         </span>
         <mt-badge size="small" color="red" v-show="unreadReqCount">
-          {{ unreadReqCount }}
+          {{ unreadReqCountFormat }}
         </mt-badge>
       </mt-cell>
       <mt-index-section v-for="(v, k, i) in contacts" :index="k" :key="i">
@@ -27,10 +27,11 @@
     },
     computed: {
       ...mapGetters([
-        'contacts'
+        'contacts',
+        'unreadReqCount'
       ]),
-      unreadReqCount() {
-        return this.$store.state.unreadReqCount > 99 ? '99+' : this.$store.state.unreadReqCount
+      unreadReqCountFormat() {
+        return this.unreadReqCount > 99 ? '99+' : this.unreadReqCount
       }
     },
     props: {

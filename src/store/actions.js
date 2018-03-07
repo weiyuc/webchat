@@ -35,12 +35,6 @@ export const getContacts = ({commit}) => {
   })
 }
 
-export const logout = ({commit}) => {
-  api.logout(() => {
-    commit(types.LOGOUT)
-  })
-}
-
 export const setRemark = ({commit}, payload) => {
   api.setRemark(payload, (res) => {
     if (res) {

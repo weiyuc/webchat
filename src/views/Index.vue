@@ -17,7 +17,7 @@
     <mt-tabbar v-model="active">
       <mt-tab-item id="message">
         <mt-badge size="small" color="red" v-show="unreadMsgCount">
-          {{ unreadMsgCount }}
+          {{ unreadMsgCountFormat }}
         </mt-badge>
         <i slot="icon" class="icon icon-bubble2"></i>
         {{ $t("msg.message") }}
@@ -25,7 +25,7 @@
       <mt-tab-item id="contact">
         <i slot="icon" class="icon icon-users"></i>
         <mt-badge size="small" color="red" v-show="unreadReqCount">
-          {{ unreadReqCount }}
+          {{ unreadReqCountFormat }}
         </mt-badge>
         {{ $t("msg.contact") }}
       </mt-tab-item>
@@ -40,6 +40,7 @@
   import SessionSection from '../components/SessionSection'
   import ContactSection from "../components/ContactSection"
   import MeSection from "../components/MeSection"
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'wc-index',
@@ -54,18 +55,22 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'unreadMsgCount',
+        'unreadReqCount'
+      ]),
       title() {
         return `msg.${this.active}`
       },
-      unreadMsgCount() {
-        return this.$store.state.unreadMsgCount > 99 ? '99+' : this.$store.state.unreadMsgCount
+      unreadMsgCountFormat() {
+        return this.unreadMsgCount > 99 ? '99+' : this.unreadMsgCount
       },
-      unreadReqCount() {
-        return this.$store.state.unreadReqCount > 99 ? '99+' : this.$store.state.unreadReqCount
+      unreadReqCountFormat() {
+        return this.unreadReqCount > 99 ? '99+' : this.unreadReqCount
       },
       active: {
         get () {
-          return this.$store.state.active
+          return this.$store.getters.active
         },
         set (value) {
           this.$store.commit('setActive', value)
