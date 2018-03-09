@@ -57,9 +57,8 @@ router.beforeEach((to, from, next) => {
       return next({path: '/login'})
     }
     if (!store.getters.expiredTime || store.getters.expiredTime < Date.now()) {
-      store.dispatch('logout').then(() => {
-        return next({path: '/login'})
-      })
+      store.commit('logout')
+      return next({path: '/login'})
     } else {
       if (!store.getters.connected) {
         store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username})
