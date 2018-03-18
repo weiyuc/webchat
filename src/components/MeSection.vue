@@ -1,6 +1,6 @@
 <template>
   <div class="me-section">
-    <mt-cell class="mt-30" is-link :title="$t('msg.moments')">
+    <mt-cell class="mt-20" is-link :title="$t('msg.moments')">
       <span slot="icon" class="cell-icon moments icon icon-camera">
       </span>
     </mt-cell>
@@ -84,7 +84,7 @@
     color: #409EFF;
   }
   .logout-btn {
-    width: 90%;
+    width: 80%;
     text-align: center;
     margin: 30px auto 0 auto;
   }

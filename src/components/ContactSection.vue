@@ -1,7 +1,6 @@
 <template>
   <div class="contact-section" ref="contactSection">
-
-    <mt-index-list :height="height" :showIndicator="false">
+    <mt-index-list :height="height">
       <mt-cell class="mt-30" :title="$t('msg.newFriends')" @click.native="toNewFriend">
         <span slot="icon" class="new-friend-icon">
             <img src="../assets/img/newFriends.png"/>
@@ -49,12 +48,12 @@
 </script>
 <style lang="scss">
   .contact-section {
-    /*.mint-indexlist-nav {*/
-      /*width: 22px !important;*/
-    /*}*/
-    /*.mint-indexlist-content {*/
-      /*margin-right: 23px !important;*/
-    /*}*/
+    .mint-indexlist-nav {
+      width: 22px !important;
+    }
+    .mint-indexlist-content {
+      margin-right: 23px !important;
+    }
     .new-friend-icon {
       display: inline-block;
       text-align: center;

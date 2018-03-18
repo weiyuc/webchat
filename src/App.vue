@@ -51,6 +51,10 @@
               right: 35px;
             }
           }
+
+          .mint-tabbar {
+            position: fixed !important;
+          }
         }
         .wc-login {
           width: 100%;
