@@ -91,7 +91,7 @@
   .wc-button {
     > h3 {
       margin: 20px 0 0 0;
-      text-align: right;
+      text-align: center;
       a {
         text-decoration: none;
       }
