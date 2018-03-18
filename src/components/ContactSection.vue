@@ -1,7 +1,7 @@
 <template>
   <div class="contact-section" ref="contactSection">
     <mt-index-list :height="height">
-      <mt-cell class="mt-30" :title="$t('msg.newFriends')" @click.native="toNewFriend">
+      <mt-cell class="mt-20" :title="$t('msg.newFriends')" @click.native="toNewFriend">
         <span slot="icon" class="new-friend-icon">
             <img src="../assets/img/newFriends.png"/>
         </span>
