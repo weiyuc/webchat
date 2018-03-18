@@ -1,8 +1,9 @@
 <template>
   <div class="session-section">
-    <div class="lost-msg" v-if="lostConnect">
+    <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
+    <div class="lost-msg" v-show="lostConnect">
       <p>{{ $t('msg.lostConnect') }}</p>
-     </div>
+    </div>
     <ul class="session-list">
       <session
         v-for="session in sessions"
@@ -32,7 +33,10 @@
         'sessions',
         'currentSession',
         'lostConnect'
-      ])
+      ]),
+      showNoMsg() {
+        return Object.keys(this.sessions).length === 0
+      }
     },
     methods: {
       switchSession (from) {
@@ -55,6 +59,10 @@
         padding: 5px 0;
         text-align: center;
       }
+    }
+    .no-message {
+      padding-top: 20px;
+      text-align: center;
     }
   }
 </style>

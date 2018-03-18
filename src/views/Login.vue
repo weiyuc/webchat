@@ -11,9 +11,7 @@
     </div>
     <div class="wc-button">
       <mt-button size="large" type="primary" @click.native="login">{{$t('msg.login')}}</mt-button>
-      <mt-button style="margin-top: 10px" size="large" @click.native="reg" type="primary">
-        {{$t('msg.register')}}
-      </mt-button>
+      <h3>还没账号?<router-link to="/Register">立即注册</router-link></h3>
     </div>
   </div>
 </template>
@@ -90,3 +88,11 @@
     }
   }
 </script>
+<style lang="scss">
+  .wc-button {
+    > h3 {
+      margin: 0;
+      text-align: right;
+    }
+  }
+</style>

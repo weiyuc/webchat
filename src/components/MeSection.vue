@@ -1,10 +1,20 @@
 <template>
   <div class="me-section">
-    <mt-cell is-link :title="$t('msg.nearBy')">
-      <span slot="icon" class="cell-icon">
-          <img src="../assets/img/nearby.png"/>
+    <mt-cell class="mt-30" is-link :title="$t('msg.moments')">
+      <span slot="icon" class="cell-icon moments icon icon-camera">
       </span>
     </mt-cell>
+
+    <mt-cell class="mt-30" is-link :title="$t('msg.nearBy')">
+      <span slot="icon" class="cell-icon near-by icon icon-man-woman">
+      </span>
+    </mt-cell>
+
+    <mt-cell class="mt-30" is-link :title="$t('msg.settings')">
+      <span slot="icon" class="cell-icon settings icon icon-cog">
+      </span>
+    </mt-cell>
+
     <mt-radio
       :title="$t('msg.lang')"
       v-model="lang"
@@ -32,13 +42,16 @@
 </script>
 <style lang="scss">
   .cell-icon {
-    display: inline-block;
-    text-align: center;
-    line-height: 25px;
-    width: 30px;
-    height: 30px;
-    background-color: #F7BA2A;
-    border-radius: 5px;
-    margin-right: 10px;
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  .moments {
+    color: #F56C6C;
+  }
+  .near-by {
+    color: #F7BA2A;
+  }
+  .settings {
+    color: #409EFF;
   }
 </style>
