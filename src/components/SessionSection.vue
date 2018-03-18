@@ -35,7 +35,15 @@
         'lostConnect'
       ]),
       showNoMsg() {
-        return Object.keys(this.sessions).length === 0
+        if (Object.keys(this.sessions).length === 0) {
+          return true
+        }
+        for (let i in this.sessions) {
+          if (this.sessions[i].lastMessage) {
+            return false
+          }
+        }
+        return true
       }
     },
     methods: {
