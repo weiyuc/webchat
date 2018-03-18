@@ -22,7 +22,7 @@
     </mt-radio>
 
     <div class="logout-btn">
-      <mt-button type="danger" size="large" @click.native="logout">退出</mt-button>
+      <mt-button type="danger" size="large" @click.native="logout">{{ $t('msg.logout') }}</mt-button>
     </div>
   </div>
 </template>

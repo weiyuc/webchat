@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-  import WcSearch from "./Search"
+  import WcSearch from './Search'
   import {Toast} from 'mint-ui'
   import {mapGetters} from 'vuex'
 
