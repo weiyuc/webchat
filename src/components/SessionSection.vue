@@ -1,9 +1,9 @@
 <template>
   <div class="session-section">
-    <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
     <div class="lost-msg" v-show="lostConnect">
       <p>{{ $t('msg.lostConnect') }}</p>
     </div>
+    <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
     <ul class="session-list">
       <session
         v-for="session in sessions"

@@ -28,6 +28,7 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (res) {
   if (res.data.responseCode !== 0) {
+    Indicator.close()
     if (~[4003, 403].indexOf(res.data.responseCode)) {
       Toast(res.data.responseMsg)
       store.dispatch('logout').then(() => {
@@ -41,6 +42,8 @@ axios.interceptors.response.use(function (res) {
   return res.data
 }, function (error) {
   console.error(error)
+  Toast('System busy')
+  Indicator.close()
   return Promise.reject(error)
 })
 

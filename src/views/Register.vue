@@ -1,6 +1,6 @@
 <template>
   <div class="wc-login">
-    <mt-header fixed :title="$t('msg.login')"></mt-header>
+    <mt-header fixed :title="$t('msg.register')"></mt-header>
     <div class="wc-logo">
       <img src="../assets/img/webchat.png"/>
     </div>
@@ -10,8 +10,8 @@
                 v-model="form.password"></mt-field>
     </div>
     <div class="wc-button">
-      <mt-button size="large" type="primary" @click.native="login">{{$t('msg.login')}}</mt-button>
-      <h3>{{ $t('msg.noAccount') }}<router-link to="/register">{{ $t('msg.registerNow') }}</router-link></h3>
+      <mt-button size="large" type="primary" @click.native="reg">{{$t('msg.register')}}</mt-button>
+      <h3>{{ $t('msg.hasAccount') }}<router-link to="/login">{{ $t('msg.loginNow') }}</router-link></h3>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@
   import api from '../api'
 
   export default {
-    name: 'login',
+    name: 'register',
     data() {
       return {
         form: {
@@ -41,33 +41,6 @@
         }
         return true
       },
-      login() {
-        if (this.doCheck()) {
-          let username = this.form.username
-          let password = this.form.password
-          Indicator.open()
-          this.$store.dispatch('login', {username, password}).then(
-            (res) => {
-              this.$store.dispatch('subscribe', res).then(() => {
-                this.$store.dispatch('getContacts').then(
-                  () => {
-                    this.$store.dispatch('getUnReadMessages').then(
-                      () => {
-                        Indicator.close()
-                        this.$router.push({path: '/'})
-                      }
-                    )
-                  }
-                )
-              })
-            },
-            () => {
-              Indicator.close()
-              //ignore
-            }
-          )
-        }
-      },
       reg() {
         if (this.doCheck()) {
           let username = this.form.username
@@ -77,6 +50,13 @@
             () => {
               Indicator.close()
               Toast('注册成功')
+              this.$nextTick(() => {
+                Indicator.open()
+                setTimeout(() => {
+                  Indicator.close()
+                  this.$router.push({path: '/login'})
+                }, 1500)
+              })
             },
             () => {
               //Do nothing

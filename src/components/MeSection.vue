@@ -20,9 +20,15 @@
       v-model="lang"
       :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">
     </mt-radio>
+
+    <div class="logout-btn">
+      <mt-button type="danger" size="large" @click.native="logout">退出</mt-button>
+    </div>
   </div>
 </template>
 <script>
+  import {MessageBox, Toast, Indicator} from 'mint-ui'
+
   export default {
     name: "me-section",
     data() {
@@ -36,6 +42,29 @@
         if (window.localStorage) {
           window.localStorage.lang = newLang
         }
+      }
+    },
+    methods: {
+      logout() {
+        let config = {
+          confirmButtonText: this.$t('msg.confirm'),
+          cancelButtonText: this.$t('msg.cancel')
+        }
+        MessageBox.close()
+        MessageBox.confirm(
+          `${this.$t('msg.confirmLogout')}`,
+          this.$t('msg.tips'),
+          config).then(() => {
+          this.$store.dispatch('logout').then(
+            () => {
+              this.$router.push({path: '/login'})
+            }
+          )
+        }).catch(
+          () => {
+            //ignore
+          }
+        )
       }
     }
   }
@@ -53,5 +82,10 @@
   }
   .settings {
     color: #409EFF;
+  }
+  .logout-btn {
+    width: 90%;
+    text-align: center;
+    margin: 30px auto 0 auto;
   }
 </style>

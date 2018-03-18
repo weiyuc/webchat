@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
+import Register from '@/views/Register'
 import Index from '@/views/Index'
 import MessageSection from '@/views/MessageSection'
 import NewFriend from '@/views/NewFriend'
@@ -17,6 +18,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/',
@@ -51,13 +57,15 @@ const router = new Router({
   ]
 })
 
+const un_check_url = ['/login', '/register']
+
 router.beforeEach((to, from, next) => {
-  if (to.fullPath !== '/login') {
+  if (!~un_check_url.indexOf(to.fullPath)) {
     if (!store.getters.token) {
       return next({path: '/login'})
     }
     if (!store.getters.expiredTime || store.getters.expiredTime < Date.now()) {
-      store.commit('logout')
+      store.commit('LOGOUT')
       return next({path: '/login'})
     } else {
       if (!store.getters.connected) {

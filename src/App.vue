@@ -13,6 +13,8 @@
 <style lang="scss">
   * {
     font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+
+    -webkit-tap-highlight-color: transparent;
   }
   html {
     width: 100%;

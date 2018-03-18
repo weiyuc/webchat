@@ -92,3 +92,12 @@ export const clearSession = ({commit}) => {
   commit(types.CLEAR_SESSION)
 }
 
+export const logout = ({commit}, payload) => {
+  return new Promise((resolve) => {
+    api.disconnect(() => {
+      commit(types.LOGOUT, payload)
+      resolve()
+    })
+  })
+}
+
