@@ -25,8 +25,8 @@
   import {mapGetters} from 'vuex'
 
   export default {
+    name: 'wc-new-friend',
     components: {WcSearch},
-    name: 'NewFriend',
     computed: {
       ...mapGetters([
         'requestContacts'

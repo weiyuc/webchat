@@ -108,7 +108,7 @@ let api = {
           //ignore
         }
       )
-    }, 1000 * 30)
+    }, 1000 * 5)
   },
   onMessage(message) {
     if (debug) {
@@ -200,7 +200,7 @@ let api = {
   },
   createMessage ({content, session}, cb) {
     const message = {
-      id: 'm_' + Math.random() * Math.random(),
+      id: 'm_' + this.uuidv4(),
       from: store.getters.username,
       isMe: true,
       to: session.from,
@@ -211,6 +211,12 @@ let api = {
     }
     this.webSocket.send('/notify', {}, JSON.stringify(message))
     cb(message)
+  },
+  uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    })
   },
   remarkHasRead(friendName) {
     let username = store.getters.username

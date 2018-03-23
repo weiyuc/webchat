@@ -7,6 +7,7 @@ import MessageSection from '@/views/MessageSection'
 import NewFriend from '@/views/NewFriend'
 import Search from '@/views/Search'
 import FriendCard from '@/views/FriendCard'
+import Settings from '@/views/Settings'
 
 import store from '../store'
 
@@ -52,7 +53,11 @@ const router = new Router({
         group: route.query.group,
         index: parseInt(route.query.index)
       })
-
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
     }
   ]
 })

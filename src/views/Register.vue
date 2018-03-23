@@ -8,6 +8,8 @@
       <mt-field :label="$t('msg.username')" :placeholder="$t('msg.unameMsg')" v-model="form.username"></mt-field>
       <mt-field :label="$t('msg.password')" :placeholder="$t('msg.passwdMsg')" type="password"
                 v-model="form.password"></mt-field>
+      <mt-field :label="$t('msg.confirmPassword')" :placeholder="$t('msg.confirmPasswordMsg')" type="password"
+                v-model="form.confirmPassword"></mt-field>
     </div>
     <div class="wc-button">
       <mt-button size="large" type="primary" @click.native="reg">{{$t('msg.register')}}</mt-button>
@@ -20,23 +22,32 @@
   import api from '../api'
 
   export default {
-    name: 'register',
+    name: 'wc-register',
     data() {
       return {
         form: {
           username: '',
-          password: ''
+          password: '',
+          confirmPassword: ''
         }
       }
     },
     methods: {
       doCheck() {
         if (!$.trim(this.form.username)) {
-          Toast("用户名不能为空")
+          Toast(this.$t('msg.unameMsg'))
           return false
         }
         if (!$.trim(this.form.password)) {
-          Toast("密码不能为空")
+          Toast(this.$t('msg.passwdMsg'))
+          return false
+        }
+        if (!$.trim(this.form.confirmPassword)) {
+          Toast(this.$t('msg.passwdMsg'))
+          return false
+        }
+        if (this.form.confirmPassword !== this.form.password) {
+          Toast(this.$t('msg.twicePasswdNotSame'))
           return false
         }
         return true

@@ -10,20 +10,10 @@
       </span>
     </mt-cell>
 
-    <mt-cell class="mt-30" is-link :title="$t('msg.settings')">
-      <span slot="icon" class="cell-icon settings icon icon-cog">
+    <mt-cell class="mt-30" is-link to="/settings" :title="$t('msg.settings')">
+      <span slot="icon"  class="cell-icon settings icon icon-cog">
       </span>
     </mt-cell>
-
-    <mt-radio
-      :title="$t('msg.lang')"
-      v-model="lang"
-      :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">
-    </mt-radio>
-
-    <div class="logout-btn">
-      <mt-button type="danger" size="large" @click.native="logout">{{ $t('msg.logout') }}</mt-button>
-    </div>
   </div>
 </template>
 <script>
