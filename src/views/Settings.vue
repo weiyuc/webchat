@@ -6,8 +6,12 @@
       </a>
     </mt-header>
 
+    <mt-cell is-link class="mt-20" :title="$t('msg.realName')" value="余伟"></mt-cell>
+    <mt-cell is-link :title="$t('msg.gender')" value="男"></mt-cell>
+    <mt-cell is-link :title="$t('msg.whatUp')" value="既然选择了远方"></mt-cell>
+
     <mt-radio
-      class="mt20"
+      class="mt-30"
       :title="$t('msg.lang')"
       v-model="lang"
       :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">
@@ -16,10 +20,11 @@
     <div class="logout-btn">
       <mt-button type="danger" size="large" @click.native="logout">{{ $t('msg.logout') }}</mt-button>
     </div>
-
   </div>
 </template>
 <script>
+  import {MessageBox, Toast, Indicator} from 'mint-ui'
+
   export default {
     name: 'wc-settings',
     data() {
@@ -44,12 +49,33 @@
               : this.$router.push('/')
           }
         )
+      },
+      logout() {
+        let config = {
+          confirmButtonText: this.$t('msg.confirm'),
+          cancelButtonText: this.$t('msg.cancel')
+        }
+        MessageBox.close()
+        MessageBox.confirm(
+          `${this.$t('msg.confirmLogout')}`,
+          this.$t('msg.tips'),
+          config).then(() => {
+          this.$store.dispatch('logout').then(
+            () => {
+              this.$router.push({path: '/login'})
+            }
+          )
+        }).catch(
+          () => {
+            //ignore
+          }
+        )
       }
     }
   }
 </script>
 <style lang="scss">
-  .wd-settings {
+  .wc-settings {
     .logout-btn {
       width: 80%;
       text-align: center;

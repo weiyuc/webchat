@@ -55,7 +55,12 @@ export default {
       hasDeleted: '已删除',
       confirmDeleteFriend: '确定删除好友',
       lostConnect: '正在尝试重新连接...',
-      accountLoginOthPlace: '账号在其它地方登录'
+      accountLoginOthPlace: '账号在其它地方登录',
+      gender: '性别',
+      male: '男',
+      female: '女',
+      whatUp: '签名',
+      realName: '姓名'
     }
   },
   en: {
@@ -78,7 +83,7 @@ export default {
       nearBy: 'People NearBy',
       login: 'Login',
       register: 'Register',
-      logout: 'Logout',
+      logout: 'Log out',
       username: 'Username',
       password: 'Password',
       noAccount: 'No account?',
@@ -90,7 +95,7 @@ export default {
       twicePasswdNotSame: 'Twice passwords were not same',
       confirmPassword: 'Confirm password',
       confirmPasswordMsg: 'Please re-enter password',
-      confirmLogout: 'Do you want to logout?',
+      confirmLogout: 'Do you want to log out?',
       userNotExist: 'User not exist',
       cannotAddYourself: 'Yourself can not add yourself',
       tips: 'tips',
@@ -114,7 +119,12 @@ export default {
       hasDeleted: 'Has deleted',
       confirmDeleteFriend: 'Do you want to delete friend',
       lostConnect: 'Trying to reconnect...',
-      accountLoginOthPlace: 'The account is logged in elsewhere'
+      accountLoginOthPlace: 'The account was logged in elsewhere',
+      gender: 'Gender',
+      male: 'Male',
+      female: 'Female',
+      whatUp: 'What’s up',
+      realName: 'Real Name'
     }
   }
 }
