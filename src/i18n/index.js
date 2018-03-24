@@ -4,12 +4,13 @@ import messages from '../locales'
 
 Vue.use(VueI18n)
 
-if (localStorage) {
+try {
   if (!localStorage.lang) {
-    localStorage.lang = 'zh'
+    localStorage.setItem('lang', 'zh')
   }
   Vue.config.lang = localStorage.lang
-} else {
+} catch (e) {
+  alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
   Vue.config.lang = 'zh'
 }
 

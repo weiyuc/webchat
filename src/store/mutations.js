@@ -150,10 +150,12 @@ function login(state, userToken) {
   state.username = userToken.username
   state.token = userToken.accessToken
   state.expiredTime = userToken.expiredTime
-  if (localStorage) {
+  try {
     localStorage.token = userToken.accessToken
     localStorage.username = userToken.username
     localStorage.expiredTime = userToken.expiredTime
+  } catch (e) {
+    alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
   }
 }
 
@@ -161,9 +163,11 @@ function logout(state) {
   state.token = ''
   state.username = ''
   state.expiredTime = 0
-  if (localStorage) {
+  try {
     localStorage.removeItem('username')
     localStorage.removeItem('token')
     localStorage.removeItem('expiredTime')
+  } catch (e) {
+    alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
   }
 }

@@ -14,9 +14,9 @@ const state = {
   unreadReqCount: 0,
   contacts: {},
   requestContacts: [],
-  username: localStorage ? localStorage.username : '',
-  token: localStorage ? localStorage.token : '',
-  expiredTime: localStorage ? localStorage.expiredTime : 0,
+  username: localStorage.username || '',
+  token: localStorage.token || '',
+  expiredTime: localStorage.expiredTime || 0,
   connected: false,
   active: 'message',
   lostConnect: false

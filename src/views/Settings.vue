@@ -22,20 +22,23 @@
   </div>
 </template>
 <script>
+  import Vue from 'vue'
   import {MessageBox, Toast, Indicator} from 'mint-ui'
 
   export default {
     name: 'wc-settings',
     data() {
       return {
-        lang: window.localStorage ? window.localStorage.lang : 'zh',
+        lang: Vue.config.lang,
       }
     },
     watch: {
       lang: function (newLang) {
         this.$i18n.locale = newLang
-        if (window.localStorage) {
+        try {
           window.localStorage.lang = newLang
+        } catch (e) {
+          alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
         }
       }
     },
