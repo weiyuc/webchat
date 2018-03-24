@@ -93,6 +93,7 @@
         height: 100%;
         overflow-y: auto;
       }
+      background: url("../assets/img/bg.png") no-repeat 100%;
     }
     .bottom-input {
       border-top: 1px solid #ccc;

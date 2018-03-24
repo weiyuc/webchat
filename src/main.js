@@ -13,7 +13,7 @@ import 'mint-ui/lib/style.css'
 import {Toast, Indicator} from 'mint-ui'
 import axios from 'axios'
 
-import './assets/css/style.css'
+import './assets/css/style.scss'
 import './assets/css/icon.css'
 import store from './store'
 

@@ -32,11 +32,11 @@
     methods: {
       doCheck() {
         if (!$.trim(this.form.username)) {
-          Toast("用户名不能为空")
+          Toast(this.$t('msg.unameMsg'))
           return false
         }
         if (!$.trim(this.form.password)) {
-          Toast("密码不能为空")
+          Toast(this.$t('msg.passwdMsg'))
           return false
         }
         return true
@@ -88,12 +88,28 @@
   }
 </script>
 <style lang="scss">
-  .wc-button {
-    > h3 {
-      margin: 20px 0 0 0;
+  .wc-login {
+    width: 100%;
+    height: 100%;
+    .wc-logo {
+      padding-top: 60px;
       text-align: center;
-      a {
-        text-decoration: none;
+    }
+    .wc-form {
+      margin: 20px auto 0 auto;
+      width: 80%;
+
+    }
+    .wc-button {
+      width: 80%;
+      padding-top: 20px;
+      margin: auto;
+      > h3 {
+        margin: 20px 0 0 0;
+        text-align: center;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }

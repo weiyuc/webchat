@@ -11,7 +11,6 @@
     <mt-cell is-link :title="$t('msg.whatUp')" value="既然选择了远方"></mt-cell>
 
     <mt-radio
-      class="mt-30"
       :title="$t('msg.lang')"
       v-model="lang"
       :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">

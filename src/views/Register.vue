@@ -1,5 +1,5 @@
 <template>
-  <div class="wc-login">
+  <div class="wc-register">
     <mt-header fixed :title="$t('msg.register')"></mt-header>
     <div class="wc-logo">
       <img src="../assets/img/webchat.png"/>
@@ -15,21 +15,25 @@
       <mt-button size="large" type="primary" @click.native="reg">{{$t('msg.register')}}</mt-button>
       <h3>{{ $t('msg.hasAccount') }}<router-link to="/login">{{ $t('msg.loginNow') }}</router-link></h3>
     </div>
+    <wc-show-success v-show="showSuccess" :message="this.$t('msg.regSuccess')"></wc-show-success>
   </div>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'
   import api from '../api'
+  import WcShowSuccess from "../components/ShowSuccess/ShowSuccess";
 
   export default {
     name: 'wc-register',
+    components: {WcShowSuccess},
     data() {
       return {
         form: {
           username: '',
           password: '',
           confirmPassword: ''
-        }
+        },
+        showSuccess: false
       }
     },
     methods: {
@@ -60,14 +64,11 @@
           api.register({username, password}).then(
             () => {
               Indicator.close()
-              Toast('注册成功')
-              this.$nextTick(() => {
-                Indicator.open()
-                setTimeout(() => {
-                  Indicator.close()
-                  this.$router.push({path: '/login'})
-                }, 1500)
-              })
+              this.showSuccess = true
+              setTimeout(() => {
+                this.showSuccess = false
+                this.$router.push({path: '/login'})
+              }, 1500)
             },
             () => {
               //Do nothing
@@ -79,12 +80,28 @@
   }
 </script>
 <style lang="scss">
-  .wc-button {
-    > h3 {
-      margin: 20px 0 0 0;
+  .wc-register {
+    width: 100%;
+    height: 100%;
+    .wc-logo {
+      padding-top: 60px;
       text-align: center;
-      a {
-        text-decoration: none;
+    }
+    .wc-form {
+      margin: 20px auto 0 auto;
+      width: 80%;
+
+    }
+    .wc-button {
+      width: 80%;
+      padding-top: 20px;
+      margin: auto;
+      > h3 {
+        margin: 20px 0 0 0;
+        text-align: center;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }

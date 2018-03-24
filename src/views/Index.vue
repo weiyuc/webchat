@@ -82,3 +82,29 @@
     }
   }
 </script>
+<style lang="scss">
+  .wc-index {
+    width: 100%;
+    height: 100%;
+    > .content {
+        width: 100%;
+        position: fixed;
+        top: 40px;
+        bottom: 55px;
+        height: calc(100% - 95px);
+        background-color: #f8f8f8;
+        overflow-y: auto;
+      }
+    .mint-tab-item-label {
+      position: relative;
+      .mint-badge {
+        position: absolute;
+        top: -38px;
+        right: 35px;
+      }
+    }
+    .mint-tabbar {
+      position: fixed !important;
+    }
+  }
+</style>

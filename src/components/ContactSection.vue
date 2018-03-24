@@ -2,8 +2,7 @@
   <div class="contact-section" ref="contactSection">
     <mt-index-list :height="height">
       <mt-cell class="mt-20" :title="$t('msg.newFriends')" @click.native="toNewFriend">
-        <span slot="icon" class="new-friend-icon">
-            <img src="../assets/img/newFriends.png"/>
+        <span slot="icon" class="new-friend-icon cell-icon moments icon icon-user-plus">
         </span>
         <mt-badge size="small" color="red" v-show="unreadReqCount">
           {{ unreadReqCountFormat }}
@@ -55,14 +54,9 @@
       margin-right: 23px !important;
     }
     .new-friend-icon {
-      display: inline-block;
-      text-align: center;
-      line-height: 25px;
-      width: 30px;
-      height: 30px;
-      background-color: #58B7FF;
-      border-radius: 5px;
-      margin-right: 10px;
+      font-size: 24px;
+      vertical-align: middle;
+      color: #26a2ff;
     }
   }
 </style>

@@ -60,7 +60,8 @@ export default {
       male: '男',
       female: '女',
       whatUp: '签名',
-      realName: '姓名'
+      realName: '姓名',
+      regSuccess: '注册成功'
     }
   },
   en: {
@@ -124,7 +125,8 @@ export default {
       male: 'Male',
       female: 'Female',
       whatUp: 'What’s up',
-      realName: 'Real Name'
+      realName: 'Real Name',
+      regSuccess: 'Register success'
     }
   }
 }
