@@ -74,6 +74,7 @@
   .load-more {
     width: 100%;
     height: 100%;
+    background-color: #333;
     .mint-loadmore-top {
       background-color: #333333;
       color: #fff;
@@ -90,6 +91,7 @@
   .session-section {
     width: 100%;
     height: 100%;
+    background-color: #f8f8f8;
     .session-list {
       margin: 0;
       padding: 0;
