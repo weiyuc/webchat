@@ -115,12 +115,11 @@ function addMessage(state, message) {
   if (!session.messages.some(id => id === message.id)) {
     session.messages.push(message.id)
     session.lastMessage = message
+    if (!message.isRead) {
+      ++session.unreadMsgCount
+      ++state.unreadMsgCount
+    }
   }
-  if (!message.isRead) {
-    ++session.unreadMsgCount
-    ++state.unreadMsgCount
-  }
-
   if (!message.isMe && message.isRead) {
     apis.remarkHasRead(from)
   }

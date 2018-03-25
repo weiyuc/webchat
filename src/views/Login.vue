@@ -52,11 +52,10 @@
                 this.$store.dispatch('getContacts').then(
                   () => {
                     this.$store.dispatch('getUnReadMessages').then(
-                      () => {
-                        Indicator.close()
-                        this.$router.push({path: '/'})
-                      }
+                      //ignore
                     )
+                    Indicator.close()
+                    this.$router.push({path: '/'})
                   }
                 )
               })

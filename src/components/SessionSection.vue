@@ -3,23 +3,23 @@
     <div slot="top" class="mint-loadmore-top">
       <span v-show="topStatus === 'pull'">↓ 下拉刷新</span>
       <span v-show="topStatus === 'drop'">↑ 释放刷新</span>
-      <span v-show="topStatus === 'loading'">加载中...</span>
+      <span v-show="topStatus === 'loading'">{{loading}}</span>
     </div>
     <div class="session-section">
       <div class="lost-msg" v-show="lostConnect">
         <p>{{ $t('msg.lostConnect') }}</p>
       </div>
       <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
-        <ul class="session-list">
-          <session
-            v-for="session in sessions"
-            v-if="session.lastMessage"
-            :key="session.from"
-            :session="session"
-            :active="session.from === currentSession.from"
-            @switch-session="switchSession">
-          </session>
-        </ul>
+      <ul class="session-list">
+        <session
+                v-for="session in sessions"
+                v-if="session.lastMessage"
+                :key="session.from"
+                :session="session"
+                :active="session.from === currentSession.from"
+                @switch-session="switchSession">
+        </session>
+      </ul>
     </div>
   </mt-loadmore>
 </template>
@@ -31,7 +31,9 @@
     name: 'SessionSection',
     data() {
       return {
-        topStatus: ''
+        topStatus: '',
+        loading: '...',
+        cleanId: null
       }
     },
     components: {Session},
@@ -53,6 +55,20 @@
         return true
       }
     },
+    watch: {
+      topStatus(newVal) {
+        if (newVal === 'loading') {
+          this.loading = '...'
+          this.cleanId = setInterval(() => {
+            if (this.loading === '...') {
+              this.loading = '.'
+            } else {
+              this.loading += '.'
+            }
+          }, 200)
+        }
+      }
+    },
     methods: {
       switchSession (from) {
         this.$store.dispatch('switchSession', {from}).then(() => {
@@ -63,9 +79,27 @@
         this.topStatus = status
       },
       loadUnread() {
-        setTimeout(() => {
-          this.$refs.loadMore.onTopLoaded()
-        }, 1500)
+        const start = Date.now()
+        this.$store.dispatch('getUnReadMessages').then(
+          () => {
+            const costTime = Date.now() - start
+            if (costTime < 2000) {
+              setTimeout(() => {
+                clearInterval(this.cleanId)
+                this.loading = '加载成功'
+                setTimeout(() => {
+                  this.$refs.loadMore.onTopLoaded()
+                }, 500)
+              }, 2000 - costTime)
+              return
+            }
+            clearInterval(this.cleanId)
+            this.loading = '加载成功'
+            setTimeout(() => {
+              this.$refs.loadMore.onTopLoaded()
+            }, 500)
+          }
+        )
       }
     }
   }
@@ -76,7 +110,6 @@
     height: 100%;
     background-color: #333;
     .mint-loadmore-top {
-      background-color: #333333;
       color: #fff;
     }
     .mint-loadmore-content {
@@ -84,6 +117,7 @@
       height: 100%;
     }
   }
+
   .session-section {
     width: 100%;
     height: 100%;
@@ -106,6 +140,10 @@
     .no-message {
       padding-top: 20px;
       text-align: center;
+    }
+    @keyframes spin {
+      0%   { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
     }
   }
 </style>

@@ -1,22 +1,15 @@
 <template>
   <div class="wc-session" @click="$emit('switch-session', session.from)">
-    <mt-cell-swipe
+    <mt-cell
             :title="session.remark || session.from"
             :label="session.lastMessage.content"
-            :right="[
-              {
-                content: 'Delete',
-                style: { background: 'red', color: '#fff' },
-                handler: () => this.$messagebox('delete')
-              }
-            ]"
             >
       <img src="../assets/img/webchat.png" width="44" height="44"/>
-      <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
-      <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
-        {{ session.unreadMsgCount > 99 ? '99+' : session.unreadMsgCount}}
-      </mt-badge>
-    </mt-cell-swipe>
+    </mt-cell>
+    <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
+    <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
+      {{ session.unreadMsgCount > 99 ? '99+' : session.unreadMsgCount}}
+    </mt-badge>
   </div>
 </template>
 <script>
@@ -32,11 +25,11 @@
   .wc-session {
     position: relative;
     height: 60px;
-    .mint-cell-swipe {
+    .mint-cell {
       .mint-cell-value {
         position: absolute;
         left: 10px;
-        width: 100%;
+        top: 7px;
         img {
           border-radius: 5px;
         }
@@ -47,6 +40,7 @@
           position: absolute;
           left: 65px;
           height: 45px;
+          top: 8px;
           .mint-cell-text {
             font-size: 16px;
           }
@@ -59,14 +53,15 @@
     }
     .time {
       position: absolute;
-      right: 40px;
-      top: 5px;
+      right: 30px;
+      top: 10px;
       font-size: 14px;
+      color: #888;
     }
     .mint-badge {
       position: absolute;
-      top: 0px;
-      right: 20px;
+      top: 5px;
+      right: 8px;
     }
   }
 
