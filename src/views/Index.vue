@@ -105,6 +105,10 @@
         >.mint-tab-container-wrap {
           width: 100%;
           height: 100%;
+          >.mint-tab-container-item {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
