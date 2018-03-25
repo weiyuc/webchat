@@ -93,10 +93,11 @@
         height: 100%;
         overflow-y: auto;
       }
-      background: url("../assets/img/bg.png") no-repeat 100%;
+      background: url("../assets/img/bg.png") no-repeat;
+      background-size:100% 100%;
+      -moz-background-size:100% 100%;
     }
     .bottom-input {
-      border-top: 1px solid #ccc;
       width: 100%;
       position: fixed;
       bottom: 0;

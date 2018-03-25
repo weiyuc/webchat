@@ -30,7 +30,7 @@ html {
     }
 }
 
-.message-list, .session-list {
+.message-list {
     font-size: 16px;
     height: calc(100% - 89px);
     margin: 0;
@@ -38,40 +38,30 @@ html {
     padding: 0;
 }
 
-.message-session-heading,
-.session-count {
+.message-session-heading {
     height: 40px;
     margin: 0;
 }
 
-.message-list-item, .session-list-item {
+.message-list-item {
     list-style: none;
     padding: 12px 14px 14px;
 }
 
-.session-list-item {
-    border-bottom: 1px solid #ccc;
-    background-color: #fff;
-}
-
-.message-author-name,
-.session-name {
+.message-author-name {
     color: #66c;
     float: left;
     font-size: 13px;
     margin: 0;
 }
 
-.message-time, .session-time {
+.message-time {
     color: #aad;
     float: right;
     font-size: 12px;
 }
-.session-time {
-    margin-right: 20px;
-}
 
-.message-text, .session-last-message {
+.message-text {
     clear: both;
     font-size: 14px;
     padding-top: 10px;

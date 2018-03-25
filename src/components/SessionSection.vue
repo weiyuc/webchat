@@ -1,20 +1,27 @@
 <template>
-  <div class="session-section">
-    <div class="lost-msg" v-show="lostConnect">
-      <p>{{ $t('msg.lostConnect') }}</p>
+  <mt-loadmore class="load-more" :top-method="loadUnread" @top-status-change="handleTopChange" ref="loadMore">
+    <div slot="top" class="mint-loadmore-top">
+      <span v-show="topStatus === 'pull'">↓ 下拉刷新</span>
+      <span v-show="topStatus === 'drop'">↑ 释放刷新</span>
+      <span v-show="topStatus === 'loading'">加载中...</span>
     </div>
-    <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
-    <ul class="session-list">
-      <session
-        v-for="session in sessions"
-        v-if="session.lastMessage"
-        :key="session.from"
-        :session="session"
-        :active="session.from === currentSession.from"
-        @switch-session="switchSession">
-      </session>
-    </ul>
-  </div>
+    <div class="session-section">
+      <div class="lost-msg" v-show="lostConnect">
+        <p>{{ $t('msg.lostConnect') }}</p>
+      </div>
+      <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
+        <ul class="session-list">
+          <session
+            v-for="session in sessions"
+            v-if="session.lastMessage"
+            :key="session.from"
+            :session="session"
+            :active="session.from === currentSession.from"
+            @switch-session="switchSession">
+          </session>
+        </ul>
+    </div>
+  </mt-loadmore>
 </template>
 <script>
   import Session from './Session.vue'
@@ -24,7 +31,7 @@
     name: 'SessionSection',
     data() {
       return {
-        searchValue: ''
+        topStatus: ''
       }
     },
     components: {Session},
@@ -51,12 +58,34 @@
         this.$store.dispatch('switchSession', {from}).then(() => {
           this.$router.push({path: '/messageSection'})
         })
+      },
+      handleTopChange(status) {
+        this.topStatus = status
+      },
+      loadUnread() {
+        setTimeout(() => {
+          this.$refs.loadMore.onTopLoaded()
+        }, 1500)
       }
     }
   }
 </script>
 <style lang="scss">
+  .load-more {
+    width: 100%;
+    height: 100%;
+    .mint-loadmore-top {
+      background-color: #333333;
+      color: #fff;
+    }
+  }
   .session-section {
+    width: 100%;
+    height: 100%;
+    .session-list {
+      margin: 0;
+      padding: 0;
+    }
     .lost-msg {
       width: 100%;
       height: 30px;
