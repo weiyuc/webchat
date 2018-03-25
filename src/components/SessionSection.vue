@@ -78,6 +78,10 @@
       background-color: #333333;
       color: #fff;
     }
+    .mint-loadmore-content {
+      width: 100%;
+      height: 100%;
+    }
   }
   .session-section {
     width: 100%;
