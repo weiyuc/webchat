@@ -61,7 +61,11 @@ export default {
       female: '女',
       whatUp: '签名',
       realName: '姓名',
-      regSuccess: '注册成功'
+      regSuccess: '注册成功',
+      pullRefresh: '下拉刷新',
+      releaseRefresh: '释放刷新',
+      loading: '加载中...',
+      loadSuccess: '加载成功'
     }
   },
   en: {
@@ -126,7 +130,11 @@ export default {
       female: 'Female',
       whatUp: 'What’s up',
       realName: 'Real Name',
-      regSuccess: 'Register success'
+      regSuccess: 'Register success',
+      pullRefresh: 'Pull-down refresh',
+      releaseRefresh: 'Release refresh',
+      loading: 'loading...',
+      loadSuccess: 'Load success'
     }
   }
 }

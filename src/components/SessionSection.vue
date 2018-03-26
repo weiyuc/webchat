@@ -1,10 +1,6 @@
 <template>
   <mt-loadmore class="load-more" :top-method="loadUnread" @top-status-change="handleTopChange" ref="loadMore">
-    <div slot="top" class="mint-loadmore-top">
-      <span v-show="topStatus === 'pull'">↓ 下拉刷新</span>
-      <span v-show="topStatus === 'drop'">↑ 释放刷新</span>
-      <span v-show="topStatus === 'loading'">{{loading}}</span>
-    </div>
+    <wc-load-more-top slot="top" :topStatus="topStatus"></wc-load-more-top>
     <div class="session-section">
       <div class="lost-msg" v-show="lostConnect">
         <p>{{ $t('msg.lostConnect') }}</p>
@@ -26,17 +22,16 @@
 <script>
   import Session from './Session.vue'
   import {mapGetters} from 'vuex'
+  import WcLoadMoreTop from "./LoadMoreTop";
 
   export default {
     name: 'SessionSection',
     data() {
       return {
-        topStatus: '',
-        loading: '...',
-        cleanId: null
+        topStatus: ''
       }
     },
-    components: {Session},
+    components: {WcLoadMoreTop, Session},
     computed: {
       ...mapGetters([
         'sessions',
@@ -55,20 +50,6 @@
         return true
       }
     },
-    watch: {
-      topStatus(newVal) {
-        if (newVal === 'loading') {
-          this.loading = '...'
-          this.cleanId = setInterval(() => {
-            if (this.loading === '...') {
-              this.loading = '.'
-            } else {
-              this.loading += '.'
-            }
-          }, 200)
-        }
-      }
-    },
     methods: {
       switchSession (from) {
         this.$store.dispatch('switchSession', {from}).then(() => {
@@ -85,18 +66,16 @@
             const costTime = Date.now() - start
             if (costTime < 2000) {
               setTimeout(() => {
-                clearInterval(this.cleanId)
-                this.loading = '加载成功'
+                this.topStatus = 'loaded'
                 setTimeout(() => {
-                  this.$refs.loadMore.onTopLoaded()
+                  this.$refs['loadMore'].onTopLoaded()
                 }, 500)
               }, 2000 - costTime)
               return
             }
-            clearInterval(this.cleanId)
-            this.loading = '加载成功'
+            this.topStatus = 'loaded'
             setTimeout(() => {
-              this.$refs.loadMore.onTopLoaded()
+              this.$refs['loadMore'].onTopLoaded()
             }, 500)
           }
         )
