@@ -3,7 +3,7 @@
     <span v-show="topStatus === 'pull'">↓ {{ $t('msg.pullRefresh') }}</span>
     <span v-show="topStatus === 'drop'">↑ {{ $t('msg.releaseRefresh') }}</span>
     <span v-show="topStatus === 'loading'">
-      <em style="margin-right: 5px">
+      <em style="margin-right: 2px">
         <svg width="15" height="15" viewBox="0 0 57 57" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
           <g fill="none" fill-rule="evenodd">
             <g transform="translate(1 1)" stroke-width="2">
@@ -53,7 +53,7 @@
       {{ $t('msg.loading') }}
     </span>
     <span v-show="topStatus === 'loaded'">
-      <i class="icon icon-checkmark" style="color: #fff"></i> {{ $t('msg.loadSuccess') }}
+      <i class="icon icon-checkmark" style="color: #fff;font-size: 12px"></i>{{ $t('msg.loadSuccess') }}
     </span>
   </div>
 </template>
