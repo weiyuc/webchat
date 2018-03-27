@@ -195,7 +195,7 @@ let api = {
         cb(res.responseData)
       },
       () => {
-        cb(false)
+        cb(-1)
       }
     )
   },
