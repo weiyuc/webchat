@@ -55,7 +55,7 @@ export const getUnReadMessages = ({commit}) => {
       if (messages === -1) {
         resolve(false)
       } else {
-        if (messages.length > 0) {
+        if (messages && messages.length > 0) {
           commit(types.RECEIVE_ALL, {messages})
         }
         resolve(true)
