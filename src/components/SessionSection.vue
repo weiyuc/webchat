@@ -101,6 +101,7 @@
     width: 100%;
     height: 100%;
     background-color: #f8f8f8;
+    overflow: auto;
     .session-list {
       margin: 0;
       padding: 0;

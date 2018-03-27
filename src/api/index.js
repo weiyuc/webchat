@@ -95,7 +95,7 @@ let api = {
   errorCallback() {
     store.commit(mutationTypes.LOST_CONNECT, true)
     setTimeout(() => {
-      store.dispatch('subscribe',
+      store.dispatch('subscribe_msg',
         {
           accessToken: store.getters.token,
           username: store.getters.username
