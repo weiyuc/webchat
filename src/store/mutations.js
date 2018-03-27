@@ -21,35 +21,65 @@ export default {
       addMessage(state, message)
     })
   },
-
   [types.RECEIVE_MESSAGE] (state, {message}) {
     if (!state.sessions[message.from]) {
       createSession(state, message.from)
     }
     addMessage(state, message)
   },
-
   [types.GET_CONTACTS] (state, contacts) {
     state.contacts = contacts
   },
-
   [types.SWITCH_SESSION] (state, {from, remark}) {
     setCurrentSession(state, from, remark)
   },
-
   [types.CLEAR_SESSION] (state) {
     state.currentFrom = null
   },
-
   [types.LOGIN] (state, userToken) {
     login(state, userToken)
   },
-
   [types.LOGOUT] (state) {
     logout(state)
   },
   [types.SET_CONNECTED] (state, connected) {
     state.connected = connected
+  },
+  [types.SET_GENDER] (state, {gender}) {
+    state.gender = gender
+    try {
+      if (gender === null) {
+        localStorage.removeItem('gender')
+      } else {
+        localStorage.gender = gender
+      }
+    } catch (e) {
+      alertTips()
+    }
+  },
+  [types.SET_REAL_NAME] (state, {realName}) {
+    state.realName = realName
+    try {
+      localStorage.realName = realName
+    } catch (e) {
+      alertTips()
+    }
+  },
+  [types.SET_WHAT_UP] (state, {whatUp}) {
+    state.whatUp = whatUp
+    try {
+      localStorage.whatUp = whatUp
+    } catch (e) {
+      alertTips()
+    }
+  },
+  [types.SET_PHONE_NUMBER] (state, {phoneNumber}) {
+    state.phoneNumber = phoneNumber
+    try {
+      localStorage.phoneNumber = phoneNumber
+    } catch (e) {
+      alertTips()
+    }
   },
   [types.SET_MASK] (state, {group, index, remark}) {
     state.contacts[group][index].remark = remark
@@ -149,12 +179,28 @@ function login(state, userToken) {
   state.username = userToken.username
   state.token = userToken.accessToken
   state.expiredTime = userToken.expiredTime
+  state.gender = userToken.gender
+  state.whatUp = userToken.whatUp || ''
+  state.realName = userToken.realName || ''
+  state.phoneNumber = userToken.phoneNumber || ''
   try {
     localStorage.token = userToken.accessToken
     localStorage.username = userToken.username
     localStorage.expiredTime = userToken.expiredTime
+    if (userToken.gender !== null) {
+      localStorage.gender = userToken.gender
+    }
+    if (userToken.whatUp) {
+      localStorage.whatUp = userToken.whatUp
+    }
+    if (userToken.realName) {
+      localStorage.realName = userToken.realName
+    }
+    if (userToken.phoneNumber) {
+      localStorage.phoneNumber = userToken.phoneNumber
+    }
   } catch (e) {
-    alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
+    alertTips()
   }
 }
 
@@ -162,11 +208,23 @@ function logout(state) {
   state.token = ''
   state.username = ''
   state.expiredTime = 0
+  state.gender = null
+  state.whatUp = ''
+  state.realName = ''
+  state.phoneNumber = ''
   try {
     localStorage.removeItem('username')
     localStorage.removeItem('token')
     localStorage.removeItem('expiredTime')
+    localStorage.removeItem('gender')
+    localStorage.removeItem('whatUp')
+    localStorage.removeItem('realName')
+    localStorage.removeItem('phoneNumber')
   } catch (e) {
-    alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
+    alertTips()
   }
+}
+
+function alertTips() {
+  alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
 }

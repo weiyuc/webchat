@@ -68,7 +68,7 @@
         }
         MessageBox.close()
         this.$nextTick(() => {
-          MessageBox.prompt(this.$t('msg.remarkMsg'), config).then(
+          MessageBox.prompt(this.$t('msg.remark'), config).then(
             ({ value }) => {
               let remark = value
               let friendName = contacts.friendName

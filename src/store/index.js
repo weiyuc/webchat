@@ -14,9 +14,15 @@ const state = {
   unreadReqCount: 0,
   contacts: {},
   requestContacts: [],
+
   username: localStorage.username || '',
   token: localStorage.token || '',
+  gender: localStorage.gender || null,
+  whatUp: localStorage.whatUp || '',
+  realName: localStorage.realName || '',
+  phoneNumber: localStorage.phoneNumber || '',
   expiredTime: localStorage.expiredTime || 0,
+
   connected: false,
   active: 'message',
   lostConnect: false

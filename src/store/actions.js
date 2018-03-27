@@ -43,6 +43,30 @@ export const setRemark = ({commit}, payload) => {
   })
 }
 
+export const setRealName = ({commit}, payload) => {
+  api.setRealName(payload, (res) => {
+    if (res) {
+      commit(types.SET_REAL_NAME, payload)
+    }
+  })
+}
+
+export const setGender = ({commit}, payload) => {
+  api.setGender(payload, (res) => {
+    if (res) {
+      commit(types.SET_GENDER, payload)
+    }
+  })
+}
+
+export const setWhatUp = ({commit}, payload) => {
+  api.setWhatUp(payload, (res) => {
+    if (res) {
+      commit(types.SET_WHAT_UP, payload)
+    }
+  })
+}
+
 export const getUnreadFriendReq = ({commit}) => {
   api.getUnreadFriendReq((data) => {
     commit(types.ADD_REQ_CONTACT, data)

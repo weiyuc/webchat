@@ -29,6 +29,14 @@ export const expiredTime = state => state.expiredTime
 
 export const username = state => state.username
 
+export const gender = state => state.gender === null ? null : parseInt(state.gender)
+
+export const whatUp = state => state.whatUp
+
+export const realName = state => state.realName
+
+export const phoneNumber = state => state.phoneNumber
+
 export const connected = state => state.connected
 
 export const lostConnect = state => state.lostConnect

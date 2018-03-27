@@ -189,6 +189,36 @@ let api = {
       }
     )
   },
+  setRealName({realName}, cb) {
+    axios.post('/apis/user/setRealName', {realName}).then(
+      () => {
+        cb(true)
+      },
+      () => {
+        cb(false)
+      }
+    )
+  },
+  setGender({gender}, cb) {
+    axios.post('/apis/user/setGender', {gender}).then(
+      () => {
+        cb(true)
+      },
+      () => {
+        cb(false)
+      }
+    )
+  },
+  setWhatUp({whatUp}, cb) {
+    axios.post('/apis/user/setWhatUp', {whatUp}).then(
+      () => {
+        cb(true)
+      },
+      () => {
+        cb(false)
+      }
+    )
+  },
   getUnReadMessages(cb) {
     axios.get('/apis/message/getUnReadMessages').then(
       (res) => {
