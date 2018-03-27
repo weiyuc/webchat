@@ -48,37 +48,15 @@
           Indicator.open()
           this.$store.dispatch('login', {username, password}).then(
             (res) => {
-              this.$store.dispatch('subscribe', res).then(() => {
-                this.$store.dispatch('getContacts').then(
-                  () => {
-                    this.$store.dispatch('getUnReadMessages').then(
-                      //ignore
-                    )
-                    Indicator.close()
-                    this.$router.push({path: '/'})
-                  }
-                )
+              this.$store.dispatch('subscribe_msg', res).then(() => {
+                Indicator.close()
+                this.$store.dispatch('getContacts')
+                this.$store.dispatch('getUnReadMessages')
+                this.$router.push({path: '/'})
               })
             },
             () => {
               Indicator.close()
-              //ignore
-            }
-          )
-        }
-      },
-      reg() {
-        if (this.doCheck()) {
-          let username = this.form.username
-          let password = this.form.password
-          Indicator.open()
-          api.register({username, password}).then(
-            () => {
-              Indicator.close()
-              Toast('注册成功')
-            },
-            () => {
-              //Do nothing
             }
           )
         }

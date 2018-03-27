@@ -14,7 +14,7 @@ export const login = ({commit}, payload) => {
   })
 }
 
-export const subscribe = ({commit}, payload) => {
+export const subscribe_msg = ({commit}, payload) => {
   return new Promise((resolve, reject) => {
     api.subscribe(payload, (connected) => {
       if (connected) {
@@ -52,10 +52,13 @@ export const getUnreadFriendReq = ({commit}) => {
 export const getUnReadMessages = ({commit}) => {
   return new Promise((resolve) => {
     api.getUnReadMessages(messages => {
+      if (!messages) {
+        resolve(false)
+      }
       if (messages && messages.length > 0) {
         commit(types.RECEIVE_ALL, {messages})
       }
-      resolve()
+      resolve(true)
     })
   })
 }

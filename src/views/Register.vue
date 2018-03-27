@@ -69,9 +69,6 @@
                 this.showSuccess = false
                 this.$router.push({path: '/login'})
               }, 1500)
-            },
-            () => {
-              //Do nothing
             }
           )
         }

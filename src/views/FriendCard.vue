@@ -76,9 +76,7 @@
               let index = this.index
               this.$store.dispatch('setRemark', {
                 remark, friendName, group, index
-              }).then(
-                //Do nothing
-              )
+              })
             },
             () => {
               //Do nothing
@@ -98,7 +96,6 @@
         }
       },
       deleteFriend() {
-
         if (this.contacts && this.contacts[this.group]) {
           let contacts = this.contacts[this.group][this.index]
 
@@ -112,20 +109,20 @@
             this.$t('msg.tips'),
             config).then(() => {
             Indicator.open()
-            this.$nextTick(() => {
-              this.$store.dispatch('dealFriendReq', {friendName: contacts.friendName, status: 4}).then(
-                () => {
-                  Indicator.close()
-                  this.$nextTick(() => {
-                    this.$store.dispatch('getContacts').then(
-                      () => {
-                        this.back()
-                      }
-                    )
-                  })
-                }
-              )
-            })
+            this.$store.dispatch('dealFriendReq',
+              {
+                friendName: contacts.friendName,
+                status: 4
+              }
+            ).then(
+              () => {
+                Indicator.close()
+                this.$nextTick(() => {
+                  this.$store.dispatch('getContacts')
+                  this.back()
+                })
+              }
+            )
           }).catch(
             () => {
               //ignore

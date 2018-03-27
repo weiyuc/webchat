@@ -62,18 +62,18 @@
       loadUnread() {
         const start = Date.now()
         this.$store.dispatch('getUnReadMessages').then(
-          () => {
+          (res) => {
             const costTime = Date.now() - start
             if (costTime < 2000) {
               setTimeout(() => {
-                this.topStatus = 'loaded'
+                this.topStatus = res ? 'loaded' : 'loadErr'
                 setTimeout(() => {
                   this.$refs['loadMore'].onTopLoaded()
                 }, 500)
               }, 2000 - costTime)
               return
             }
-            this.topStatus = 'loaded'
+            this.topStatus = res ? 'loaded' : 'loadErr'
             setTimeout(() => {
               this.$refs['loadMore'].onTopLoaded()
             }, 500)

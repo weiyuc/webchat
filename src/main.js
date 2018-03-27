@@ -58,13 +58,8 @@ Vue.filter('time', timestamp => {
 Vue.config.productionTip = false
 
 if (store.getters.isLogin) {
-  store.dispatch('getContacts').then(
-    () => {
-      store.dispatch('getUnReadMessages').then(
-        //do nothing
-      )
-    }
-  )
+  store.dispatch('getContacts')
+  store.dispatch('getUnReadMessages')
 }
 
 new Vue({

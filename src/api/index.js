@@ -6,6 +6,7 @@ import { MessageBox, Toast } from 'mint-ui'
 import store from '../store'
 import axios from 'axios'
 import i18n from '../i18n'
+import {uuidv4} from '../utils'
 
 const debug = true
 
@@ -94,16 +95,16 @@ let api = {
   errorCallback() {
     store.commit(mutationTypes.LOST_CONNECT, true)
     setTimeout(() => {
-      store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username}).then(
+      store.dispatch('subscribe',
+        {
+          accessToken: store.getters.token,
+          username: store.getters.username
+        }
+      ).then(
         () => {
           store.commit(mutationTypes.LOST_CONNECT, false)
-          store.dispatch('getContacts').then(
-            () => {
-              store.dispatch('getUnReadMessages').then(
-                //do nothing
-              )
-            }
-          )
+          store.dispatch('getContacts')
+          store.dispatch('getUnReadMessages')
         }).catch(() => {
           //ignore
         }
@@ -126,31 +127,11 @@ let api = {
         return
         break
       case messageType.SMS:
-        store.dispatch('onMessage', {message}).then(
-          //ignore
-        )
+        store.dispatch('onMessage', {message})
         return
         break
       case messageType.PUSH_OUT:
-        const vm = this
-        MessageBox.close()
-        let config = {
-          confirmButtonText: i18n.t('msg.confirm'),
-          cancelButtonText: i18n.t('msg.cancel')
-        }
-        MessageBox.alert(
-          i18n.t('msg.accountLoginOthPlace'),
-          i18n.t('msg.tips'),
-          config
-        ).then(
-          () => {
-            store.commit(mutationTypes.LOGOUT)
-            if (vm.webSocket) {
-              vm.webSocket.unsubscribe()
-            }
-            window.location.reload()
-          }
-        )
+        this.onPushOut()
         return
         break
       case messageType.DEAL_ADD_FRIEND_REQ:
@@ -164,6 +145,26 @@ let api = {
         new Error('Unknow message type')
         break
     }
+  },
+  onPushOut() {
+    store.commit(mutationTypes.LOGOUT)
+    if (this.webSocket) {
+      this.webSocket.unsubscribe()
+    }
+    MessageBox.close()
+    let config = {
+      confirmButtonText: i18n.t('msg.confirm'),
+      cancelButtonText: i18n.t('msg.cancel')
+    }
+    MessageBox.alert(
+      i18n.t('msg.accountLoginOthPlace'),
+      i18n.t('msg.tips'),
+      config
+    ).then(
+      () => {
+        window.location.reload()
+      }
+    )
   },
   onAddFriendMsg(message) {
     store.commit(mutationTypes.ADD_REQ_CONTACT, message.from)
@@ -200,7 +201,7 @@ let api = {
   },
   createMessage ({content, session}, cb) {
     const message = {
-      id: 'm_' + this.uuidv4(),
+      id: 'm_' + uuidv4(),
       from: store.getters.username,
       isMe: true,
       to: session.from,
@@ -212,15 +213,10 @@ let api = {
     this.webSocket.send('/notify', {}, JSON.stringify(message))
     cb(message)
   },
-  uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    })
-  },
   remarkHasRead(friendName) {
     let username = store.getters.username
-    this.webSocket.send('/notify', {}, JSON.stringify({from: friendName, to: username, messageType: messageType.HAS_READ}))
+    let param = {from: friendName, to: username, messageType: messageType.HAS_READ}
+    this.webSocket.send('/notify', {}, JSON.stringify(param))
   }
 }
 

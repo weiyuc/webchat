@@ -65,7 +65,8 @@ export default {
       pullRefresh: '下拉刷新',
       releaseRefresh: '释放刷新',
       loading: '加载中...',
-      loadSuccess: '加载成功'
+      loadSuccess: '加载成功',
+      loadFail: '加载失败'
     }
   },
   en: {
@@ -134,7 +135,8 @@ export default {
       pullRefresh: 'Pull-down refresh',
       releaseRefresh: 'Release refresh',
       loading: 'loading...',
-      loadSuccess: 'Load success'
+      loadSuccess: 'Load success',
+      loadFail: 'Load fail'
     }
   }
 }

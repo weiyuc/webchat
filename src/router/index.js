@@ -74,14 +74,32 @@ router.beforeEach((to, from, next) => {
       return next({path: '/login'})
     } else {
       if (!store.getters.connected) {
-        store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username})
+        store.dispatch('subscribe_msg',
+          {
+            accessToken: store.getters.token,
+            username: store.getters.username
+          }
+        ).catch(
+          () => {
+            //ignore
+          }
+        )
       }
       return next()
     }
   } else {
     if (store.getters.token && store.getters.expiredTime > Date.now()) {
       if (!store.getters.connected) {
-        store.dispatch('subscribe', {accessToken: store.getters.token, username: store.getters.username})
+        store.dispatch('subscribe_msg',
+          {
+            accessToken: store.getters.token,
+            username: store.getters.username
+          }
+        ).catch(
+          () => {
+            //ignore
+          }
+        )
       }
       return next({path: '/'})
     }

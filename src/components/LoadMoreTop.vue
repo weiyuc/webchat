@@ -55,6 +55,7 @@
     <span v-show="topStatus === 'loaded'">
       <i class="icon icon-checkmark" style="color: #fff;font-size: 12px"></i>{{ $t('msg.loadSuccess') }}
     </span>
+    <span v-show="topStatus === 'loadErr'"><i class="icon icon-cross"></i> {{ $t('msg.loadFail') }}</span>
   </div>
 </template>
 <script>

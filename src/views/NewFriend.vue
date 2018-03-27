@@ -37,14 +37,11 @@
         this.$router.push({path: '/search'})
       },
       dealReq(friendName, status) {
-
         this.$store.dispatch('dealFriendReq', {friendName, status}).then(
           () => {
             if (status === 2) {
               Toast(this.$t('msg.addSuccess'))
-              this.$store.dispatch('getContacts').then(
-                //Do nothing
-              )
+              this.$store.dispatch('getContacts')
             } else {
               Toast(this.$t('msg.hasRefused'))
             }
