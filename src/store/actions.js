@@ -53,12 +53,13 @@ export const getUnReadMessages = ({commit}) => {
   return new Promise((resolve) => {
     api.getUnReadMessages(res => {
       if (res === -1) {
-        return resolve(false)
+        resolve(false)
+      } else {
+        if (res.length > 0) {
+          commit(types.RECEIVE_ALL, {messages: res})
+        }
+        resolve(true)
       }
-      if (res.length > 0) {
-        commit(types.RECEIVE_ALL, {messages: res})
-      }
-      return resolve(true)
     })
   })
 }
