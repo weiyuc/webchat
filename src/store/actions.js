@@ -51,12 +51,12 @@ export const getUnreadFriendReq = ({commit}) => {
 
 export const getUnReadMessages = ({commit}) => {
   return new Promise((resolve) => {
-    api.getUnReadMessages(res => {
-      if (res === -1) {
+    api.getUnReadMessages(messages => {
+      if (messages === -1) {
         resolve(false)
       } else {
-        if (res.length > 0) {
-          commit(types.RECEIVE_ALL, {messages: res})
+        if (messages.length > 0) {
+          commit(types.RECEIVE_ALL, {messages})
         }
         resolve(true)
       }
