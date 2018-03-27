@@ -122,7 +122,9 @@
         this.popupVisible = true
       },
       onValuesChange(picker, values) {
-        this.checkIndex = picker.slots[0].values.indexOf(values[0])
+        if (picker.slots.length > 0) {
+          this.checkIndex = picker.slots[0].values.indexOf(values[0])
+        }
       },
       setWhatUp() {
         let config = {
