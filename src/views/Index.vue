@@ -4,7 +4,7 @@
     <div class="content" ref="content">
       <mt-tab-container v-model="active">
         <mt-tab-container-item id="message">
-          <session-section></session-section>
+          <session-section :height="height"></session-section>
         </mt-tab-container-item>
         <mt-tab-container-item id="contact">
           <contact-section :height="height"></contact-section>
@@ -83,7 +83,7 @@
       }
     },
     mounted() {
-      this.height = this.$refs.content.clientHeight
+      this.height = document.body.clientHeight - 95
     }
   }
 </script>
@@ -93,12 +93,9 @@
     height: 100%;
     > .content {
       width: 100%;
-      position: fixed;
-      top: 40px;
-      bottom: 55px;
+      padding-top: 40px;
       height: calc(100% - 95px);
       background-color: #f8f8f8;
-      overflow-y: auto;
       >.mint-tab-container {
         width: 100%;
         height: 100%;
@@ -108,6 +105,7 @@
           >.mint-tab-container-item {
             width: 100%;
             height: 100%;
+            overflow: auto;
           }
         }
       }

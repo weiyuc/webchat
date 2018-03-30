@@ -47,12 +47,6 @@
 </script>
 <style lang="scss">
   .contact-section {
-    .mint-indexlist-nav {
-      width: 22px !important;
-    }
-    .mint-indexlist-content {
-      margin-right: 23px !important;
-    }
     .new-friend-icon {
       font-size: 24px;
       vertical-align: middle;

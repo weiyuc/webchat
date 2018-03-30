@@ -1,12 +1,12 @@
 <template>
-  <mt-loadmore class="load-more" :top-method="loadUnread" @top-status-change="handleTopChange" ref="loadMore">
-    <wc-load-more-top slot="top" :topStatus="topStatus"></wc-load-more-top>
-    <div class="session-section">
-      <div class="lost-msg" v-show="lostConnect">
-        <p>{{ $t('msg.lostConnect') }}</p>
-      </div>
-      <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
-      <ul class="session-list">
+  <div class="message-section" :style="{'height': height + 'px'}">
+    <mt-loadmore class="load-more" :top-method="loadUnread" @top-status-change="handleTopChange" ref="loadMore">
+      <wc-load-more-top slot="top" :topStatus="topStatus"></wc-load-more-top>
+      <ul class="session-list" :style="{'min-height': height + 'px'}">
+        <div class="lost-msg" v-show="lostConnect">
+          <p>{{ $t('msg.lostConnect') }}</p>
+        </div>
+        <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
         <session
                 v-for="session in sessions"
                 v-if="session.lastMessage"
@@ -16,8 +16,8 @@
                 @switch-session="switchSession">
         </session>
       </ul>
-    </div>
-  </mt-loadmore>
+    </mt-loadmore>
+  </div>
 </template>
 <script>
   import Session from './Session.vue'
@@ -29,6 +29,12 @@
     data() {
       return {
         topStatus: ''
+      }
+    },
+    props: {
+      height: {
+        type: Number,
+        default: 0
       }
     },
     components: {WcLoadMoreTop, Session},
@@ -84,46 +90,42 @@
   }
 </script>
 <style lang="scss">
-  .load-more {
+  .message-section {
     width: 100%;
-    height: 100%;
-    background-color: #333;
-    .mint-loadmore-top {
-      color: #fff;
-    }
-    .mint-loadmore-content {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .session-section {
-    width: 100%;
-    height: 100%;
-    background-color: #f8f8f8;
-    overflow: auto;
-    .session-list {
-      margin: 0;
-      padding: 0;
-    }
-    .lost-msg {
-      width: 100%;
-      height: 30px;
-      background-color: #fdf6ec;
-      color: #e6a23c;
-      > p {
+    overflow-y: auto;
+    .load-more {
+      background-color: #000;
+      .mint-loadmore-top {
+        color: #fff;
+        background-color: #000;
+      }
+      .mint-loadmore-content {
+        background-color: #f8f8f8;
+      }
+      .session-list {
         margin: 0;
-        padding: 5px 0;
+        padding: 0;
+      }
+      .lost-msg {
+        width: 100%;
+        height: 30px;
+        background-color: #fdf6ec;
+        color: #e6a23c;
+        > p {
+          margin: 0;
+          padding: 5px 0;
+          text-align: center;
+        }
+      }
+      .no-message {
+        height: 40px;
+        padding-top: 20px;
         text-align: center;
       }
-    }
-    .no-message {
-      padding-top: 20px;
-      text-align: center;
-    }
-    @keyframes spin {
-      0%   { transform: rotate(360deg); }
-      100% { transform: rotate(0deg); }
+      @keyframes spin {
+        0%   { transform: rotate(360deg); }
+        100% { transform: rotate(0deg); }
+      }
     }
   }
 </style>
