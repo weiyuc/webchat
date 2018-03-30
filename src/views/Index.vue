@@ -82,8 +82,8 @@
         }
       }
     },
-    mounted() {
-      this.height = document.body.clientHeight - 95
+    created() {
+      this.height = document.documentElement.clientHeight  - 95
     }
   }
 </script>
