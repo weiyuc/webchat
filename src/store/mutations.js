@@ -125,6 +125,15 @@ export default {
   [types.SET_MESSAGE_SENT] (state, id) {
     state.messages[id].sent = true
   },
+  [types.SET_MESSAGE_TIMEOUT] (state, {id, timeout, timestamp}) {
+    state.messages[id].timeout = timeout
+    if (timestamp) {
+      state.messages[id].timestamp = timestamp
+    }
+  },
+  [types.REMOVE_UNSENT_MESSAGE] (state, id) {
+    state.unSendMsg.splice(id, 1)
+  },
   setActive(state, active) {
     state.active = active
   }

@@ -115,6 +115,10 @@ export const sendMessage = ({commit}, payload) => {
   })
 }
 
+export const resend = ({}, payload) => {
+  api.resend(payload)
+}
+
 export const switchSession = ({commit}, payload) => {
   commit(types.SWITCH_SESSION, payload)
 }

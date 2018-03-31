@@ -98,6 +98,8 @@ let api = {
       return
     }
     store.commit(mutationTypes.LOST_CONNECT, true)
+    store.commit(mutationTypes.SET_CONNECTED, false)
+    this.checkUnsentMsgTimeout()
     setTimeout(() => {
       store.dispatch('subscribe_msg',
         {
@@ -152,9 +154,7 @@ let api = {
   },
   onPushOut() {
     store.commit(mutationTypes.LOGOUT)
-    if (this.webSocket) {
-      this.webSocket.unsubscribe()
-    }
+    this.disconnect()
     MessageBox.close()
     let config = {
       confirmButtonText: i18n.t('msg.confirm'),
@@ -243,7 +243,8 @@ let api = {
       remark: session.remark,
       timestamp: Date.now(),
       messageType: messageType.SMS,
-      sent: false
+      sent: false,
+      timeout: false
     }
     if (!store.getters.lostConnect) {
       this.webSocket.send('/notify', {}, JSON.stringify(message))
@@ -252,6 +253,15 @@ let api = {
       store.commit(mutationTypes.ADD_UN_SEND_MSG, message)
     }
     cb(message)
+  },
+  resend(message) {
+    store.commit(mutationTypes.SET_MESSAGE_TIMEOUT, {id: message.id, timeout: false, timestamp: Date.now()})
+    if (!store.getters.lostConnect) {
+      this.webSocket.send('/notify', {}, JSON.stringify(message))
+      message.sent = true
+    } else {
+      store.commit(mutationTypes.ADD_UN_SEND_MSG, message)
+    }
   },
   remarkHasRead(friendName) {
     let username = store.getters.username
@@ -264,16 +274,30 @@ let api = {
       for (let i = messages.length - 1; i >= 0; i--) {
         let message = messages[i]
         if (Date.now() - message.timestamp > 60000) {
-          messages.splice(i, 1)
+          store.commit(mutationTypes.SET_MESSAGE_TIMEOUT, {id: message.id, timeout: true})
+          store.commit(mutationTypes.REMOVE_UNSENT_MESSAGE, i)
           continue
         }
-        if (!store.getters.lostConnect) {
+        if (store.getters.connected) {
           this.webSocket.send('/notify', {}, JSON.stringify(message))
           store.commit(mutationTypes.SET_MESSAGE_SENT, message.id)
-          messages.splice(i, 1)
+          store.commit(mutationTypes.REMOVE_UNSENT_MESSAGE, i)
           continue
         }
         break
+      }
+    }
+  },
+  checkUnsentMsgTimeout() {
+    let messages = store.getters.unSendMsg
+    if (messages.length > 0) {
+      for (let i = messages.length - 1; i >= 0; i--) {
+        let message = messages[i]
+        if (Date.now() - message.timestamp > 60000) {
+          store.commit(mutationTypes.SET_MESSAGE_TIMEOUT, {id: message.id, timeout: true})
+          store.commit(mutationTypes.REMOVE_UNSENT_MESSAGE, i)
+          continue
+        }
       }
     }
   }

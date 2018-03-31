@@ -1,9 +1,13 @@
 <template>
   <li class="message-list-item">
     <div :class="'message-text ' + (message.isMe ? 'text-right' : 'text-left')">
-      <img v-show="message.isMe && !message.sent" class="loading" src="../assets/img/loading.svg"/>
+      <svg v-show="loading" class="loading" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+        <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z" transform="rotate(325.811 25 25)">
+          <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform>
+        </path>
+      </svg>
+      <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
       {{ message.content }}
-
     </div>
     <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" src="../assets/img/webchat.png"/>
   </li>
@@ -12,44 +16,26 @@
 <script>
   export default {
     name: 'Message',
+    computed: {
+      loading() {
+        return this.message.isMe && !this.message.sent && !this.message.timeout
+      },
+      isTimeout() {
+        return this.message.isMe && this.message.timeout
+      }
+    },
     props: {
       message: Object
+    },
+    methods: {
+      resend() {
+        this.$store.dispatch('resend', this.message)
+      }
     }
   }
 </script>
 
 <style lang="scss">
-  @keyframes load {
-    0% {
-      transform: rotate(0deg);
-      -ms-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-      -moz-transform: rotate(90deg);
-      -webkit-transform: rotate(90deg);
-      -o-transform: rotate(90deg);
-    }
-    50% {
-      transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      -moz-transform: rotate(180deg);
-      -webkit-transform: rotate(180deg);
-      -o-transform: rotate(180deg);
-    }
-    100% {
-      transform: rotate(360deg);
-      -ms-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-    }
-  }
-
   .message-list-item {
     position: relative;
     margin-top: 20px;
@@ -119,11 +105,7 @@
       top: calc(50% - 8px);
       width: 16px;
       height: 16px;
-      left: -20px;
-      animation: load 1s;
-      -moz-animation: load 1s;
-      -webkit-animation: load 1s;
-      -o-animation: load 1s;
+      left: -25px;
     }
   }
 

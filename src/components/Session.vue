@@ -25,6 +25,7 @@
   .wc-session {
     position: relative;
     height: 60px;
+    border-bottom: 1px solid #f8f8f8;
     .mint-cell {
       .mint-cell-value {
         position: absolute;
@@ -41,27 +42,32 @@
           left: 65px;
           height: 45px;
           top: 8px;
+          width: 100%;
           .mint-cell-text {
             font-size: 16px;
           }
           .mint-cell-label {
             font-size: 14px;
             margin-top: 9px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 80%;
           }
         }
       }
     }
     .time {
       position: absolute;
-      right: 30px;
+      right: 10px;
       top: 10px;
       font-size: 14px;
       color: #888;
     }
     .mint-badge {
       position: absolute;
-      top: 5px;
-      right: 8px;
+      top: 2px;
+      left: 45px;
     }
   }
 
