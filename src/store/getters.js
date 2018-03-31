@@ -44,3 +44,5 @@ export const lostConnect = state => state.lostConnect
 export const isLogin = state => {
   return state.token && state.expiredTime && state.expiredTime > Date.now()
 }
+
+export const unSendMsg = state => state.unSendMsg

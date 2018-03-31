@@ -27,52 +27,11 @@ html {
         .mt-30 {
             margin-top: 30px;
         }
+        .tar {
+            text-align: right;
+        }
+        .tal {
+            text-align: left;
+        }
     }
-}
-
-.message-list {
-    font-size: 16px;
-    height: calc(100% - 89px);
-    margin: 0;
-    overflow-y: auto;
-    padding: 0;
-}
-
-.message-session-heading {
-    height: 40px;
-    margin: 0;
-}
-
-.message-list-item {
-    list-style: none;
-    padding: 12px 14px 14px;
-}
-
-.message-author-name {
-    color: #66c;
-    float: left;
-    font-size: 13px;
-    margin: 0;
-}
-
-.message-time {
-    color: #aad;
-    float: right;
-    font-size: 12px;
-}
-
-.message-text {
-    clear: both;
-    font-size: 14px;
-    padding-top: 10px;
-}
-
-.message-composer {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: 14px;
-    height: 5em;
-    width: 100%;
-    margin: 20px 0 0;
-    padding: 10px;
 }

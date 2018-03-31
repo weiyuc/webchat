@@ -91,8 +91,12 @@ let api = {
         vm.onMessage(message)
       }
     })
+    this.resendAllMsg()
   },
   errorCallback() {
+    if (!store.getters.isLogin) {
+      return
+    }
     store.commit(mutationTypes.LOST_CONNECT, true)
     setTimeout(() => {
       store.dispatch('subscribe_msg',
@@ -238,15 +242,40 @@ let api = {
       content,
       remark: session.remark,
       timestamp: Date.now(),
-      messageType: messageType.SMS
+      messageType: messageType.SMS,
+      sent: false
     }
-    this.webSocket.send('/notify', {}, JSON.stringify(message))
+    if (!store.getters.lostConnect) {
+      this.webSocket.send('/notify', {}, JSON.stringify(message))
+      message.sent = true
+    } else {
+      store.commit(mutationTypes.ADD_UN_SEND_MSG, message)
+    }
     cb(message)
   },
   remarkHasRead(friendName) {
     let username = store.getters.username
     let param = {from: friendName, to: username, messageType: messageType.HAS_READ}
     this.webSocket.send('/notify', {}, JSON.stringify(param))
+  },
+  resendAllMsg() {
+    let messages = store.getters.unSendMsg
+    if (messages.length > 0) {
+      for (let i = messages.length - 1; i >= 0; i--) {
+        let message = messages[i]
+        if (Date.now() - message.timestamp > 60000) {
+          messages.splice(i, 1)
+          continue
+        }
+        if (!store.getters.lostConnect) {
+          this.webSocket.send('/notify', {}, JSON.stringify(message))
+          store.commit(mutationTypes.SET_MESSAGE_SENT, message.id)
+          messages.splice(i, 1)
+          continue
+        }
+        break
+      }
+    }
   }
 }
 

@@ -95,7 +95,7 @@ export default {
     state.requestContacts.push(username)
     ++ state.unreadReqCount
   },
-  [types.DEAL_FREIND_REQ] (state, username) {
+  [types.DEAL_FRIEND_REQ] (state, username) {
     state.requestContacts = state.requestContacts.filter(u => u !== username)
     -- state.unreadReqCount
   },
@@ -118,6 +118,12 @@ export default {
   },
   [types.LOST_CONNECT] (state, lost) {
     state.lostConnect = lost
+  },
+  [types.ADD_UN_SEND_MSG] (state, message) {
+    state.unSendMsg.push(message)
+  },
+  [types.SET_MESSAGE_SENT] (state, id) {
+    state.messages[id].sent = true
   },
   setActive(state, active) {
     state.active = active
@@ -225,6 +231,9 @@ function logout(state) {
   }
 }
 
-function alertTips() {
-  alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
+function alertTips(state) {
+  if (!state.isAlertTips) {
+    alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
+    state.isAlertTips = true
+  }
 }

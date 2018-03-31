@@ -90,8 +90,11 @@
       height: calc(100% - 89px);
       max-height: calc(100% - 89px);
       .message-list {
-        height: 100%;
+        height: calc(100% - 20px);
+        margin: 0;
+        list-style: none;
         overflow-y: auto;
+        padding: 0 0 20px 0;
       }
       background: url("../assets/img/bg.png") no-repeat;
       background-size:100% 100%;

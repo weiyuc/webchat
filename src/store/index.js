@@ -25,7 +25,9 @@ const state = {
 
   connected: false,
   active: 'message',
-  lostConnect: false
+  lostConnect: false,
+  unSendMsg: [],
+  isAlertTips: false
 }
 
 export default new Vuex.Store({

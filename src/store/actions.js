@@ -92,7 +92,7 @@ export const dealFriendReq = ({commit}, payload) => {
   return new Promise((resolve) => {
     api.dealFriendReq(payload, (res) => {
       if (res && payload.status !== 4) {
-        commit(types.DEAL_FREIND_REQ, payload.friendName)
+        commit(types.DEAL_FRIEND_REQ, payload.friendName)
       }
       resolve()
     })
