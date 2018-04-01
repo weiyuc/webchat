@@ -8,6 +8,7 @@ import NewFriend from '@/views/NewFriend'
 import Search from '@/views/Search'
 import FriendCard from '@/views/FriendCard'
 import Settings from '@/views/Settings'
+import Profiles from '@/views/Profiles'
 
 import store from '../store'
 
@@ -58,6 +59,11 @@ const router = new Router({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path: '/profiles',
+      name: 'profiles',
+      component: Profiles
     }
   ]
 })

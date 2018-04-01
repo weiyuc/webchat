@@ -73,6 +73,14 @@ export default {
       alertTips()
     }
   },
+  [types.SET_PROFILE_PHOTO] (state, {profilePhoto}) {
+    state.profilePhoto = profilePhoto
+    try {
+      localStorage.profilePhoto = profilePhoto
+    } catch (e) {
+      alertTips()
+    }
+  },
   [types.SET_PHONE_NUMBER] (state, {phoneNumber}) {
     state.phoneNumber = phoneNumber
     try {
@@ -198,6 +206,7 @@ function login(state, userToken) {
   state.whatUp = userToken.whatUp || ''
   state.realName = userToken.realName || ''
   state.phoneNumber = userToken.phoneNumber || ''
+  state.profilePhoto = userToken.profilePhoto || ''
   try {
     localStorage.token = userToken.accessToken
     localStorage.username = userToken.username
@@ -214,6 +223,9 @@ function login(state, userToken) {
     if (userToken.phoneNumber) {
       localStorage.phoneNumber = userToken.phoneNumber
     }
+    if (userToken.profilePhoto) {
+      localStorage.profilePhoto = userToken.profilePhoto
+    }
   } catch (e) {
     alertTips()
   }
@@ -227,6 +239,7 @@ function logout(state) {
   state.whatUp = ''
   state.realName = ''
   state.phoneNumber = ''
+  state.profilePhoto = ''
   try {
     localStorage.removeItem('username')
     localStorage.removeItem('token')
@@ -235,6 +248,7 @@ function logout(state) {
     localStorage.removeItem('whatUp')
     localStorage.removeItem('realName')
     localStorage.removeItem('phoneNumber')
+    localStorage.removeItem('profilePhoto')
   } catch (e) {
     alertTips()
   }

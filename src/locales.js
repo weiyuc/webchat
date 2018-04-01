@@ -66,7 +66,10 @@ export default {
       releaseRefresh: '释放刷新',
       loading: '加载中...',
       loadSuccess: '加载成功',
-      loadFail: '加载失败'
+      loadFail: '加载失败',
+      networkErr: '网络异常',
+      profiles: '个人信息',
+      profilePhoto: '头像'
     }
   },
   en: {
@@ -136,7 +139,10 @@ export default {
       releaseRefresh: 'Release refresh',
       loading: 'loading...',
       loadSuccess: 'Load success',
-      loadFail: 'Load fail'
+      loadFail: 'Load fail',
+      networkErr: 'Network anomaly',
+      profiles: 'Profiles',
+      profilePhoto: 'Profile photo'
     }
   }
 }

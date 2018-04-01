@@ -42,7 +42,7 @@ axios.interceptors.response.use(function (res) {
   return res.data
 }, function (error) {
   console.error(error)
-  Toast('System busy')
+  Toast(i18n.t('msg.networkErr'))
   Indicator.close()
   return Promise.reject(error)
 })

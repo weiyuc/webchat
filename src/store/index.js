@@ -21,6 +21,7 @@ const state = {
   whatUp: localStorage.whatUp || '',
   realName: localStorage.realName || '',
   phoneNumber: localStorage.phoneNumber || '',
+  profilePhoto: localStorage.profilePhoto || '',
   expiredTime: localStorage.expiredTime || 0,
 
   connected: false,

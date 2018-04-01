@@ -223,6 +223,16 @@ let api = {
       }
     )
   },
+  setProfilePhoto({profilePhoto}, cb) {
+    axios.post('/apis/user/setProfilePhoto', {profilePhoto}).then(
+      () => {
+        cb(true)
+      },
+      () => {
+        cb(false)
+      }
+    )
+  },
   getUnReadMessages(cb) {
     axios.get('/apis/message/getUnReadMessages').then(
       (res) => {

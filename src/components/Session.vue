@@ -25,7 +25,6 @@
   .wc-session {
     position: relative;
     height: 60px;
-    border-bottom: 1px solid #f8f8f8;
     .mint-cell {
       .mint-cell-value {
         position: absolute;

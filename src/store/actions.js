@@ -67,6 +67,19 @@ export const setWhatUp = ({commit}, payload) => {
   })
 }
 
+export const setProfilePhoto = ({commit}, payload) => {
+  return new Promise((resolve, reject) => {
+    api.setProfilePhoto(payload, (res) => {
+      if (res) {
+        commit(types.SET_PROFILE_PHOTO, payload)
+        resolve()
+      } else {
+        reject()
+      }
+    })
+  })
+}
+
 export const getUnreadFriendReq = ({commit}) => {
   api.getUnreadFriendReq((data) => {
     commit(types.ADD_REQ_CONTACT, data)

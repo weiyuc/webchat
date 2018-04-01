@@ -46,3 +46,5 @@ export const isLogin = state => {
 }
 
 export const unSendMsg = state => state.unSendMsg
+
+export const profilePhoto = state => state.profilePhoto
