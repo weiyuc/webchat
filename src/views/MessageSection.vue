@@ -86,7 +86,8 @@
     width: 100%;
     height: 100%;
     .message-section {
-      padding: 40px 0 48px 0;
+      position: fixed;
+      top: 40px;
       height: calc(100% - 89px);
       max-height: calc(100% - 89px);
       .message-list {

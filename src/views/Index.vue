@@ -93,7 +93,9 @@
     height: 100%;
     > .content {
       width: 100%;
-      padding-top: 40px;
+      position: fixed;
+      top: 40px;
+      left: 0;
       height: calc(100% - 95px);
       background-color: #f8f8f8;
       >.mint-tab-container {
