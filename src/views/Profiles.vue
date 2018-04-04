@@ -6,12 +6,12 @@
       </a>
     </mt-header>
 
-    <mt-cell class="mt-20 photo" @click.native="selPhoto" is-link :title="$t('msg.profilePhoto')">
+    <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
       <wc-profile-photo :myself="true" v-show="imgData === ''" ></wc-profile-photo>
       <mt-button @click.native="uploadImg" v-show="imgData !== ''" :plain="true" type="primary">上传</mt-button>
       <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
     </mt-cell>
-    <input :id="inputId" @change="handleChange" style="display: none" type="file" accept="image/*"/>
+    <wc-img-upload v-show="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
 
     <mt-cell is-link @click.native="setRealName" :title="$t('msg.realName')" :value="realName"></mt-cell>
     <mt-cell title="Webchat ID" :value="username"></mt-cell>
@@ -32,18 +32,19 @@
   import {uuidv4} from '../utils'
   import lrz from 'lrz'
   import WcProfilePhoto from "../components/ProfilePhoto";
+  import WcImgUpload from "../components/ImageUpload";
 
   export default {
-    components: {WcProfilePhoto}, name: 'wc-settings',
+    components: {WcImgUpload, WcProfilePhoto}, name: 'wc-settings',
     data() {
       return {
-        lang: Vue.config.lang,
         popupVisible: false,
         slots: [
         ],
         checkIndex: this.index,
         inputId: uuidv4(),
-        imgData: ''
+        imgData: '',
+        imgUploadShow: false
       }
     },
     computed: {
@@ -61,14 +62,6 @@
       }
     },
     watch: {
-      lang: function(newLang) {
-        this.$i18n.locale = newLang
-        try {
-          window.localStorage.lang = newLang
-        } catch (e) {
-          alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
-        }
-      },
       popupVisible: function(newVal) {
         if (!newVal) {
           if (this.checkIndex !== this.index) {
@@ -151,25 +144,9 @@
           )
         })
       },
-      selPhoto() {
-        document.getElementById(this.inputId).click();
-      },
-      handleChange(e) {
-        if (!e.target.files[0]) {
-          console.log('no file found')
-          return;
-        }
-        let vm = this;
-        lrz(e.target.files[0], {quality: 0.5, width: 44, height: 44}).then(function (rst) {
-          if (rst.base64Len > 1024 * 1024) {
-            vm.imgData = ''
-            Toast('图片不能超过1MB')
-            return;
-          }
-          vm.imgData = rst.base64
-        }).catch(function (err) {
-          Toast('压缩图片失败')
-        });
+      onSelected(base64Img) {
+        this.imgData = base64Img
+        this.imgUploadShow = false
       },
       uploadImg(e) {
         e.stopPropagation()

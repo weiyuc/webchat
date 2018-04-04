@@ -10,6 +10,8 @@ import FriendCard from '@/views/FriendCard'
 import Settings from '@/views/Settings'
 import Profiles from '@/views/Profiles'
 
+import ImgUpload from '@/components/ImageUpload'
+
 import store from '../store'
 
 Vue.use(Router)
@@ -64,11 +66,16 @@ const router = new Router({
       path: '/profiles',
       name: 'profiles',
       component: Profiles
+    },
+    {
+      path: '/imgUpload',
+      name: 'imgUpload',
+      component: ImgUpload
     }
   ]
 })
 
-const un_check_url = ['/login', '/register']
+const un_check_url = ['/login', '/register', '/imgUpload']
 
 router.beforeEach((to, from, next) => {
   if (!~un_check_url.indexOf(to.fullPath)) {

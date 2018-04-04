@@ -1,0 +1,193 @@
+<template>
+  <div class="wc-img-upload">
+    <mt-header fixed title="photo">
+      <mt-button icon="back" slot="left" @click.native="$emit('cancel')">取消</mt-button>
+      <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
+    </mt-header>
+    <input :id="inputId" @change="handleChange" style="display: none" type="file" accept="image/*"/>
+    <canvas id="imgCanvas" :width="canvasWidth" :height="canvasHeight" v-show="imgData">
+    </canvas>
+    <div id="cut" class="cut"></div>
+    <mt-actionsheet
+      :actions="[
+        {
+          name: '选择照片',
+          method: () => {
+            this.handleSelect()
+          }
+        }
+      ]"
+      v-model="sheetVisible">
+    </mt-actionsheet>
+    <div class="upload-btn">
+      <mt-button type="primary" plain @click.native="getImageData">上传</mt-button>
+    </div>
+  </div>
+</template>
+<script>
+  import {uuidv4} from '../utils'
+  import lrz from 'lrz'
+  import {MessageBox, Toast, Indicator} from 'mint-ui'
+
+  export default {
+    name: 'wc-img-upload',
+    data() {
+      return {
+        inputId: uuidv4(),
+        sheetVisible: false,
+        imgData: '',
+        canvasHeight: document.body.clientHeight - 160,
+        canvasWidth: document.body.clientWidth,
+        btnText: '选择照片',
+        cutWidthAndHeight: 0,
+        top: 0,
+        left: 0,
+        currentY: 0,
+        flag: false,
+        ctx: null
+      }
+    },
+    methods: {
+      handleChange(e) {
+        let file = e.target.files[0]
+        if (!file) {
+          return
+        }
+        let vm = this
+        lrz(e.target.files[0], {quality: 0.5}).then(function (rst) {
+          if (rst.base64Len > 1024 * 1024) {
+            vm.imgData = ''
+            Toast('图片不能超过1MB')
+            return
+          }
+          vm.imgData = rst.base64
+          vm.btnText = '上传'
+          const img = new Image()
+          img.src = vm.imgData
+          img.onload = function () {
+            const canvas = document.getElementById('imgCanvas')
+            const ctx = canvas.getContext("2d")
+            vm.ctx = ctx
+
+            const r1 = img.width / img.height
+            const r2 = canvas.clientWidth / canvas.clientHeight
+
+            let width = 0, height = 0
+
+            if (r1 > r2) {
+              width = vm.canvasWidth
+              height = img.height * (vm.canvasWidth / img.width)
+            } else if (r1 === r2) {
+              width = vm.canvasWidth
+              height = vm.canvasHeight
+            } else {
+              height = vm.canvasHeight
+              width = img.width * (vm.canvasHeight / img.height)
+            }
+
+            const x = (vm.canvasWidth - width) / 2
+            vm.left = x
+            const y = (vm.canvasHeight - height) / 2
+            ctx.drawImage(img, x, y, width, height)
+
+            const element = document.getElementById('cut')
+            const cutWidthAndHeight = width - 1
+            vm.cutWidthAndHeight = cutWidthAndHeight
+
+            element.style.width = cutWidthAndHeight - 2 + 'px'
+            element.style.height = cutWidthAndHeight - 2 + 'px'
+            element.style.top = (60 + y + (height - cutWidthAndHeight)/2) + 'px'
+            element.style.left = x + 'px'
+
+            let getCss = function (o, key) {
+              return o.currentStyle ? o.currentStyle[key] : document.defaultView.getComputedStyle(o, false)[key]
+            }
+
+            element.ontouchstart = function (event) {
+              vm.flag = true;
+              vm.currentY = event.touches[0].clientY;
+            }
+
+            document.ontouchend = function () {
+              vm.flag = false
+              if (getCss(element, "top") !== "auto") {
+                vm.top = getCss(element, "top")
+              }
+            }
+
+            document.ontouchmove = function (event) {
+              if (vm.flag) {
+                let nowY = event.touches[0].clientY;
+                let disY = nowY - vm.currentY;
+                let newTop = parseInt(vm.top) + disY
+
+                const minTop = 60 + y
+                const maxTop = minTop + height - cutWidthAndHeight
+
+                if (newTop < minTop) {
+                  newTop = minTop
+                } else if (newTop > maxTop) {
+                  newTop = maxTop
+                }
+                element.style.top = newTop + "px"
+              }
+            }
+          }
+        }).catch(function (err) {
+          console.error(err)
+          Toast('压缩图片失败')
+        })
+      },
+      handleSelect() {
+        document.getElementById(this.inputId).click()
+      },
+      getImageData() {
+        if (this.imgData === '') {
+          Toast('还未选择图片')
+          return
+        }
+        const imageData = this.ctx.getImageData(this.left, parseInt(this.top), this.cutWidthAndHeight, this.cutWidthAndHeight)
+        const bufferCanvas = document.createElement('canvas')
+        bufferCanvas.width = this.cutWidthAndHeight
+        bufferCanvas.height = this.cutWidthAndHeight
+        const bfx = bufferCanvas.getContext('2d')
+        bfx.putImageData(imageData, 0, 0)
+        const base64Img = bufferCanvas.toDataURL()
+        this.$emit('onSelected', base64Img)
+      }
+    }
+  }
+</script>
+<style lang="scss">
+  .wc-img-upload {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    .mint-header {
+      background: #000;
+      height: 48px;
+    }
+    canvas {
+      margin-top: 60px;
+    }
+    .cut {
+      border: 1px solid red;
+      position: fixed;
+    }
+    .upload-btn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      width: 100%;
+      height: 60px;
+      button {
+        width: 80%;
+      }
+    }
+  }
+</style>
