@@ -39,7 +39,7 @@
         'realName'
       ]),
       showPhoto() {
-        return this.myself ? this.profilePhoto !== '' : this.photo !== ''
+        return this.myself ? this.profilePhoto !== null && this.profilePhoto !== '' : this.photo !== null && this.photo !== ''
       },
       textIcon() {
         if (this.myself) {

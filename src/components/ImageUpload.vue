@@ -1,9 +1,10 @@
 <template>
   <div class="wc-img-upload">
     <mt-header fixed title="photo">
-      <mt-button icon="back" slot="left" @click.native="$emit('cancel')">取消</mt-button>
+      <mt-button icon="back" slot="left" @click.native="$emit('cancel')">{{ $t('msg.cancel') }}</mt-button>
       <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
     </mt-header>
+    <wc-profile-photo :width="canvasWidth/1.5" :height="canvasWidth/1.5" :myself="true" v-show="imgData === ''"></wc-profile-photo>
     <input :id="inputId" @change="handleChange" style="display: none" type="file" accept="image/*"/>
     <canvas id="imgCanvas" :width="canvasWidth" :height="canvasHeight" v-show="imgData">
     </canvas>
@@ -11,16 +12,17 @@
     <mt-actionsheet
       :actions="[
         {
-          name: '选择照片',
+          name: this.$t('msg.choosePhoto'),
           method: () => {
             this.handleSelect()
           }
         }
       ]"
+      :cancelText="$t('msg.cancel')"
       v-model="sheetVisible">
     </mt-actionsheet>
-    <div class="upload-btn">
-      <mt-button type="primary" plain @click.native="getImageData">上传</mt-button>
+    <div class="upload-btn" v-show="imgData !== ''">
+      <mt-button type="primary" plain @click.native="handleUpload">{{ $t('msg.upload') }}</mt-button>
     </div>
   </div>
 </template>
@@ -28,9 +30,10 @@
   import {uuidv4} from '../utils'
   import lrz from 'lrz'
   import {MessageBox, Toast, Indicator} from 'mint-ui'
+  import WcProfilePhoto from "./ProfilePhoto";
 
   export default {
-    name: 'wc-img-upload',
+    components: {WcProfilePhoto}, name: 'wc-img-upload',
     data() {
       return {
         inputId: uuidv4(),
@@ -38,11 +41,11 @@
         imgData: '',
         canvasHeight: document.body.clientHeight - 160,
         canvasWidth: document.body.clientWidth,
-        btnText: '选择照片',
         cutWidthAndHeight: 0,
         top: 0,
         left: 0,
         currentY: 0,
+        currentX: 0,
         flag: false,
         ctx: null
       }
@@ -61,14 +64,21 @@
             return
           }
           vm.imgData = rst.base64
-          vm.btnText = '上传'
           const img = new Image()
           img.src = vm.imgData
           img.onload = function () {
-            const canvas = document.getElementById('imgCanvas')
-            const ctx = canvas.getContext("2d")
-            vm.ctx = ctx
 
+            const canvas = document.getElementById('imgCanvas')
+            let ctx = null
+
+            if (vm.ctx === null) {
+              ctx = canvas.getContext('2d')
+              vm.ctx = ctx
+            } else {
+              ctx = vm.ctx
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
             const r1 = img.width / img.height
             const r2 = canvas.clientWidth / canvas.clientHeight
 
@@ -91,21 +101,22 @@
             ctx.drawImage(img, x, y, width, height)
 
             const element = document.getElementById('cut')
-            const cutWidthAndHeight = width - 1
+            const cutWidthAndHeight = Math.min(width, height)
             vm.cutWidthAndHeight = cutWidthAndHeight
 
             element.style.width = cutWidthAndHeight - 2 + 'px'
             element.style.height = cutWidthAndHeight - 2 + 'px'
             element.style.top = (60 + y + (height - cutWidthAndHeight)/2) + 'px'
-            element.style.left = x + 'px'
+            element.style.left = (width - cutWidthAndHeight)/2 + 'px'
 
             let getCss = function (o, key) {
               return o.currentStyle ? o.currentStyle[key] : document.defaultView.getComputedStyle(o, false)[key]
             }
 
             element.ontouchstart = function (event) {
-              vm.flag = true;
-              vm.currentY = event.touches[0].clientY;
+              vm.flag = true
+              vm.currentY = event.touches[0].clientY
+              vm.currentX = event.touches[0].clientX
             }
 
             document.ontouchend = function () {
@@ -113,12 +124,19 @@
               if (getCss(element, "top") !== "auto") {
                 vm.top = getCss(element, "top")
               }
+              if (getCss(element, "left") !== "auto") {
+                vm.left = getCss(element, "left")
+              }
             }
 
             document.ontouchmove = function (event) {
               if (vm.flag) {
-                let nowY = event.touches[0].clientY;
-                let disY = nowY - vm.currentY;
+                let nowY = event.touches[0].clientY
+                let nowX = event.touches[0].clientX
+
+                let disY = nowY - vm.currentY
+                let disX = nowX - vm.currentX
+
                 let newTop = parseInt(vm.top) + disY
 
                 const minTop = 60 + y
@@ -130,30 +148,44 @@
                   newTop = maxTop
                 }
                 element.style.top = newTop + "px"
+
+                let newLeft = parseInt(vm.left) + disX
+                const minLeft = x
+                const maxLeft = width - cutWidthAndHeight
+
+                if (newLeft < minLeft) {
+                  newLeft = minLeft
+                } else if (newLeft > maxLeft) {
+                  newLeft = maxLeft
+                }
+                element.style.left = newLeft + "px"
+
               }
             }
           }
         }).catch(function (err) {
           console.error(err)
-          Toast('压缩图片失败')
+          Toast(vm.$t('msg.readFail'))
         })
       },
       handleSelect() {
         document.getElementById(this.inputId).click()
       },
-      getImageData() {
-        if (this.imgData === '') {
-          Toast('还未选择图片')
-          return
-        }
-        const imageData = this.ctx.getImageData(this.left, parseInt(this.top), this.cutWidthAndHeight, this.cutWidthAndHeight)
+      handleUpload() {
+        let top = parseInt(this.top)
+        const imageData = this.ctx.getImageData(this.left, top - 60, this.cutWidthAndHeight, this.cutWidthAndHeight)
         const bufferCanvas = document.createElement('canvas')
         bufferCanvas.width = this.cutWidthAndHeight
         bufferCanvas.height = this.cutWidthAndHeight
         const bfx = bufferCanvas.getContext('2d')
         bfx.putImageData(imageData, 0, 0)
-        const base64Img = bufferCanvas.toDataURL()
-        this.$emit('onSelected', base64Img)
+        const profilePhoto = bufferCanvas.toDataURL()
+        this.$store.dispatch('setProfilePhoto', {
+          profilePhoto
+        }).then(() => {
+          this.$emit('onSelected')
+        }).catch(() => {
+        })
       }
     }
   }
@@ -171,6 +203,9 @@
       background: #000;
       height: 48px;
     }
+    .wc-profile-photo {
+
+    }
     canvas {
       margin-top: 60px;
     }
@@ -187,6 +222,15 @@
       height: 60px;
       button {
         width: 80%;
+      }
+    }
+    .text-icon {
+      position: fixed;
+      left: 16.5%;
+      top: 130px;
+      font-size: 30px;
+      >span {
+        font-size: 40px;
       }
     }
   }

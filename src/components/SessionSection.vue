@@ -1,5 +1,5 @@
 <template>
-  <div class="message-section" :style="{'height': height + 'px'}">
+  <div class="session-section" :style="{'height': height + 'px'}">
     <mt-loadmore class="load-more" :top-method="loadUnread" @top-status-change="handleTopChange" ref="loadMore">
       <wc-load-more-top slot="top" :topStatus="topStatus"></wc-load-more-top>
       <ul class="session-list" :style="{'min-height': height + 'px'}">
@@ -90,9 +90,10 @@
   }
 </script>
 <style lang="scss">
-  .message-section {
+  .session-section {
     width: 100%;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     .load-more {
       background-color: #000;
       .mint-loadmore-top {

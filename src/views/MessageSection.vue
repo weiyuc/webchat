@@ -96,6 +96,7 @@
         list-style: none;
         overflow-y: auto;
         padding: 0 0 20px 0;
+        -webkit-overflow-scrolling: touch;
       }
       background: url("../assets/img/bg.png") no-repeat;
       background-size:100% 100%;

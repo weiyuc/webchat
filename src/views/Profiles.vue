@@ -8,10 +8,9 @@
 
     <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
       <wc-profile-photo :myself="true" v-show="imgData === ''" ></wc-profile-photo>
-      <mt-button @click.native="uploadImg" v-show="imgData !== ''" :plain="true" type="primary">上传</mt-button>
       <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
     </mt-cell>
-    <wc-img-upload v-show="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
+    <wc-img-upload v-if="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
 
     <mt-cell is-link @click.native="setRealName" :title="$t('msg.realName')" :value="realName"></mt-cell>
     <mt-cell title="Webchat ID" :value="username"></mt-cell>
@@ -144,19 +143,8 @@
           )
         })
       },
-      onSelected(base64Img) {
-        this.imgData = base64Img
+      onSelected() {
         this.imgUploadShow = false
-      },
-      uploadImg(e) {
-        e.stopPropagation()
-        let profilePhoto = this.imgData
-        this.$store.dispatch('setProfilePhoto', {
-          profilePhoto
-        }).then(() => {
-          this.imgData = ''
-        }).catch(() => {
-        })
       }
     }
   }
@@ -164,14 +152,9 @@
 <style lang="scss">
   .wc-profiles {
     .photo {
-      button {
-        width: 40px;
-        height: 25px;
-        font-size: 12px;
-        padding: 0 5px;
-        position: absolute;
-        right: 90px;
-        top: 12px;
+      height: 70px;
+      .mint-cell-wrapper {
+        height: 100%;
       }
       img {
         border-radius: 5px;

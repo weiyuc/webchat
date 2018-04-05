@@ -69,7 +69,10 @@ export default {
       loadFail: '加载失败',
       networkErr: '网络异常',
       profiles: '个人信息',
-      profilePhoto: '头像'
+      profilePhoto: '头像',
+      choosePhoto: '选择照片',
+      upload: '上传',
+      readFail: '读取图片失败'
     }
   },
   en: {
@@ -142,7 +145,10 @@ export default {
       loadFail: 'Load fail',
       networkErr: 'Network anomaly',
       profiles: 'Profiles',
-      profilePhoto: 'Profile photo'
+      profilePhoto: 'Profile photo',
+      choosePhoto: 'Choose photo',
+      upload: 'Upload',
+      readFail: 'Read file fail'
     }
   }
 }

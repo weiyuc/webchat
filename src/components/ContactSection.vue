@@ -10,7 +10,8 @@
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
         <mt-cell v-for="(n, j) in v" :key="j" :title="n.remark || n.friendName" @click.native="toFriendCard(k, j)">
-          <wc-profile-photo :width="35" :height="35" :content="n.remark || n.friendName"></wc-profile-photo>
+          <wc-profile-photo :width="35" :photo="n.friendInfo.profilePhoto" :height="35" :content="n.remark || n.friendName">
+          </wc-profile-photo>
         </mt-cell>
       </mt-index-section>
     </mt-index-list>
@@ -18,10 +19,11 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto";
+  import WcProfilePhoto from "./ProfilePhoto"
 
   export default {
-    components: {WcProfilePhoto}, name: 'contact-section',
+    name: 'contact-section',
+    components: {WcProfilePhoto},
     data() {
       return  {
       }
@@ -66,7 +68,12 @@
         .mint-cell-title {
           position: absolute;
           left: 60px;
-          top: 16px;
+          top: 13px;
+        }
+      }
+      .mint-indexlist {
+        ul {
+          -webkit-overflow-scrolling: touch;
         }
       }
     }

@@ -9,6 +9,10 @@
       <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
       {{ message.content }}
     </div>
+
+    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :photo="profilePhoto" :content="this.contact.remark || this.contact.friendName">
+    </wc-profile-photo>
+
     <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" src="../assets/img/webchat.png"/>
   </li>
 </template>

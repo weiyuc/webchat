@@ -4,7 +4,8 @@
         <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
     </mt-header>
     <mt-cell style="min-height: 60px;">
-      <img slot="icon" src="../assets/img/webchat.png" width="50" height="50">
+      <wc-profile-photo slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="this.contact.remark || this.contact.friendName">
+      </wc-profile-photo>
       <div slot="title" class="info-title">
         <p>{{ remark }}</p>
         <p>{{ nickname }}</p>
@@ -20,11 +21,13 @@
 </template>
 <script>
   import {MessageBox, Toast, Indicator} from 'mint-ui'
+  import WcProfilePhoto from "../components/ProfilePhoto"
   import {mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
 
   export default {
     name: 'friend-card',
+    components: {WcProfilePhoto},
     props: {
       group: {
         type: String,
@@ -39,20 +42,21 @@
       ...mapGetters([
         'contacts'
       ]),
-      remark() {
-        let contacts = {}
+      contact() {
+        let contact = {}
         if (this.contacts && this.contacts[this.group]) {
-          contacts = this.contacts[this.group][this.index]
+          contact = this.contacts[this.group][this.index]
         }
-        return this.$t('msg.remark') + ': ' + (contacts.remark || '')
-
+        return contact
+      },
+      remark() {
+        return this.$t('msg.remark') + ': ' + (this.contact.remark || '')
       },
       nickname() {
-        let contacts = {}
-        if (this.contacts && this.contacts[this.group]) {
-          contacts = this.contacts[this.group][this.index]
-        }
-        return this.$t('msg.nickname') + ': ' + contacts.friendName
+        return this.$t('msg.nickname') + ': ' + this.contact.friendName
+      },
+      profilePhoto() {
+        return this.contact.friendInfo ? this.contact.friendInfo.profilePhoto : ''
       }
     },
     methods: {
