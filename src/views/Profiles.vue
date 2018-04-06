@@ -143,8 +143,16 @@
           )
         })
       },
-      onSelected() {
+      onSelected(profilePhoto) {
         this.imgUploadShow = false
+        Indicator.open()
+        this.$store.dispatch('setProfilePhoto', {
+          profilePhoto
+        }).then(() => {
+          Indicator.close()
+        }).catch(() => {
+          Indicator.close()
+        })
       }
     }
   }

@@ -34,7 +34,11 @@
         return this.message.isMe && this.message.timeout
       },
       profilePhoto() {
-        return this.friendsInfo[this.session.from]
+        let info = this.friendsInfo[this.session.from]
+        if (info) {
+          return info.profilePhoto
+        }
+        return ''
       }
     },
     props: {

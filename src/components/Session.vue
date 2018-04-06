@@ -29,7 +29,11 @@
         friendsInfo: 'friendsInfo'
       }),
       profilePhoto() {
-        return this.friendsInfo[this.session.from]
+        let info = this.friendsInfo[this.session.from]
+        if (info) {
+          return info.profilePhoto
+        }
+        return ''
       }
     }
   }

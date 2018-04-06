@@ -175,7 +175,7 @@
       handleUpload() {
         let top = parseInt(this.top)
         let left = parseInt(this.left)
-        console.log(top, left)
+
         const imageData = this.ctx.getImageData(left, top - 60, this.cutWidthAndHeight, this.cutWidthAndHeight)
         const bufferCanvas = document.createElement('canvas')
         bufferCanvas.width = this.cutWidthAndHeight
@@ -183,15 +183,7 @@
         const bfx = bufferCanvas.getContext('2d')
         bfx.putImageData(imageData, 0, 0)
         const profilePhoto = bufferCanvas.toDataURL()
-        Indicator.open()
-        this.$store.dispatch('setProfilePhoto', {
-          profilePhoto
-        }).then(() => {
-          Indicator.close()
-          this.$emit('onSelected')
-        }).catch(() => {
-          Indicator.close()
-        })
+        this.$emit('onSelected', profilePhoto)
       }
     }
   }
