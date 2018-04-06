@@ -1,10 +1,11 @@
 <template>
   <div class="wc-session" @click="$emit('switch-session', session.from)">
     <mt-cell
-            :title="session.remark || session.from"
-            :label="session.lastMessage.content"
-            >
-      <img src="../assets/img/webchat.png" width="44" height="44"/>
+    :title="session.remark || session.from"
+    :label="session.lastMessage.content"
+    >
+      <wc-profile-photo :photo="profilePhoto" :content="this.session.remark || this.session.from">
+      </wc-profile-photo>
     </mt-cell>
     <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
     <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
@@ -13,11 +14,23 @@
   </div>
 </template>
 <script>
+  import {mapGetters} from 'vuex'
+  import WcProfilePhoto from "./ProfilePhoto";
+
   export default {
     name: 'Session',
+    components: {WcProfilePhoto},
     props: {
       session: Object,
       active: Boolean
+    },
+    computed: {
+      ...mapGetters({
+        friendsInfo: 'friendsInfo'
+      }),
+      profilePhoto() {
+        return this.friendsInfo[this.session.from]
+      }
     }
   }
 </script>

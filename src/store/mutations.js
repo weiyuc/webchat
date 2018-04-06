@@ -30,6 +30,9 @@ export default {
   [types.GET_CONTACTS] (state, contacts) {
     state.contacts = contacts
   },
+  [types.GET_FRIEND_INFO] (state, {friendName, friendInfo}) {
+    state.friendsInfo[friendName] = friendInfo
+  },
   [types.SWITCH_SESSION] (state, {from, remark}) {
     setCurrentSession(state, from, remark)
   },
@@ -54,7 +57,7 @@ export default {
         localStorage.gender = gender
       }
     } catch (e) {
-      alertTips()
+      alertTips(state)
     }
   },
   [types.SET_REAL_NAME] (state, {realName}) {
@@ -62,7 +65,7 @@ export default {
     try {
       localStorage.realName = realName
     } catch (e) {
-      alertTips()
+      alertTips(state)
     }
   },
   [types.SET_WHAT_UP] (state, {whatUp}) {
@@ -70,7 +73,7 @@ export default {
     try {
       localStorage.whatUp = whatUp
     } catch (e) {
-      alertTips()
+      alertTips(state)
     }
   },
   [types.SET_PROFILE_PHOTO] (state, {profilePhoto}) {
@@ -78,7 +81,7 @@ export default {
     try {
       localStorage.profilePhoto = profilePhoto
     } catch (e) {
-      alertTips()
+      alertTips(state)
     }
   },
   [types.SET_PHONE_NUMBER] (state, {phoneNumber}) {
@@ -86,7 +89,7 @@ export default {
     try {
       localStorage.phoneNumber = phoneNumber
     } catch (e) {
-      alertTips()
+      alertTips(state)
     }
   },
   [types.SET_MASK] (state, {group, index, remark}) {
@@ -227,7 +230,7 @@ function login(state, userToken) {
       localStorage.profilePhoto = userToken.profilePhoto
     }
   } catch (e) {
-    alertTips()
+    alertTips(state)
   }
 }
 
@@ -250,7 +253,7 @@ function logout(state) {
     localStorage.removeItem('phoneNumber')
     localStorage.removeItem('profilePhoto')
   } catch (e) {
-    alertTips()
+    alertTips(state)
   }
 }
 

@@ -90,6 +90,7 @@
       top: 40px;
       height: calc(100% - 89px);
       max-height: calc(100% - 89px);
+      width: 100%;
       .message-list {
         height: calc(100% - 20px);
         margin: 0;

@@ -30,6 +30,16 @@ export const subscribe_msg = ({commit}, payload) => {
 export const getContacts = ({commit}) => {
   api.getContacts(contacts => {
     if (contacts) {
+      for (let index in contacts) {
+        let contact = contacts[index]
+        contact.forEach(c => {
+          if (c.friendInfo) {
+            const friendName = c.friendInfo.username
+            const friendInfo = friendInfo
+            commit(types.GET_FRIEND_INFO, {friendName, friendInfo})
+          }
+        })
+      }
       commit(types.GET_CONTACTS, contacts)
     }
   })

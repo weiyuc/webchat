@@ -29,7 +29,7 @@
 <script>
   import {uuidv4} from '../utils'
   import lrz from 'lrz'
-  import {MessageBox, Toast, Indicator} from 'mint-ui'
+  import {Toast, Indicator} from 'mint-ui'
   import WcProfilePhoto from "./ProfilePhoto";
 
   export default {
@@ -107,7 +107,7 @@
             element.style.width = cutWidthAndHeight - 2 + 'px'
             element.style.height = cutWidthAndHeight - 2 + 'px'
             element.style.top = (60 + y + (height - cutWidthAndHeight)/2) + 'px'
-            element.style.left = (width - cutWidthAndHeight)/2 + 'px'
+            element.style.left = (vm.canvasWidth - cutWidthAndHeight)/2 + 'px'
 
             let getCss = function (o, key) {
               return o.currentStyle ? o.currentStyle[key] : document.defaultView.getComputedStyle(o, false)[key]
@@ -151,7 +151,7 @@
 
                 let newLeft = parseInt(vm.left) + disX
                 const minLeft = x
-                const maxLeft = width - cutWidthAndHeight
+                const maxLeft = (vm.canvasWidth - cutWidthAndHeight)/2
 
                 if (newLeft < minLeft) {
                   newLeft = minLeft
@@ -180,11 +180,14 @@
         const bfx = bufferCanvas.getContext('2d')
         bfx.putImageData(imageData, 0, 0)
         const profilePhoto = bufferCanvas.toDataURL()
+        Indicator.open()
         this.$store.dispatch('setProfilePhoto', {
           profilePhoto
         }).then(() => {
+          Indicator.close()
           this.$emit('onSelected')
         }).catch(() => {
+          Indicator.close()
         })
       }
     }

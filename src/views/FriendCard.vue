@@ -4,7 +4,7 @@
         <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
     </mt-header>
     <mt-cell style="min-height: 60px;">
-      <wc-profile-photo slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="this.contact.remark || this.contact.friendName">
+      <wc-profile-photo slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="remark || contact.friendName">
       </wc-profile-photo>
       <div slot="title" class="info-title">
         <p>{{ remark }}</p>
@@ -61,21 +61,17 @@
     },
     methods: {
       setRemark() {
-        if (!this.contacts || !this.contacts[this.group]) {
-          return
-        }
-        let contacts = this.contacts[this.group][this.index]
         let config = {
           confirmButtonText: this.$t('msg.confirm'),
           cancelButtonText: this.$t('msg.cancel'),
-          inputPlaceholder: contacts.remark
+          inputPlaceholder: this.contact.remark
         }
         MessageBox.close()
         this.$nextTick(() => {
           MessageBox.prompt(this.$t('msg.remark'), config).then(
             ({ value }) => {
               let remark = value
-              let friendName = contacts.friendName
+              let friendName = this.contact.friendName
               let group = this.group
               let index = this.index
               this.$store.dispatch('setRemark', {
@@ -89,50 +85,44 @@
         })
       },
       switchSession () {
-        let contacts = {}
-        if (this.contacts && this.contacts[this.group]) {
-          contacts = this.contacts[this.group][this.index]
-          let from = contacts.friendName
-          let remark = contacts.remark
-          this.$store.dispatch('switchSession', {from, remark}).then(() => {
-            this.$router.push({path: '/messageSection'})
-          })
-        }
+        let from = this.contact.friendName
+        let remark = this.contact.remark
+        this.$store.dispatch('switchSession', {from, remark}).then(() => {
+          this.$router.push({path: '/messageSection'})
+        })
       },
       deleteFriend() {
-        if (this.contacts && this.contacts[this.group]) {
-          let contacts = this.contacts[this.group][this.index]
 
-          let config = {
-            confirmButtonText: this.$t('msg.confirm'),
-            cancelButtonText: this.$t('msg.cancel')
-          }
-          MessageBox.close()
-          MessageBox.confirm(
-            `${this.$t('msg.confirmDeleteFriend')} ${contacts.remark || contacts.friendName}`,
-            this.$t('msg.tips'),
-            config).then(() => {
-            Indicator.open()
-            this.$store.dispatch('dealFriendReq',
-              {
-                friendName: contacts.friendName,
-                status: 4
-              }
-            ).then(
-              () => {
-                Indicator.close()
-                this.$nextTick(() => {
-                  this.$store.dispatch('getContacts')
-                  this.back()
-                })
-              }
-            )
-          }).catch(
+        let config = {
+          confirmButtonText: this.$t('msg.confirm'),
+          cancelButtonText: this.$t('msg.cancel')
+        }
+        MessageBox.close()
+        MessageBox.confirm(
+          `${this.$t('msg.confirmDeleteFriend')} ${this.contact.remark || this.contact.friendName}`,
+          this.$t('msg.tips'),
+          config).then(() => {
+          Indicator.open()
+          this.$store.dispatch('dealFriendReq',
+            {
+              friendName: this.contact.friendName,
+              status: 4
+            }
+          ).then(
             () => {
-              //ignore
+              Indicator.close()
+              this.$nextTick(() => {
+                this.$store.dispatch('getContacts')
+                this.back()
+              })
             }
           )
-        }
+        }).catch(
+          () => {
+            //ignore
+          }
+        )
+
       },
       back() {
         window.history.length > 1

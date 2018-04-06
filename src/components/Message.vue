@@ -10,22 +10,31 @@
       {{ message.content }}
     </div>
 
-    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :photo="profilePhoto" :content="this.contact.remark || this.contact.friendName">
+    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :photo="profilePhoto" :content="this.session.remark || this.session.from">
     </wc-profile-photo>
-
-    <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" src="../assets/img/webchat.png"/>
   </li>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+  import WcProfilePhoto from "./ProfilePhoto";
+
   export default {
     name: 'Message',
+    components: {WcProfilePhoto},
     computed: {
+      ...mapGetters({
+        session: 'currentSession',
+        friendsInfo: 'friendsInfo'
+      }),
       loading() {
         return this.message.isMe && !this.message.sent && !this.message.timeout
       },
       isTimeout() {
         return this.message.isMe && this.message.timeout
+      },
+      profilePhoto() {
+        return this.friendsInfo[this.session.from]
       }
     },
     props: {

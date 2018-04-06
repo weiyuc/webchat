@@ -13,6 +13,7 @@ const state = {
   unreadMsgCount: 0,
   unreadReqCount: 0,
   contacts: {},
+  friendsInfo: {},
   requestContacts: [],
 
   username: localStorage.username || '',
