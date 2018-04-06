@@ -35,7 +35,7 @@ export const getContacts = ({commit}) => {
         contact.forEach(c => {
           if (c.friendInfo) {
             const friendName = c.friendInfo.username
-            const friendInfo = friendInfo
+            const friendInfo = c.friendInfo
             commit(types.GET_FRIEND_INFO, {friendName, friendInfo})
           }
         })
