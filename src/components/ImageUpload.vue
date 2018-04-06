@@ -98,6 +98,7 @@
             const x = (vm.canvasWidth - width) / 2
             vm.left = x
             const y = (vm.canvasHeight - height) / 2
+            vm.top = y
             ctx.drawImage(img, x, y, width, height)
 
             const element = document.getElementById('cut')
@@ -173,7 +174,9 @@
       },
       handleUpload() {
         let top = parseInt(this.top)
-        const imageData = this.ctx.getImageData(this.left, top - 60, this.cutWidthAndHeight, this.cutWidthAndHeight)
+        let left = parseInt(this.left)
+        console.log(top, left)
+        const imageData = this.ctx.getImageData(left, top - 60, this.cutWidthAndHeight, this.cutWidthAndHeight)
         const bufferCanvas = document.createElement('canvas')
         bufferCanvas.width = this.cutWidthAndHeight
         bufferCanvas.height = this.cutWidthAndHeight
