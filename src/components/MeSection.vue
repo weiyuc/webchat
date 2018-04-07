@@ -46,7 +46,7 @@
         img {
           position: absolute;
           left: 10px;
-          top: 12px;
+          top: 13px;
         }
         .mint-cell-title {
           position: absolute;

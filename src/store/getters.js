@@ -51,3 +51,5 @@ export const unSendMsg = state => state.unSendMsg
 export const profilePhoto = state => state.profilePhoto
 
 export const friendsInfo = state => state.friendsInfo
+
+export const isAlertTips = state => state.isAlertTips

@@ -12,6 +12,8 @@ const debug = true
 
 let api = {
   webSocket: null,
+  reconnecting: false,
+  cleanId: null,
   login({username, password}, cb) {
     axios.post('/apis/user/login', {username, password}).then(
       res => {
@@ -100,7 +102,18 @@ let api = {
     store.commit(mutationTypes.LOST_CONNECT, true)
     store.commit(mutationTypes.SET_CONNECTED, false)
     this.checkUnsentMsgTimeout()
-    setTimeout(() => {
+    if (this.cleanId === null) {
+      this.reconnect()
+    }
+
+  },
+  reconnect() {
+    this.cleanId = setInterval(() => {
+      if (this.reconnecting) {
+        return
+      }
+      this.reconnecting = true
+      let vm = this
       store.dispatch('subscribe_msg',
         {
           accessToken: store.getters.token,
@@ -108,14 +121,18 @@ let api = {
         }
       ).then(
         () => {
+          clearInterval(vm.cleanId)
+          vm.cleanId = null
           store.commit(mutationTypes.LOST_CONNECT, false)
           store.dispatch('getContacts')
           store.dispatch('getUnReadMessages')
+          vm.reconnecting = false
         }).catch(() => {
-          //ignore
+          vm.reconnecting = false
         }
       )
     }, 1000 * 5)
+
   },
   onMessage(message) {
     if (debug) {

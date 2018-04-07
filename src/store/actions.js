@@ -36,6 +36,7 @@ export const getContacts = ({commit}) => {
           if (c.friendInfo) {
             const friendName = c.friendInfo.username
             const friendInfo = c.friendInfo
+            friendInfo.remark = c.remark
             commit(types.GET_FRIEND_INFO, {friendName, friendInfo})
           }
         })

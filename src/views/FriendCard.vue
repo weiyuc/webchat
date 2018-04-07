@@ -3,15 +3,15 @@
     <mt-header :title="$t('msg.friendDetails')">
         <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
     </mt-header>
-    <mt-cell style="min-height: 60px;">
-      <wc-profile-photo slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="remark || contact.friendName">
+    <mt-cell style="min-height: 60px;" isLink>
+      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="contact.remark || friendName">
       </wc-profile-photo>
       <div slot="title" class="info-title">
         <p>{{ remark }}</p>
         <p>{{ nickname }}</p>
       </div>
     </mt-cell>
-    <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark">
+    <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark" isLink>
     </mt-cell>
     <mt-cell :title="$t('msg.region')" value="Wuhan, Hubei">
     </mt-cell>
@@ -29,34 +29,26 @@
     name: 'friend-card',
     components: {WcProfilePhoto},
     props: {
-      group: {
+      friendName: {
         type: String,
-        required: true
-      },
-      index: {
-        type: Number,
         required: true
       }
     },
     computed: {
-      ...mapGetters([
-        'contacts'
-      ]),
+      ...mapGetters({
+        friendsInfo: 'friendsInfo'
+      }),
       contact() {
-        let contact = {}
-        if (this.contacts && this.contacts[this.group]) {
-          contact = this.contacts[this.group][this.index]
-        }
-        return contact
+        return this.friendsInfo[this.friendName] || {}
+      },
+      nickname() {
+        return this.$t('msg.nickname') + ': ' + this.friendName
       },
       remark() {
         return this.$t('msg.remark') + ': ' + (this.contact.remark || '')
       },
-      nickname() {
-        return this.$t('msg.nickname') + ': ' + this.contact.friendName
-      },
       profilePhoto() {
-        return this.contact.friendInfo ? this.contact.friendInfo.profilePhoto : ''
+        return this.contact.profilePhoto || ''
       }
     },
     methods: {
@@ -85,7 +77,7 @@
         })
       },
       switchSession () {
-        let from = this.contact.friendName
+        let from = this.friendName
         let remark = this.contact.remark
         this.$store.dispatch('switchSession', {from, remark}).then(() => {
           this.$router.push({path: '/messageSection'})
@@ -99,13 +91,13 @@
         }
         MessageBox.close()
         MessageBox.confirm(
-          `${this.$t('msg.confirmDeleteFriend')} ${this.contact.remark || this.contact.friendName}`,
+          `${this.$t('msg.confirmDeleteFriend')} ${this.contact.remark || this.friendName}`,
           this.$t('msg.tips'),
           config).then(() => {
           Indicator.open()
           this.$store.dispatch('dealFriendReq',
             {
-              friendName: this.contact.friendName,
+              friendName: this.friendName,
               status: 4
             }
           ).then(
@@ -151,6 +143,11 @@
     .info-button {
       width: 80%;
       margin: 20px auto 0 auto;
+    }
+    .text-icon {
+      span {
+        font-size: 20px;
+      }
     }
   }
 </style>

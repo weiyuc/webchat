@@ -53,8 +53,7 @@ const router = new Router({
       name: 'friendCard',
       component: FriendCard,
       props: (route) => ({
-        group: route.query.group,
-        index: parseInt(route.query.index)
+        friendName: route.query.friendName
       })
     },
     {

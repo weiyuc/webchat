@@ -9,7 +9,7 @@
         </mt-badge>
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
-        <mt-cell v-for="(n, j) in v" :key="j" :title="n.remark || n.friendName" @click.native="toFriendCard(k, j)">
+        <mt-cell v-for="(n, j) in v" :key="j" :title="n.remark || n.friendName" @click.native="toFriendCard(n.friendName)">
           <wc-profile-photo :width="35" :photo="n.friendInfo.profilePhoto" :height="35" :content="n.remark || n.friendName">
           </wc-profile-photo>
         </mt-cell>
@@ -24,10 +24,6 @@
   export default {
     name: 'contact-section',
     components: {WcProfilePhoto},
-    data() {
-      return  {
-      }
-    },
     computed: {
       ...mapGetters([
         'contacts',
@@ -44,8 +40,8 @@
       toNewFriend() {
         this.$router.push({path: '/newFriend'})
       },
-      toFriendCard(group, index) {
-        this.$router.push({path: '/friendCard', query: {group, index}})
+      toFriendCard(friendName) {
+        this.$router.push({path: '/friendCard', query: {friendName}})
       }
     }
   }
@@ -71,9 +67,12 @@
           top: 13px;
         }
       }
-      .mint-indexlist {
-        ul {
-          -webkit-overflow-scrolling: touch;
+    }
+    .mint-indexlist {
+      ul {
+        -webkit-overflow-scrolling: touch;
+        .mint-indexsection-index {
+          padding: 3px 10px !important;
         }
       }
     }
