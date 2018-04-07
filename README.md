@@ -1,6 +1,6 @@
 # webchat
 
-> A realtime chat for web
+> A realtime chat for web, backend built by java
 
 ## Build Setup
 
@@ -18,5 +18,8 @@ npm run build
 npm run build --report
 ```
 
+## Backend repository
+[https://github.com/weiyuc/webchat-backend](https://github.com/weiyuc/webchat-backend)
+
 ## Online
-[http://120.79.24.194/](http://120.79.24.194/)
+[https://weiyuc.cn](https://weiyuc.cn)
