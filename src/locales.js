@@ -72,7 +72,8 @@ export default {
       profilePhoto: '头像',
       choosePhoto: '选择照片',
       upload: '上传',
-      readFail: '读取图片失败'
+      readFail: '读取图片失败',
+      comingSoon: '敬请期待'
     }
   },
   en: {
@@ -148,7 +149,8 @@ export default {
       profilePhoto: 'Profile photo',
       choosePhoto: 'Choose photo',
       upload: 'Upload',
-      readFail: 'Read file fail'
+      readFail: 'Read file fail',
+      comingSoon: 'Coming soon'
     }
   }
 }

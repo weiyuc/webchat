@@ -5,11 +5,11 @@
       <wc-profile-photo :myself="true"></wc-profile-photo>
     </mt-cell>
 
-    <mt-cell class="mt-20" is-link :title="$t('msg.moments')">
+    <mt-cell class="mt-20" is-link :title="$t('msg.moments')" @click.native="comingSoon">
       <span slot="icon" class="cell-icon moments icon icon-camera">
       </span>
     </mt-cell>
-    <mt-cell is-link :title="$t('msg.nearBy')">
+    <mt-cell is-link :title="$t('msg.nearBy')" @click.native="comingSoon">
       <span slot="icon" class="cell-icon near-by icon icon-man-woman">
       </span>
     </mt-cell>
@@ -22,7 +22,8 @@
 <script>
   import {mapGetters} from 'vuex'
   import WcProfilePhoto from "./ProfilePhoto"
-  
+  import {Toast} from 'mint-ui'
+
   export default {
     name: "me-section",
     components: {WcProfilePhoto},
@@ -35,6 +36,11 @@
         'username',
         'realName'
       ])
+    },
+    methods: {
+      comingSoon() {
+        Toast(this.$t('msg.comingSoon'))
+      }
     }
   }
 </script>
