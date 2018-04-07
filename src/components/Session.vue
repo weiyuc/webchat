@@ -1,6 +1,6 @@
 <template>
   <div class="wc-session" @click="$emit('switch-session', session.from)">
-    <mt-cell isLink
+    <mt-cell
     :title="session.remark || session.from"
     :label="session.lastMessage.content"
     >
