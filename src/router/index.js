@@ -74,7 +74,7 @@ const router = new Router({
   ]
 })
 
-const un_check_url = ['/login', '/register', '/imgUpload']
+const un_check_url = ['/login', '/register']
 
 router.beforeEach((to, from, next) => {
   if (!~un_check_url.indexOf(to.fullPath)) {
@@ -97,7 +97,15 @@ router.beforeEach((to, from, next) => {
           }
         )
       }
-      return next()
+      if (from.fullPath === '/messageSection') {
+        store.dispatch('clearSession').then(
+          () => {
+            return next()
+          }
+        )
+      } else {
+        return next()
+      }
     }
   } else {
     if (store.getters.token && store.getters.expiredTime > Date.now()) {
