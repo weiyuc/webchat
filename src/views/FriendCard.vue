@@ -63,11 +63,9 @@
           MessageBox.prompt(this.$t('msg.remark'), config).then(
             ({ value }) => {
               let remark = value
-              let friendName = this.contact.friendName
-              let group = this.group
-              let index = this.index
+              let friendName = this.friendName
               this.$store.dispatch('setRemark', {
-                remark, friendName, group, index
+                remark, friendName
               })
             },
             () => {

@@ -10,7 +10,7 @@
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
         <mt-cell v-for="(n, j) in v" :key="j" :title="n.remark || n.friendName" @click.native="toFriendCard(n.friendName)">
-          <wc-profile-photo :width="35" :photo="n.friendInfo.profilePhoto" :height="35" :content="n.remark || n.friendName">
+          <wc-profile-photo :width="35" :photo="n.friendInfon ? n.friendInfo.profilePhoto : ''" :height="35" :content="n.remark || n.friendName">
           </wc-profile-photo>
         </mt-cell>
       </mt-index-section>

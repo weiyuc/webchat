@@ -92,8 +92,13 @@ export default {
       alertTips(state)
     }
   },
-  [types.SET_MASK] (state, {group, index, remark}) {
-    state.contacts[group][index].remark = remark
+  [types.SET_MASK] (state, {friendName, remark}) {
+    let info = state.friendsInfo[friendName]
+    if (info) {
+      info.remark = remark
+    } else {
+      state.friendsInfo[friendName] = {remark}
+    }
   },
   [types.ADD_REQ_CONTACT] (state, username) {
     if (username instanceof Array) {
