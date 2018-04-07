@@ -1,15 +1,23 @@
 <template>
   <div class="text-icon" :style="{'width': width + 'px', 'height': height + 'px'}">
     <img v-if="showPhoto" :src="myself ? profilePhoto : photo" :width="width" :height="height" />
-    <span v-else :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px'}">
+    <span v-else :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px', 'background-color': hashColor}">
       {{ textIcon }}
     </span>
   </div>
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import {hashCode} from '../utils'
   export default {
     name: 'wc-profile-photo',
+    data() {
+      return {
+        colors: [
+          '#996633', '#993333', '#3399CC', '#336699', '#006699', '#0066CC', '#666699', '#9999CC', '#CCCC99'
+        ]
+      }
+    },
     props: {
       width: {
         type: Number,
@@ -55,6 +63,20 @@
           return this.content.toLocaleUpperCase()
         }
         return this.content.charAt(0).toLocaleUpperCase()
+      },
+      hashColor() {
+        let str
+        if (this.myself) {
+          if (this.realName) {
+            str = this.realName
+          } else {
+            str = this.username
+          }
+        } else {
+          str = this.content
+        }
+        const hash = Math.abs(hashCode(str))
+        return this.colors[hash % this.colors.length]
       }
     }
   }
@@ -67,7 +89,6 @@
       border-radius: 5px;
       text-align: center;
       vertical-align: middle;
-      background-color: #26a2ff;
       font-size: 18px;
       color: #fff;
     }

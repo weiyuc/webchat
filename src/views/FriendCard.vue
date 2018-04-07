@@ -7,8 +7,8 @@
       <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="contact.remark || friendName">
       </wc-profile-photo>
       <div slot="title" class="info-title">
-        <p>{{ remark }}</p>
         <p>{{ nickname }}</p>
+        <p>{{ remark }}</p>
       </div>
     </mt-cell>
     <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark" isLink>
@@ -42,7 +42,7 @@
         return this.friendsInfo[this.friendName] || {}
       },
       nickname() {
-        return this.$t('msg.nickname') + ': ' + this.friendName
+        return 'Webchat ID: ' + this.friendName
       },
       remark() {
         return this.$t('msg.remark') + ': ' + (this.contact.remark || '')

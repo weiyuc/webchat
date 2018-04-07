@@ -21,9 +21,11 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto";
+  import WcProfilePhoto from "./ProfilePhoto"
+  
   export default {
-    components: {WcProfilePhoto}, name: "me-section",
+    name: "me-section",
+    components: {WcProfilePhoto},
     data() {
       return {
       }
