@@ -152,7 +152,7 @@
 
                 let newLeft = parseInt(vm.left) + disX
                 const minLeft = x
-                const maxLeft = (vm.canvasWidth - cutWidthAndHeight)/2
+                const maxLeft = (vm.canvasWidth - width)/2 + (width - cutWidthAndHeight)
 
                 if (newLeft < minLeft) {
                   newLeft = minLeft
