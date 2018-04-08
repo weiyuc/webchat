@@ -67,7 +67,7 @@
           config).then(() => {
           this.$store.dispatch('logout').then(
             () => {
-              this.$router.push({path: '/login'})
+              window.location.reload()
             }
           )
         }).catch(

@@ -29,10 +29,10 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (res) {
   if (res.data.responseCode !== 0) {
     Indicator.close()
-    if (~[4003, 403].indexOf(res.data.responseCode)) {
+    if (~[4003, 4004, 403].indexOf(res.data.responseCode)) {
       Toast(res.data.responseMsg)
       store.dispatch('logout').then(() => {
-        router.push({path: '/login'})
+        window.location.reload()
       })
       return Promise.reject(res.data)
     }
@@ -52,8 +52,6 @@ Vue.prototype.$http = axios
 Vue.filter('time', timestamp => {
   return new Date(timestamp).toLocaleTimeString(Vue.config.lang)
 })
-
-
 
 Vue.config.productionTip = false
 

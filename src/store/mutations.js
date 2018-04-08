@@ -104,16 +104,16 @@ export default {
     if (username instanceof Array) {
       username.forEach(u => {
         state.requestContacts.push(u)
-        ++ state.unreadReqCount
+        ++state.unreadReqCount
       })
       return
     }
     state.requestContacts.push(username)
-    ++ state.unreadReqCount
+    ++state.unreadReqCount
   },
   [types.DEAL_FRIEND_REQ] (state, username) {
     state.requestContacts = state.requestContacts.filter(u => u !== username)
-    -- state.unreadReqCount
+    --state.unreadReqCount
   },
   [types.ACCEPTED_FRIEND_REQ] (state, message) {
     let contact = {friendName: message.from}
@@ -125,7 +125,9 @@ export default {
     }
   },
   [types.DELETE_FRIEND] (state, message) {
-    const removed = state.contacts[message.content].filter(c => { return c.friendName !== message.from })
+    const removed = state.contacts[message.content].filter(c => {
+      return c.friendName !== message.from
+    })
     if (removed.length === 0) {
       Vue.delete(state.contacts, message.content)
     } else {
@@ -200,7 +202,7 @@ function setCurrentSession(state, from, remark) {
   }
   state.unreadMsgCount -= state.sessions[from].unreadMsgCount
   if (state.sessions[from].unreadMsgCount > 0) {
-      apis.remarkHasRead(from)
+    apis.remarkHasRead(from)
   }
 
   state.sessions[from].unreadMsgCount = 0
@@ -215,6 +217,7 @@ function login(state, userToken) {
   state.realName = userToken.realName || ''
   state.phoneNumber = userToken.phoneNumber || ''
   state.profilePhoto = userToken.profilePhoto || ''
+
   try {
     localStorage.token = userToken.accessToken
     localStorage.username = userToken.username
@@ -248,6 +251,19 @@ function logout(state) {
   state.realName = ''
   state.phoneNumber = ''
   state.profilePhoto = ''
+
+  state.currentFrom = null
+  state.sessions = {}
+  state.messages = {}
+  state.unreadMsgCount = 0
+  state.unreadReqCount = 0
+  state.contacts = {}
+  state.friendsInfo = {}
+  state.requestContacts = []
+  state.connected = false
+  state.lostConnect = false
+  state.unSendMsg = []
+
   try {
     localStorage.removeItem('username')
     localStorage.removeItem('token')

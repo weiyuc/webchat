@@ -22,7 +22,7 @@
       v-model="sheetVisible">
     </mt-actionsheet>
     <div class="upload-btn" v-show="imgData !== ''">
-      <mt-button type="primary" plain @click.native="handleUpload">{{ $t('msg.upload') }}</mt-button>
+      <mt-button type="primary" :disabled="btnDisabled" plain @click.native="handleUpload">{{ $t('msg.upload') }}</mt-button>
     </div>
   </div>
 </template>
@@ -47,7 +47,8 @@
         currentY: 0,
         currentX: 0,
         flag: false,
-        ctx: null
+        ctx: null,
+        btnDisabled: false
       }
     },
     methods: {
@@ -57,12 +58,14 @@
           return
         }
         let vm = this
-        lrz(e.target.files[0], {quality: 0.5}).then(function (rst) {
+        lrz(e.target.files[0], {quality: 0.2}).then(function (rst) {
+
           if (rst.base64Len > 1024 * 1024) {
             vm.imgData = ''
             Toast('图片不能超过1MB')
             return
           }
+
           vm.imgData = rst.base64
           const img = new Image()
           img.src = vm.imgData
@@ -173,9 +176,9 @@
         document.getElementById(this.inputId).click()
       },
       handleUpload() {
+        this.btnDisabled = true
         let top = parseInt(this.top)
         let left = parseInt(this.left)
-
         const imageData = this.ctx.getImageData(left, top - 60, this.cutWidthAndHeight, this.cutWidthAndHeight)
         const bufferCanvas = document.createElement('canvas')
         bufferCanvas.width = this.cutWidthAndHeight
@@ -184,6 +187,7 @@
         bfx.putImageData(imageData, 0, 0)
         const profilePhoto = bufferCanvas.toDataURL()
         this.$emit('onSelected', profilePhoto)
+        this.btnDisabled = false
       }
     }
   }

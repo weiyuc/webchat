@@ -25,7 +25,7 @@ let api = {
     )
   },
   disconnect(cb) {
-    if (this.webSocket) {
+    if (this.webSocket && this.webSocket.connected) {
       const headers = {};
       headers['token'] = store.getters.token
       this.webSocket.unsubscribe()
