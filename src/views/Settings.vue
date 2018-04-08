@@ -26,7 +26,7 @@
     name: 'wc-settings',
     data() {
       return {
-        lang: Vue.config.lang
+        lang: Vue.config.lang,
       }
     },
     computed: {
@@ -67,7 +67,7 @@
           config).then(() => {
           this.$store.dispatch('logout').then(
             () => {
-              window.location.reload()
+              this.$router.push({path: '/login'})
             }
           )
         }).catch(

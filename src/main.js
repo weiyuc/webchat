@@ -32,7 +32,7 @@ axios.interceptors.response.use(function (res) {
     if (~[4003, 4004, 403].indexOf(res.data.responseCode)) {
       Toast(res.data.responseMsg)
       store.dispatch('logout').then(() => {
-        window.location.reload()
+        router.push({path: '/login'})
       })
       return Promise.reject(res.data)
     }

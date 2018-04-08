@@ -73,7 +73,8 @@ export default {
       choosePhoto: '选择照片',
       upload: '上传',
       readFail: '读取图片失败',
-      comingSoon: '敬请期待'
+      comingSoon: '敬请期待',
+      photoTooLarge: '图片太大'
     }
   },
   en: {
@@ -150,7 +151,8 @@ export default {
       choosePhoto: 'Choose photo',
       upload: 'Upload',
       readFail: 'Read file fail',
-      comingSoon: 'Coming soon'
+      comingSoon: 'Coming soon',
+      photoTooLarge: 'Photo was too large'
     }
   }
 }

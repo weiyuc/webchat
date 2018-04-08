@@ -25,6 +25,10 @@ let api = {
     )
   },
   disconnect(cb) {
+    if (this.cleanId !== null) {
+      clearInterval(this.cleanId)
+      this.cleanId = null
+    }
     if (this.webSocket && this.webSocket.connected) {
       const headers = {};
       headers['token'] = store.getters.token

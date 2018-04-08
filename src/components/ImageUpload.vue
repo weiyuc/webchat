@@ -60,9 +60,9 @@
         let vm = this
         lrz(e.target.files[0], {quality: 0.2}).then(function (rst) {
 
-          if (rst.base64Len > 1024 * 1024) {
+          if (rst.base64Len > 1024 * 100) {
             vm.imgData = ''
-            Toast('图片不能超过1MB')
+            Toast(vm.$t('msg.photoTooLarge'))
             return
           }
 
@@ -203,7 +203,6 @@
     background: #333;
     .mint-header {
       background: #000;
-      height: 48px;
     }
     .wc-profile-photo {
 
