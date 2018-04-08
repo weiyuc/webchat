@@ -60,7 +60,7 @@
         let vm = this
         lrz(e.target.files[0], {quality: 0.2}).then(function (rst) {
 
-          if (rst.base64Len > 1024 * 100) {
+          if (rst.base64Len > 1024 * 200) {
             vm.imgData = ''
             Toast(vm.$t('msg.photoTooLarge'))
             return
@@ -187,6 +187,7 @@
         bfx.putImageData(imageData, 0, 0)
         const profilePhoto = bufferCanvas.toDataURL()
         this.$emit('onSelected', profilePhoto)
+        Toast(profilePhoto.length)
         this.btnDisabled = false
       }
     }
