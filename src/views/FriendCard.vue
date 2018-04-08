@@ -62,6 +62,10 @@
         this.$nextTick(() => {
           MessageBox.prompt(this.$t('msg.remark'), config).then(
             ({ value }) => {
+              if (value && value.length > 20) {
+                Toast(this.$t('msg.enterWith20'))
+                return
+              }
               let remark = value
               let friendName = this.friendName
               this.$store.dispatch('setRemark', {

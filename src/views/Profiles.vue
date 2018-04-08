@@ -92,6 +92,10 @@
         this.$nextTick(() => {
           MessageBox.prompt(this.$t('msg.realName'), config).then(
             ({ value }) => {
+              if (value && value.length > 20) {
+                Toast(this.$t('msg.enterWith20'))
+                return
+              }
               let realName = value
               this.$store.dispatch('setRealName', {
                 realName
@@ -132,6 +136,10 @@
         this.$nextTick(() => {
           MessageBox.prompt(this.$t('msg.whatUp'), config).then(
             ({ value }) => {
+              if (value && value.length > 150) {
+                Toast(this.$t('msg.enterWith150'))
+                return
+              }
               let whatUp = value
               this.$store.dispatch('setWhatUp', {
                 whatUp
