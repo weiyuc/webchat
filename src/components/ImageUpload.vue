@@ -187,7 +187,6 @@
         bfx.putImageData(imageData, 0, 0)
         const profilePhoto = bufferCanvas.toDataURL()
         this.$emit('onSelected', profilePhoto)
-        Toast(profilePhoto.length)
         this.btnDisabled = false
       }
     }
