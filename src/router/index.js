@@ -9,7 +9,7 @@ import Search from '@/views/Search'
 import FriendCard from '@/views/FriendCard'
 import Settings from '@/views/Settings'
 import Profiles from '@/views/Profiles'
-import NearbyPeople from '@/Views/NearbyPeople'
+import NearbyPeople from '@/views/NearbyPeople'
 
 import ImgUpload from '@/components/ImageUpload'
 
