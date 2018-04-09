@@ -9,7 +9,7 @@
       <span slot="icon" class="cell-icon moments icon icon-camera">
       </span>
     </mt-cell>
-    <mt-cell is-link :title="$t('msg.nearBy')" @click.native="comingSoon">
+    <mt-cell is-link :title="$t('msg.nearBy')" to="/NearbyPeople">
       <span slot="icon" class="cell-icon near-by icon icon-man-woman">
       </span>
     </mt-cell>

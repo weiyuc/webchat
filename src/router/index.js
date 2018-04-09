@@ -9,6 +9,7 @@ import Search from '@/views/Search'
 import FriendCard from '@/views/FriendCard'
 import Settings from '@/views/Settings'
 import Profiles from '@/views/Profiles'
+import NearbyPeople from '@/Views/NearbyPeople'
 
 import ImgUpload from '@/components/ImageUpload'
 
@@ -60,6 +61,11 @@ const router = new Router({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path: '/nearbyPeople',
+      name: 'nearbyPeople',
+      component: NearbyPeople
     },
     {
       path: '/profiles',
