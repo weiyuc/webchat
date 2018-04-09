@@ -2,7 +2,7 @@ import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import * as messageType from './messageType'
 import * as mutationTypes from '../store/mutation-types'
-import { MessageBox, Toast } from 'mint-ui'
+import { MessageBox, Toast, Indicator } from 'mint-ui'
 import store from '../store'
 import axios from 'axios'
 import i18n from '../i18n'
@@ -205,8 +205,10 @@ let api = {
     )
   },
   setRemark({remark, friendName}, cb) {
+    Indicator.open()
     axios.post('/apis/friend/setRemark', {remark: remark, friendName}).then(
       () => {
+        Indicator.close()
         cb(true)
       },
       () => {
@@ -215,8 +217,10 @@ let api = {
     )
   },
   setRealName({realName}, cb) {
+    Indicator.open()
     axios.post('/apis/user/setRealName', {realName}).then(
       () => {
+        Indicator.close()
         cb(true)
       },
       () => {
@@ -225,8 +229,10 @@ let api = {
     )
   },
   setGender({gender}, cb) {
+    Indicator.open()
     axios.post('/apis/user/setGender', {gender}).then(
       () => {
+        Indicator.close()
         cb(true)
       },
       () => {
@@ -235,8 +241,10 @@ let api = {
     )
   },
   setWhatUp({whatUp}, cb) {
+    Indicator.open()
     axios.post('/apis/user/setWhatUp', {whatUp}).then(
       () => {
+        Indicator.close()
         cb(true)
       },
       () => {
