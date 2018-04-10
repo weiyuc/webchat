@@ -15,6 +15,7 @@ const state = {
   contacts: {},
   friendsInfo: {},
   requestContacts: [],
+  nearbyPeoples: [],
 
   username: localStorage.username || '',
   token: localStorage.token || '',

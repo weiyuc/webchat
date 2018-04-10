@@ -112,6 +112,21 @@ export const getUnReadMessages = ({commit}) => {
   })
 }
 
+export const getNearbyPeoples = ({commit}, payload) => {
+  return new Promise((resolve) => {
+    api.getNearbyPeoples(payload, nearbyPeoples => {
+      if (nearbyPeoples === -1) {
+        resolve(false)
+      } else {
+        if (nearbyPeoples && nearbyPeoples.length > 0) {
+          commit(types.GET_NEARBY_PEOPLE, {nearbyPeoples})
+        }
+        resolve(true)
+      }
+    })
+  })
+}
+
 export const dealFriendReq = ({commit}, payload) => {
   return new Promise((resolve) => {
     api.dealFriendReq(payload, (res) => {

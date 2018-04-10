@@ -13,7 +13,7 @@ const debug = true
 let api = {
   webSocket: null,
   reconnecting: false,
-  cleanId: null,
+  cleanId: -1,
   login({username, password}, cb) {
     axios.post('/apis/user/login', {username, password}).then(
       res => {
@@ -25,9 +25,9 @@ let api = {
     )
   },
   disconnect(cb) {
-    if (this.cleanId !== null) {
+    if (this.cleanId !== -1) {
       clearInterval(this.cleanId)
-      this.cleanId = null
+      this.cleanId = -1
     }
     if (this.webSocket && this.webSocket.connected) {
       const headers = {};
@@ -106,14 +106,14 @@ let api = {
     store.commit(mutationTypes.LOST_CONNECT, true)
     store.commit(mutationTypes.SET_CONNECTED, false)
     this.checkUnsentMsgTimeout()
-    if (this.cleanId === null) {
+    if (this.cleanId === -1) {
       this.reconnect()
     }
 
   },
   reconnect() {
     this.cleanId = setInterval(() => {
-      if (this.reconnecting) {
+      if (this.reconnecting || this.cleanId === -1) {
         return
       }
       this.reconnecting = true
@@ -126,7 +126,7 @@ let api = {
       ).then(
         () => {
           clearInterval(vm.cleanId)
-          vm.cleanId = null
+          vm.cleanId = -1
           store.commit(mutationTypes.LOST_CONNECT, false)
           store.dispatch('getContacts')
           store.dispatch('getUnReadMessages')
@@ -264,6 +264,16 @@ let api = {
   },
   getUnReadMessages(cb) {
     axios.get('/apis/message/getUnReadMessages').then(
+      (res) => {
+        cb(res.responseData)
+      },
+      () => {
+        cb(-1)
+      }
+    )
+  },
+  getNearbyPeoples({x, y}, cb) {
+    axios.post('/apis/user/getNearbyPeoples', {x, y}).then(
       (res) => {
         cb(res.responseData)
       },

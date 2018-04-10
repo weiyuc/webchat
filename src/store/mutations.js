@@ -152,6 +152,9 @@ export default {
   [types.REMOVE_UNSENT_MESSAGE] (state, id) {
     state.unSendMsg.splice(id, 1)
   },
+  [types.GET_NEARBY_PEOPLE] (state, nearbyPeoples) {
+    state.nearbyPeoples = nearbyPeoples
+  },
   setActive(state, active) {
     state.active = active
   }

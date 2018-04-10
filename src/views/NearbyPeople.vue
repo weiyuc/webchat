@@ -9,10 +9,15 @@
       latitude: {{position.latitude}}
       longitude: {{position.longitude}}
     </div>
+    <div v-for="p in nearbyPeoples">
+      <p>{{ p.username }}</p>
+    </div>
   </div>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'
+  import {mapGetters} from 'vuex'
+
   export default {
     name: 'wc-nearby-people',
     data() {
@@ -20,10 +25,14 @@
         position: {
           latitude: -1,
           longitude: -1
-        }
+        },
+        nearbyPeoples: []
       }
     },
     methods: {
+      ...mapGetters([
+        'nearbyPeoples'
+      ]),
       getPosition() {
         const geo_options = {
           enableHighAccuracy: true,
@@ -37,11 +46,26 @@
           const longitude = position.coords.longitude
           vm.position.latitude = latitude
           vm.position.longitude = longitude
-          Indicator.close()
+          vm.getNearbyPeoples(latitude, longitude)
         }, () => {
           Toast('Unable to retrieve your location')
           Indicator.close()
-        }, geo_options);
+        }, geo_options)
+      },
+      getNearbyPeoples(x, y) {
+        this.$store.dispatch('getNearbyPeoples', {x, y}).then(
+          () => {
+            Indicator.close()
+          },
+          () => {
+            Indicator.close()
+          }
+        )
+      },
+      back() {
+        window.history.length > 1
+          ? this.$router.go(-1)
+          : this.$router.push('/')
       }
     },
     mounted() {

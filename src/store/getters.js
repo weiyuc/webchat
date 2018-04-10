@@ -41,11 +41,6 @@ export const connected = state => state.connected
 
 export const lostConnect = state => state.lostConnect
 
-//TODO fix it
-export const isLogin = state => {
-  return state.token && state.expiredTime && state.expiredTime > Date.now()
-}
-
 export const unSendMsg = state => state.unSendMsg
 
 export const profilePhoto = state => state.profilePhoto

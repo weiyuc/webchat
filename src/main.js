@@ -21,6 +21,7 @@ Vue.use(Mint)
 
 axios.interceptors.request.use(function (config) {
   config.headers.token = store.getters.token
+  config.timeout = 6000
   return config
 }, function (error) {
   return Promise.reject(error)
@@ -55,7 +56,7 @@ Vue.filter('time', timestamp => {
 
 Vue.config.productionTip = false
 
-if (store.getters.isLogin) {
+if (store.getters.token && store.getters.expiredTime > Date.now()) {
   store.dispatch('getContacts')
   store.dispatch('getUnReadMessages')
 }

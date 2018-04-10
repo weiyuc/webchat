@@ -91,18 +91,18 @@ router.beforeEach((to, from, next) => {
       store.commit('LOGOUT')
       return next({path: '/login'})
     } else {
-      if (!store.getters.connected) {
-        store.dispatch('subscribe_msg',
-          {
-            accessToken: store.getters.token,
-            username: store.getters.username
-          }
-        ).catch(
-          () => {
-            //ignore
-          }
-        )
-      }
+      // if (!store.getters.connected) {
+      //   store.dispatch('subscribe_msg',
+      //     {
+      //       accessToken: store.getters.token,
+      //       username: store.getters.username
+      //     }
+      //   ).catch(
+      //     () => {
+      //       //ignore
+      //     }
+      //   )
+      // }
       if (from.fullPath === '/messageSection') {
         store.dispatch('clearSession').then(
           () => {
@@ -115,18 +115,18 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (store.getters.token && store.getters.expiredTime > Date.now()) {
-      if (!store.getters.connected) {
-        store.dispatch('subscribe_msg',
-          {
-            accessToken: store.getters.token,
-            username: store.getters.username
-          }
-        ).catch(
-          () => {
-            //ignore
-          }
-        )
-      }
+      // if (!store.getters.connected) {
+      //   store.dispatch('subscribe_msg',
+      //     {
+      //       accessToken: store.getters.token,
+      //       username: store.getters.username
+      //     }
+      //   ).catch(
+      //     () => {
+      //       //ignore
+      //     }
+      //   )
+      // }
       return next({path: '/'})
     }
     return next()
