@@ -5,10 +5,6 @@
         <mt-button icon="back">{{$t('msg.back')}}</mt-button>
       </a>
     </mt-header>
-    <div v-show="position.latitude !== -1">
-      latitude: {{position.latitude}}
-      longitude: {{position.longitude}}
-    </div>
     <div v-for="p in nearbyPeoples">
       <p>{{ p.username }}</p>
     </div>
@@ -43,9 +39,9 @@
         window.navigator.geolocation.getCurrentPosition((position) => {
           const latitude = position.coords.latitude
           const longitude = position.coords.longitude
-          vm.position.latitude = latitude
           vm.position.longitude = longitude
-          vm.getNearbyPeoples(latitude, longitude)
+          vm.position.latitude = latitude
+          vm.getNearbyPeoples(longitude, latitude)
         }, (err) => {
           console.error(err)
           Toast('Unable to retrieve your location')

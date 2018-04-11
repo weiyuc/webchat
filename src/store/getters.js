@@ -48,3 +48,5 @@ export const profilePhoto = state => state.profilePhoto
 export const friendsInfo = state => state.friendsInfo
 
 export const isAlertTips = state => state.isAlertTips
+
+export const nearbyPeoples = state => state.nearbyPeoples
