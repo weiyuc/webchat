@@ -80,6 +80,25 @@ const router = new Router({
   ]
 })
 
+function checkToken() {
+  return store.getters.expiredTime && store.getters.expiredTime > Date.now()
+}
+
+function subscribe() {
+  if (!store.getters.connected) {
+    store.dispatch('subscribe_msg',
+      {
+        accessToken: store.getters.token,
+        username: store.getters.username
+      }
+    ).catch(
+      () => {
+        //ignore
+      }
+    )
+  }
+}
+
 const un_check_url = ['/login', '/register']
 
 router.beforeEach((to, from, next) => {
@@ -87,22 +106,11 @@ router.beforeEach((to, from, next) => {
     if (!store.getters.token) {
       return next({path: '/login'})
     }
-    if (!store.getters.expiredTime || store.getters.expiredTime < Date.now()) {
+    if (!checkToken()) {
       store.commit('LOGOUT')
       return next({path: '/login'})
     } else {
-      // if (!store.getters.connected) {
-      //   store.dispatch('subscribe_msg',
-      //     {
-      //       accessToken: store.getters.token,
-      //       username: store.getters.username
-      //     }
-      //   ).catch(
-      //     () => {
-      //       //ignore
-      //     }
-      //   )
-      // }
+      subscribe()
       if (from.fullPath === '/messageSection') {
         store.dispatch('clearSession').then(
           () => {
@@ -114,19 +122,8 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (store.getters.token && store.getters.expiredTime > Date.now()) {
-      // if (!store.getters.connected) {
-      //   store.dispatch('subscribe_msg',
-      //     {
-      //       accessToken: store.getters.token,
-      //       username: store.getters.username
-      //     }
-      //   ).catch(
-      //     () => {
-      //       //ignore
-      //     }
-      //   )
-      // }
+    if (checkToken()) {
+      subscribe()
       return next({path: '/'})
     }
     return next()

@@ -25,8 +25,7 @@
         position: {
           latitude: -1,
           longitude: -1
-        },
-        nearbyPeoples: []
+        }
       }
     },
     methods: {
@@ -37,17 +36,18 @@
         const geo_options = {
           enableHighAccuracy: true,
           maximumAge: 30000,
-          timeout: 3000
+          timeout: 10000
         }
         Indicator.open()
         let vm = this
-        navigator.geolocation.getCurrentPosition((position) => {
+        window.navigator.geolocation.getCurrentPosition((position) => {
           const latitude = position.coords.latitude
           const longitude = position.coords.longitude
           vm.position.latitude = latitude
           vm.position.longitude = longitude
           vm.getNearbyPeoples(latitude, longitude)
-        }, () => {
+        }, (err) => {
+          console.error(err)
           Toast('Unable to retrieve your location')
           Indicator.close()
         }, geo_options)
