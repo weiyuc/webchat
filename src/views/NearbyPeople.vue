@@ -91,8 +91,7 @@
       }
     },
     mounted() {
-//      this.getPosition()
-      this.getNearbyPeoples(114.2291376, 30.6236283)
+      this.getPosition()
     }
   }
 </script>
@@ -110,7 +109,7 @@
         .mint-cell-title {
           position: absolute;
           left: 60px;
-          top: 5px;
+          top: 6px;
         }
       }
     }

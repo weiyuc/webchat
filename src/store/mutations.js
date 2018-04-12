@@ -123,6 +123,7 @@ export default {
     } else {
       Vue.set(state.contacts, message.content, [contact])
     }
+    Vue.set(state.friendsInfo, message.from, {username: message.from})
   },
   [types.DELETE_FRIEND] (state, message) {
     const removed = state.contacts[message.content].filter(c => {
