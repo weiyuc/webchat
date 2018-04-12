@@ -4,7 +4,7 @@
     :title="session.remark || session.from"
     :label="session.lastMessage.content"
     >
-      <wc-profile-photo :photo="profilePhoto" :content="this.session.remark || this.session.from">
+      <wc-profile-photo :username="session.from" :realName="session.remark">
       </wc-profile-photo>
     </mt-cell>
     <span  class="time">{{ session.lastMessage.timestamp | time }}</span>

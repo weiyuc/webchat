@@ -1,7 +1,7 @@
 <template>
   <div class="text-icon" :style="{'width': width + 'px', 'height': height + 'px'}">
-    <img v-show="showPhoto" :src="myself ? profilePhoto : photo" :width="width" :height="height" />
-    <span v-show="!showPhoto" :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px', 'background-color': hashColor}">
+    <img v-if="showPhoto" :src="myself ? profilePhoto : userInfo.profilePhoto" :width="width" :height="height" />
+    <span v-else :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px', 'background-color': hashColor}">
       {{ textIcon }}
     </span>
   </div>
@@ -27,53 +27,66 @@
         type: Number,
         default: 44
       },
-      content: {
-        type: String,
-        default: ''
+      username: {
+        type: String
       },
-      photo: {
-        type: String,
-        default: ''
+      realName: {
+        type: String
       },
       myself: {
-        type: Boolean,
-        default: false
+        type: Boolean
       }
     },
     computed: {
-      ...mapGetters([
-        'profilePhoto',
-        'username',
-        'realName'
-      ]),
+      ...mapGetters({
+        profilePhoto: 'profilePhoto',
+        selfName: 'username',
+        selfRealName: 'realName',
+        friendsInfo: 'friendsInfo'
+      }),
+      userInfo() {
+        return this.friendsInfo[this.username]
+      },
       showPhoto() {
-        return this.myself ? this.profilePhoto !== null && this.profilePhoto !== '' : this.photo !== null && this.photo !== ''
+        if (this.myself) {
+          return this.profilePhoto !== null && this.profilePhoto !== ''
+        }
+        return this.userInfo && this.userInfo.profilePhoto
       },
       textIcon() {
         if (this.myself) {
-          if (this.realName) {
-            if (this.realName.length === 1) {
-              return this.realName.toLocaleUpperCase()
+          if (this.selfRealName) {
+            if (this.selfRealName.length === 1) {
+              return this.selfRealName.toLocaleUpperCase()
             }
-            return this.realName.charAt(0).toLocaleUpperCase()
+            return this.selfRealName.charAt(0).toLocaleUpperCase()
           }
-          return this.username.charAt(0).toLocaleUpperCase()
+          return this.selfName.charAt(0).toLocaleUpperCase()
         }
-        if (this.content.length === 1) {
-          return this.content.toLocaleUpperCase()
+
+        if (this.realName) {
+          if (this.realName.length === 1) {
+            return this.realName.toLocaleUpperCase()
+          }
+          return this.realName.charAt(0).toLocaleUpperCase()
         }
-        return this.content.charAt(0).toLocaleUpperCase()
+        return this.username.charAt(0).toLocaleUpperCase()
+
       },
       hashColor() {
         let str
         if (this.myself) {
+          if (this.selfRealName) {
+            str = this.selfRealName
+          } else {
+            str = this.selfName
+          }
+        } else {
           if (this.realName) {
             str = this.realName
           } else {
             str = this.username
           }
-        } else {
-          str = this.content
         }
         const hash = Math.abs(hashCode(str))
         return this.colors[hash % this.colors.length]

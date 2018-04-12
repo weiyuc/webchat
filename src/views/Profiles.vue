@@ -7,7 +7,7 @@
     </mt-header>
 
     <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
-      <wc-profile-photo :myself="true" v-show="imgData === ''" ></wc-profile-photo>
+      <wc-profile-photo :myself="true" ></wc-profile-photo>
       <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
     </mt-cell>
     <wc-img-upload v-if="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>

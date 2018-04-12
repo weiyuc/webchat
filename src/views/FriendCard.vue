@@ -4,7 +4,7 @@
         <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
     </mt-header>
     <mt-cell style="min-height: 60px;" isLink>
-      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :photo="profilePhoto" :content="contact.remark || friendName">
+      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="contact.remark">
       </wc-profile-photo>
       <div slot="title" class="info-title">
         <p>{{ nickname }}</p>

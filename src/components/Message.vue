@@ -10,7 +10,7 @@
       {{ message.content }}
     </div>
 
-    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :photo="profilePhoto" :content="this.session.remark || this.session.from">
+    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :username="session.from" :realName="session.remark">
     </wc-profile-photo>
   </li>
 </template>
