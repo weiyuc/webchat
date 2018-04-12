@@ -18,7 +18,6 @@ export const subscribe_msg = ({commit}, payload) => {
   return new Promise((resolve, reject) => {
     api.subscribe(payload, (connected) => {
       if (connected) {
-        getUnreadFriendReq({commit})
         resolve()
       } else {
         reject()
@@ -119,7 +118,7 @@ export const getNearbyPeoples = ({commit}, payload) => {
         resolve(false)
       } else {
         if (nearbyPeoples && nearbyPeoples.length > 0) {
-          commit(types.GET_NEARBY_PEOPLE, {nearbyPeoples})
+          commit(types.GET_NEARBY_PEOPLE, nearbyPeoples)
         }
         resolve(true)
       }

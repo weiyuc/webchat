@@ -59,6 +59,7 @@ Vue.config.productionTip = false
 if (store.getters.token && store.getters.expiredTime > Date.now()) {
   store.dispatch('getContacts')
   store.dispatch('getUnReadMessages')
+  store.dispatch('getUnreadFriendReq')
 }
 
 new Vue({

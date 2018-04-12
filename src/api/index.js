@@ -100,7 +100,7 @@ let api = {
     this.resendAllMsg()
   },
   errorCallback() {
-    if (!store.getters.isLogin) {
+    if (!store.getters.expiredTime || store.getters.expiredTime < Date.now()) {
       return
     }
     store.commit(mutationTypes.LOST_CONNECT, true)

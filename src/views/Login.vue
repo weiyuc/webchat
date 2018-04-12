@@ -52,6 +52,7 @@
                 Indicator.close()
                 this.$store.dispatch('getContacts')
                 this.$store.dispatch('getUnReadMessages')
+                this.$store.dispatch('getUnreadFriendReq')
                 this.$router.push({path: '/'})
               })
             },
