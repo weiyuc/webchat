@@ -1,7 +1,7 @@
 <template>
   <div class="text-icon" :style="{'width': width + 'px', 'height': height + 'px'}">
-    <img v-if="showPhoto" :src="myself ? profilePhoto : photo" :width="width" :height="height" />
-    <span v-else :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px', 'background-color': hashColor}">
+    <img v-show="showPhoto" :src="myself ? profilePhoto : photo" :width="width" :height="height" />
+    <span v-show="!showPhoto" :style="{'width': width + 'px', 'height': height + 'px', 'line-height': height + 'px', 'background-color': hashColor}">
       {{ textIcon }}
     </span>
   </div>
