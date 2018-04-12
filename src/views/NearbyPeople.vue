@@ -6,7 +6,7 @@
       </a>
     </mt-header>
     <div class="nearby-people-list">
-      <mt-cell  v-for="(p, i) in nearbyPeoples" isLink to="" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
+      <mt-cell  v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
         <wc-profile-photo :content="p.username" :width="35" :height="35">
         </wc-profile-photo>
       </mt-cell>
@@ -30,7 +30,10 @@
       }
     },
     computed: {
-      ...mapGetters(['nearbyPeoples'])
+      ...mapGetters([
+        'nearbyPeoples',
+        'friendsInfo'
+      ])
     },
     methods: {
       back() {

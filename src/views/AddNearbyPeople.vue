@@ -1,0 +1,97 @@
+<template>
+  <div class="add-nearby">
+    <mt-header :title="$t('msg.nearBy')">
+      <a href="javascript:;" slot="left" @click="back">
+        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+      </a>
+    </mt-header>
+
+    <div class="user-info">
+      <img src="../assets/img/webchat.png"/>
+      <p>
+        {{ friendName }}
+      </p>
+      <mt-button type="primary" size="small" @click="addFriend">{{ $t('msg.add') }}</mt-button>
+    </div>
+
+    <mt-popup v-model="popupVisible" :closeOnClickModal="false" position="top" class="mint-popup-2">
+      <p>{{ $t('msg.reqSuccess') }}</p>
+    </mt-popup>
+  </div>
+</template>
+<script>
+  import {MessageBox} from 'mint-ui'
+  export default {
+    name: 'wc-search',
+    data() {
+      return  {
+        popupVisible: false
+      }
+    },
+    props: {
+      friendName: {
+        type: String
+      }
+    },
+    methods: {
+      addFriend() {
+        this.$http.post('/apis/friend/addFriend', {
+          friendName: this.friendName
+        }).then(
+          res => {
+            if (res.responseCode === 0) {
+              this.popupVisible = true
+              setTimeout(() => {
+                this.popupVisible = false
+                this.$router.go(-1)
+              }, 2000)
+            }
+          }
+        )
+      },
+      back() {
+        window.history.length > 1
+          ? this.$router.go(-1)
+          : this.$router.push('/')
+      },
+    }
+  }
+</script>
+<style lang="scss">
+  .add-nearby {
+    .line {
+      height: 10px;
+      margin-top: 48px;
+      background-color: #d9d9d9;
+    }
+    .user-info {
+      text-align: center;
+      margin-top: 20px;
+      > p {
+        font-size: 18px;
+      }
+      > button {
+        width: 70%;
+      }
+    }
+
+    .no-data {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .mint-popup-2 {
+      width: 100%;
+      height: 50px;
+      text-align: center;
+      background-color: rgba(0,0,0,.7);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      color: #fff;
+    }
+
+    .v-modal {
+      background: transparent !important;
+    }
+  }
+</style>

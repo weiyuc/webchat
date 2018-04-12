@@ -10,6 +10,7 @@ import FriendCard from '@/views/FriendCard'
 import Settings from '@/views/Settings'
 import Profiles from '@/views/Profiles'
 import NearbyPeople from '@/views/NearbyPeople'
+import AddNearbyPeople from '@/views/AddNearbyPeople'
 
 import ImgUpload from '@/components/ImageUpload'
 
@@ -66,6 +67,14 @@ const router = new Router({
       path: '/nearbyPeople',
       name: 'nearbyPeople',
       component: NearbyPeople
+    },
+    {
+      path: '/AddNearbyPeople',
+      name: 'AddNearbyPeople',
+      component: AddNearbyPeople,
+      props: (route) => ({
+        friendName: route.query.friendName
+      })
     },
     {
       path: '/profiles',
