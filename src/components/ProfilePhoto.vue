@@ -75,17 +75,9 @@
       hashColor() {
         let str
         if (this.myself) {
-          if (this.selfRealName) {
-            str = this.selfRealName
-          } else {
-            str = this.selfName
-          }
+          str = this.selfName
         } else {
-          if (this.realName) {
-            str = this.realName
-          } else {
-            str = this.username
-          }
+          str = this.username
         }
         const hash = Math.abs(hashCode(str))
         return this.colors[hash % this.colors.length]
