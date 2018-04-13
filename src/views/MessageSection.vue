@@ -14,9 +14,11 @@
         </message>
       </ul>
     </div>
-    <mt-field type="search" v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
-      <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
-    </mt-field>
+    <form id="msgForm" @submit="sendMessage">
+      <mt-field type="search" v-model="msg" id="msgInput" class="bottom-input">
+        <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
+      </mt-field>
+    </form>
   </div>
 </template>
 
@@ -78,9 +80,6 @@
       if (!this.session || Object.keys(this.session).length === 0) {
         this.$router.push('/')
       }
-      setInterval(function () {
-        document.getElementById('msgInput').scrollIntoView(false)
-      }, 200)
     }
   }
 </script>
