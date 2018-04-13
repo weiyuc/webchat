@@ -14,7 +14,7 @@
         </message>
       </ul>
     </div>
-    <mt-field v-model="msg" @keyup.enter.native="sendMessage" class="bottom-input">
+    <mt-field v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
       <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
     </mt-field>
   </div>
@@ -78,6 +78,9 @@
       if (!this.session || Object.keys(this.session).length === 0) {
         this.$router.push('/')
       }
+      setInterval(function () {
+        document.getElementById('msgInput').scrollIntoView(false)
+      }, 200)
     }
   }
 </script>
@@ -100,8 +103,8 @@
         -webkit-overflow-scrolling: touch;
       }
       background: url("../assets/img/bg.png") no-repeat;
-      background-size:100% 100%;
-      -moz-background-size:100% 100%;
+      background-size: 100% 100%;
+      -moz-background-size: 100% 100%;
     }
     .bottom-input {
       width: 100%;
