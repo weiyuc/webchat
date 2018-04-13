@@ -7,7 +7,7 @@
     </mt-header>
 
     <div class="user-info">
-      <img src="../assets/img/webchat.png"/>
+      <img :src="`/apis/user/getProfilePhoto/${friendName}`" @error="onLoadError"/>
       <p>
         {{ friendName }}
       </p>
@@ -25,7 +25,8 @@
     name: 'wc-search',
     data() {
       return  {
-        popupVisible: false
+        popupVisible: false,
+        defaultImg: require('../assets/img/webchat.png')
       }
     },
     props: {
@@ -54,6 +55,10 @@
           ? this.$router.go(-1)
           : this.$router.push('/')
       },
+      onLoadError(e) {
+        e.target.src = this.defaultImg
+        e.target.onerror = null
+      }
     }
   }
 </script>

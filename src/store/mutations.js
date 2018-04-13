@@ -33,6 +33,9 @@ export default {
   [types.GET_FRIEND_INFO] (state, {friendName, friendInfo}) {
     Vue.set(state.friendsInfo, friendName, friendInfo)
   },
+  [types.CLEAR_FRIEND_INFO] (state) {
+    state.friendsInfo = []
+  },
   [types.SWITCH_SESSION] (state, {from, remark}) {
     setCurrentSession(state, from, remark)
   },

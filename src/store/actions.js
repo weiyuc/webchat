@@ -29,6 +29,8 @@ export const subscribe_msg = ({commit}, payload) => {
 export const getContacts = ({commit}) => {
   api.getContacts(contacts => {
     if (contacts) {
+      commit(types.GET_CONTACTS, contacts)
+      commit(types.CLEAR_FRIEND_INFO)
       for (let index in contacts) {
         let contact = contacts[index]
         contact.forEach(c => {
@@ -40,7 +42,6 @@ export const getContacts = ({commit}) => {
           }
         })
       }
-      commit(types.GET_CONTACTS, contacts)
     }
   })
 }

@@ -91,7 +91,9 @@
       }
     },
     mounted() {
-      this.getPosition()
+//      this.getPosition()
+      this.getNearbyPeoples(114.2291376, 30.6236283)
+
     }
   }
 </script>
