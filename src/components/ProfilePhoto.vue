@@ -71,7 +71,6 @@
           return this.realName.charAt(0).toLocaleUpperCase()
         }
         return this.username.charAt(0).toLocaleUpperCase()
-
       },
       hashColor() {
         let str

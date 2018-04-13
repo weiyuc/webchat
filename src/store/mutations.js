@@ -31,7 +31,7 @@ export default {
     state.contacts = contacts
   },
   [types.GET_FRIEND_INFO] (state, {friendName, friendInfo}) {
-    state.friendsInfo[friendName] = friendInfo
+    Vue.set(state.friendsInfo, friendName, friendInfo)
   },
   [types.SWITCH_SESSION] (state, {from, remark}) {
     setCurrentSession(state, from, remark)
