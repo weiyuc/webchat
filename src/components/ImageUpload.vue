@@ -185,7 +185,7 @@
         bufferCanvas.height = this.cutWidthAndHeight
         const bfx = bufferCanvas.getContext('2d')
         bfx.putImageData(imageData, 0, 0)
-        const profilePhoto = bufferCanvas.toDataURL()
+        const profilePhoto = bufferCanvas.toDataURL('image/png', 0.5)
         this.$emit('onSelected', profilePhoto)
         this.btnDisabled = false
       }
