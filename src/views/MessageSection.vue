@@ -14,8 +14,8 @@
         </message>
       </ul>
     </div>
-    <form id="msgForm" @submit="sendMessage">
-      <mt-field type="search" v-model="msg" id="msgInput" class="bottom-input">
+    <form action=".">
+      <mt-field type="search" v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
         <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
       </mt-field>
     </form>
