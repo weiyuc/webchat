@@ -65,7 +65,6 @@
             Toast(vm.$t('msg.photoTooLarge'))
             return
           }
-
           vm.imgData = rst.base64
           const img = new Image()
           img.src = vm.imgData
@@ -185,8 +184,7 @@
         bufferCanvas.height = this.cutWidthAndHeight
         const bfx = bufferCanvas.getContext('2d')
         bfx.putImageData(imageData, 0, 0)
-        const profilePhoto = bufferCanvas.toDataURL('image/png', 0.2)
-        Toast(profilePhoto.length)
+        const profilePhoto = bufferCanvas.toDataURL('image/jpeg', 0.7)
         this.$emit('onSelected', profilePhoto)
         this.btnDisabled = false
       }
