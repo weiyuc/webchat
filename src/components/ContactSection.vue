@@ -9,7 +9,7 @@
         </mt-badge>
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
-        <mt-cell v-for="(n, j) in v" :key="j" :title="n.remark || n.friendName" @click.native="toFriendCard(n.friendName)">
+        <mt-cell v-for="(n, j) in v" :key="j" :title="(friendsInfo[n.friendName] ? friendsInfo[n.friendName].remark : '') || n.friendName" @click.native="toFriendCard(n.friendName)">
           <wc-profile-photo :width="35" :height="35" :username="n.friendName" :realName="n.remark">
           </wc-profile-photo>
         </mt-cell>
@@ -27,7 +27,8 @@
     computed: {
       ...mapGetters([
         'contacts',
-        'unreadReqCount'
+        'unreadReqCount',
+        'friendsInfo'
       ]),
       unreadReqCountFormat() {
         return this.unreadReqCount > 99 ? '99+' : this.unreadReqCount
