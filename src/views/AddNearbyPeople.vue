@@ -7,7 +7,7 @@
     </mt-header>
 
     <div class="user-info">
-      <img :src="`/apis/user/getProfilePhoto/${friendName}`" @error="onLoadError"/>
+      <img width="82px" height="82px" :src="`/apis/user/getProfilePhoto/${friendName}`" @error="onLoadError"/>
       <p>
         {{ friendName }}
       </p>

@@ -6,10 +6,11 @@
       </a>
     </mt-header>
     <div class="nearby-people-list">
-      <mt-cell  v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
+      <mt-cell v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
         <wc-profile-photo :username="p.username" :width="35" :height="35">
         </wc-profile-photo>
       </mt-cell>
+      <div v-show="nearbyPeoples.length === 0" class="no-data">{{ $t('msg.noData') }}</div>
     </div>
   </div>
 </template>
@@ -113,6 +114,11 @@
           left: 60px;
           top: 6px;
         }
+      }
+      .no-data {
+        height: 40px;
+        padding-top: 20px;
+        text-align: center;
       }
     }
   }
