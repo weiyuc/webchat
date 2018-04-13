@@ -1,7 +1,7 @@
 <template>
   <div class="contact-section" ref="contactSection">
     <mt-index-list :height="height">
-      <mt-cell class="mt-20" :title="$t('msg.newFriends')" @click.native="toNewFriend">
+      <mt-cell class="mt-20 new-friend" :title="$t('msg.newFriends')" @click.native="toNewFriend">
         <span slot="icon" class="new-friend-icon cell-icon icon icon-user-plus">
         </span>
         <mt-badge size="small" color="red" v-show="unreadReqCount">
@@ -48,6 +48,13 @@
 </script>
 <style lang="scss">
   .contact-section {
+    .new-friend {
+      .mint-badge {
+        position: absolute;
+        top: 16px;
+        right: 27px;
+      }
+    }
     .new-friend-icon {
       font-size: 24px;
       vertical-align: middle;
