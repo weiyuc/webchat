@@ -95,7 +95,7 @@ export default {
   [types.SET_MASK] (state, {friendName, remark}) {
     let info = state.friendsInfo[friendName]
     if (info) {
-      info.remark = remark
+      Vue.set(state.friendsInfo[friendName], 'remark', remark)
     } else {
       state.friendsInfo[friendName] = {remark}
     }

@@ -100,6 +100,7 @@
           this.$store.dispatch('dealFriendReq',
             {
               friendName: this.friendName,
+              remark: this.contact.remark,
               status: 4
             }
           ).then(
