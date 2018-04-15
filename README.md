@@ -1,6 +1,11 @@
 # webchat
 
-> A realtime chat for web, backend built by java
+> A realtime chat for browser, backend built by java
+
+## Document
+[中文](https://github.com/weiyuc/webchat/edit/master/README.md)
+
+[English](https://github.com/weiyuc/webchat/edit/master/README_EN.md)
 
 ## Build Setup
 
