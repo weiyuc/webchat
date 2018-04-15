@@ -45,7 +45,7 @@
       getPosition() {
         const geo_options = {
           enableHighAccuracy: false,
-          maximumAge: 30000,
+          maximumAge: 0,
           timeout: 10000
         }
         Indicator.open()

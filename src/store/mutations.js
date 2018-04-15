@@ -34,7 +34,7 @@ export default {
     Vue.set(state.friendsInfo, friendName, friendInfo)
   },
   [types.CLEAR_FRIEND_INFO] (state) {
-    state.friendsInfo = []
+    state.friendsInfo = {}
   },
   [types.SWITCH_SESSION] (state, {from, remark}) {
     setCurrentSession(state, from, remark)
@@ -100,7 +100,7 @@ export default {
     if (info) {
       Vue.set(state.friendsInfo[friendName], 'remark', remark)
     } else {
-      state.friendsInfo[friendName] = {remark}
+      Vue.set(state.friendsInfo, friendName, {remark})
     }
   },
   [types.ADD_REQ_CONTACT] (state, username) {

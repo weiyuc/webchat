@@ -10,7 +10,7 @@
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
         <mt-cell v-for="(n, j) in v" :key="j" :title="(friendsInfo[n.friendName] ? friendsInfo[n.friendName].remark : '') || n.friendName" @click.native="toFriendCard(n.friendName)">
-          <wc-profile-photo :width="35" :height="35" :username="n.friendName" :realName="n.remark">
+          <wc-profile-photo :width="35" :height="35" :username="n.friendName" :realName="friendsInfo[n.friendName] ? friendsInfo[n.friendName].remark : ''">
           </wc-profile-photo>
         </mt-cell>
       </mt-index-section>
@@ -53,7 +53,7 @@
       .mint-badge {
         position: absolute;
         top: 16px;
-        right: 27px;
+        right: 32px;
       }
     }
     .new-friend-icon {

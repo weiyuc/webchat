@@ -47,10 +47,15 @@ export const getContacts = ({commit}) => {
 }
 
 export const setRemark = ({commit}, payload) => {
-  api.setRemark(payload, (res) => {
-    if (res) {
-      commit(types.SET_MASK, payload)
-    }
+  return new Promise((resolve, reject) => {
+    api.setRemark(payload, (res) => {
+      if (res) {
+        commit(types.SET_MASK, payload)
+        resolve()
+      } else {
+        reject()
+      }
+    })
   })
 }
 

@@ -4,11 +4,11 @@
         <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
     </mt-header>
     <mt-cell style="min-height: 60px;" isLink>
-      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="contact.remark">
+      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="remark">
       </wc-profile-photo>
       <div slot="title" class="info-title">
         <p>{{ nickname }}</p>
-        <p>{{ remark }}</p>
+        <p>{{ $t('msg.remark') + ': ' + remark }}</p>
       </div>
     </mt-cell>
     <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark" isLink>
@@ -28,6 +28,11 @@
   export default {
     name: 'friend-card',
     components: {WcProfilePhoto},
+    data() {
+      return {
+        friendRemark: ''
+      }
+    },
     props: {
       friendName: {
         type: String,
@@ -45,10 +50,14 @@
         return 'Webchat ID: ' + this.friendName
       },
       remark() {
-        return this.$t('msg.remark') + ': ' + (this.contact.remark || '')
+        if (this.friendRemark) {
+          return this.friendRemark
+        }
+        return this.friendsInfo[this.friendName] ? this.friendsInfo[this.friendName].remark : ''
       },
       profilePhoto() {
-        return this.contact.profilePhoto || ''
+        let contact = this.friendsInfo[this.friendName] || {}
+        return contact.profilePhoto || ''
       }
     },
     methods: {
@@ -70,7 +79,13 @@
               let friendName = this.friendName
               this.$store.dispatch('setRemark', {
                 remark, friendName
-              })
+              }).then(
+                () => {
+                  this.friendRemark = remark
+                },
+                () => {
+                }
+              )
             },
             () => {
               //Do nothing
