@@ -64,3 +64,7 @@ npm run build --report
 
 ## 在线例子
 [https://weiyuc.cn](https://weiyuc.cn)
+
+## License
+
+MIT
