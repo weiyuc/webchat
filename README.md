@@ -1,13 +1,12 @@
 # webchat
 
-> A realtime chat for browser, backend built by java
-
+> 基于浏览器端的web实时聊天工具，后台用的java
 ## Document
 [中文](https://github.com/weiyuc/webchat/blob/master/README.md)
 
 [English](https://github.com/weiyuc/webchat/blob/master/README_EN.md)
 
-## Build Setup
+## 项目构建
 
 ``` bash
 # install dependencies
@@ -23,8 +22,8 @@ npm run build
 npm run build --report
 ```
 
-## Backend repository
+## 后台项目github地址
 [https://github.com/weiyuc/webchat-backend](https://github.com/weiyuc/webchat-backend)
 
-## Online
+## 在线例子
 [https://weiyuc.cn](https://weiyuc.cn)
