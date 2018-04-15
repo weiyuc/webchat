@@ -3,9 +3,9 @@
 > A realtime chat for browser, backend built by java
 
 ## Document
-[中文](https://github.com/weiyuc/webchat/edit/master/README.md)
+[中文](https://github.com/weiyuc/webchat/blob/master/README.md)
 
-[English](https://github.com/weiyuc/webchat/edit/master/README_EN.md)
+[English](https://github.com/weiyuc/webchat/blob/master/README_EN.md)
 
 ## Build Setup
 
