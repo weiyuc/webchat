@@ -7,7 +7,7 @@
 
 [English](https://github.com/weiyuc/webchat/blob/master/README_EN.md)
 
-## Feature list
+## Features
 
 1.Login&Register
 
@@ -32,17 +32,26 @@
 2.Optimization message resend
 
 ## Mockup
+
 1. Login & Register
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/login.gif)
+![image](https://weiyuc.cn/gif/login.gif)
 
-2. Add friend & Internationalization
+2. Add friend
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/addFriend.gif)
+![image](https://weiyuc.cn/gif/addFriend.gif)
 
-3. Message resend
+3. Upload profile photo
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/resend.gif)
+![image](https://weiyuc.cn/gif/upload.gif)
+
+4. Internationalization
+
+![image](https://weiyuc.cn/gif/international.gif)
+
+5. Message resend
+
+![image](https://weiyuc.cn/gif/resend.gif)
 
 
 ## Build Setup
