@@ -33,15 +33,23 @@
 ## 效果
 1. 登录注册
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/login.gif)
+![image](https://weiyuc.cn/gif/login.gif)
 
-2. 添加好友&国际化
+2. 添加好友
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/addFriend.gif)
+![image](https://weiyuc.cn/gif/addFriend.gif)
+
+3. 上传头像
+
+![image](https://weiyuc.cn/gif/upload.gif)
+
+3. 国际化
+
+![image](https://weiyuc.cn/gif/international.gif)
 
 3. 消息重发
 
-![image](https://github.com/weiyuc/webchat/blob/master/gif/resend.gif)
+![image](https://weiyuc.cn/gif/resend.gif)
 
 ## 项目构建
 
