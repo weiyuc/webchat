@@ -43,11 +43,11 @@
 
 ![image](https://weiyuc.cn/gif/upload.gif)
 
-3. 国际化
+4. 国际化
 
 ![image](https://weiyuc.cn/gif/international.gif)
 
-3. 消息重发
+5. 消息重发
 
 ![image](https://weiyuc.cn/gif/resend.gif)
 
