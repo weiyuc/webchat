@@ -92,9 +92,7 @@
       }
     },
     mounted() {
-//      this.getPosition()
-      this.getNearbyPeoples(114.2291376, 30.6236283)
-
+      this.getPosition()
     }
   }
 </script>
