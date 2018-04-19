@@ -67,8 +67,9 @@ npm run build
 npm run build --report
 ```
 
-## 后台项目github地址
-[https://github.com/weiyuc/webchat-backend](https://github.com/weiyuc/webchat-backend)
+## 后台项目地址
+github: [https://github.com/weiyuc/webchat-backend](https://github.com/weiyuc/webchat-backend)
+码云: [https://gitee.com/yuwei149/webchat-backend](https://gitee.com/yuwei149/webchat-backend)
 
 ## 在线例子
 [https://weiyuc.cn](https://weiyuc.cn)
