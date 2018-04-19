@@ -73,6 +73,9 @@ npm run build --report
 ## 在线例子
 [https://weiyuc.cn](https://weiyuc.cn)
 
+## QQ交流群
+431588188
+
 ## License
 
 MIT
