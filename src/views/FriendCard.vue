@@ -53,7 +53,7 @@
         if (this.friendRemark) {
           return this.friendRemark
         }
-        return this.friendsInfo[this.friendName] ? this.friendsInfo[this.friendName].remark : ''
+        return this.friendsInfo[this.friendName] ? (this.friendsInfo[this.friendName].remark || '') : ''
       },
       profilePhoto() {
         let contact = this.friendsInfo[this.friendName] || {}
