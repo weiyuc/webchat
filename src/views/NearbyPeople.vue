@@ -4,6 +4,7 @@
       <a href="javascript:;" slot="left" @click="back">
         <mt-button icon="back">{{$t('msg.back')}}</mt-button>
       </a>
+      <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
     </mt-header>
     <div class="nearby-people-list">
       <mt-cell v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
@@ -12,12 +13,24 @@
       </mt-cell>
       <div v-show="nearbyPeoples.length === 0" class="no-data">{{ $t('msg.noData') }}</div>
     </div>
+    <mt-actionsheet :actions="[
+        {
+          name: this.$t('msg.clearLocation'),
+          method: () => {
+            this.handleClearLocation()
+          }
+        }
+      ]"
+      :cancelText="$t('msg.cancel')"
+      v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'
   import {mapGetters} from 'vuex'
   import WcProfilePhoto from "../components/ProfilePhoto"
+  import api from '../api'
 
   export default {
     name: 'wc-nearby-people',
@@ -27,7 +40,8 @@
         position: {
           latitude: -1,
           longitude: -1
-        }
+        },
+        sheetVisible: false
       }
     },
     computed: {
@@ -89,6 +103,13 @@
           return d.toFixed(2) + u + '以内'
         }
         return 'Within: ' + d.toFixed(2) + u
+      },
+      handleClearLocation() {
+        api.clearLocation((isOk) => {
+          if (isOk) {
+            this.back()
+          }
+        })
       }
     },
     mounted() {
