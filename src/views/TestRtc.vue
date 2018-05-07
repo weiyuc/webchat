@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div id="container">
     test web rtc
 
+    <button @touchstart="startRecord" @touchend="stopRecord">{{ btnText }}</button>
   </div>
 </template>
 <script>
@@ -13,7 +14,8 @@
         mediaStream: null,
         recorderFile: null,
         stopRecordCallback: function () {
-        }
+        },
+        btnText: '按住说话'
       }
     },
     methods: {
@@ -46,7 +48,7 @@
           stream.stop();
         }
         else {
-          let trackList = [stream.getAudioTracks(), stream.getVideoTracks()];
+          let trackList = [stream.getAudioTracks(), stream.getVideoTracks()]
 
           for (let i = 0; i < trackList.length; i++) {
             let tracks = trackList[i];
@@ -90,12 +92,9 @@
       playRecord() {
         let url = URL.createObjectURL(this.recorderFile)
         let dom = document.createElement('video')
+        dom.controls = "controls"
         dom.src = url
-        dom.autoplay = "true"
-        dom.playsinline = "true"
-        dom.controls = "true"
-        document.body.appendChild(dom)
-        dom.play()
+        document.getElementById('container').appendChild(dom)
       }
     },
     created() {
