@@ -1,6 +1,7 @@
 <template>
   <div>
     test web rtc
+
   </div>
 </template>
 <script>
@@ -90,6 +91,9 @@
         let url = URL.createObjectURL(this.recorderFile)
         let dom = document.createElement('video')
         dom.src = url
+        dom.autoplay = "true"
+        dom.playsinline = "true"
+        dom.controls = "true"
         document.body.appendChild(dom)
         dom.play()
       }
