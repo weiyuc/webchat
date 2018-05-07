@@ -13,6 +13,7 @@ import NearbyPeople from '@/views/NearbyPeople'
 import AddNearbyPeople from '@/views/AddNearbyPeople'
 
 import ImgUpload from '@/components/ImageUpload'
+import TestRtc from '@/views/TestRtc'
 
 import store from '../store'
 
@@ -85,6 +86,11 @@ const router = new Router({
       path: '/imgUpload',
       name: 'imgUpload',
       component: ImgUpload
+    },
+    {
+      path: '/testRtc',
+      name: 'testRtc',
+      component: TestRtc
     }
   ]
 })
@@ -108,7 +114,7 @@ function subscribe() {
   }
 }
 
-const un_check_url = ['/login', '/register']
+const un_check_url = ['/login', '/register', '/testRtc']
 
 router.beforeEach((to, from, next) => {
   if (!~un_check_url.indexOf(to.fullPath)) {
@@ -139,4 +145,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router;
+export default router
