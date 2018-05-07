@@ -80,7 +80,8 @@ export default {
       upload: '上传',
       readFail: '读取图片失败',
       comingSoon: '敬请期待',
-      photoTooLarge: '图片太大'
+      photoTooLarge: '图片太大',
+      clearLocation: '清除位置信息'
     }
   },
   en: {
@@ -164,7 +165,8 @@ export default {
       upload: 'Upload',
       readFail: 'Read file fail',
       comingSoon: 'Coming soon',
-      photoTooLarge: 'Photo was too large'
+      photoTooLarge: 'Photo was too large',
+      clearLocation: 'Clear location'
     }
   }
 }

@@ -282,6 +282,17 @@ let api = {
       }
     )
   },
+  clearLocation(cb) {
+    axios.post('/apis/user/clearLocation').then(
+      () => {
+        cb(true)
+      },
+      (err) => {
+        console.error(err)
+        cb(false)
+      }
+    )
+  },
   createMessage ({content, session}, cb) {
     const message = {
       id: 'm_' + uuidv4(),
