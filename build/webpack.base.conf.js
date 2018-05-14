@@ -4,6 +4,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -62,10 +63,9 @@ module.exports = {
         }]
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            "window.jQuery": 'jquery'
-        })
+      new CopyWebpackPlugin([
+        {from: './node_modules/opus-recorder/dist/encoderWorker.min.js', to: './static/js/encoderWorker.min.js'},
+        {from: './node_modules/opus-recorder/dist/encoderWorker.min.wasm', to: './static/js/encoderWorker.min.wasm'}
+      ])
     ]
 }

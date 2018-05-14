@@ -203,9 +203,6 @@
     .mint-header {
       background: #000;
     }
-    .wc-profile-photo {
-
-    }
     canvas {
       margin-top: 60px;
     }
