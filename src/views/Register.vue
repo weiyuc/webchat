@@ -43,7 +43,7 @@
     },
     methods: {
       checkUsername() {
-        if (!$.trim(this.form.username)) {
+        if (!this.form.username.trim()) {
           Toast(this.$t('msg.unameMsg'))
           this.faultStatus.username = true
           return false
@@ -70,7 +70,7 @@
         return true
       },
       checkPassword(key) {
-        if (!$.trim(this.form[key])) {
+        if (!this.form[key].trim()) {
           Toast(this.$t('msg.passwdMsg'))
           this.faultStatus[key] = true
           return false

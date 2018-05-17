@@ -31,11 +31,11 @@
     },
     methods: {
       doCheck() {
-        if (!$.trim(this.form.username)) {
+        if (!this.form.username.trim()) {
           Toast(this.$t('msg.unameMsg'))
           return false
         }
-        if (!$.trim(this.form.password)) {
+        if (!this.form.password.trim()) {
           Toast(this.$t('msg.passwdMsg'))
           return false
         }
