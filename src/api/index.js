@@ -93,7 +93,7 @@ let api = {
     }
     vm.webSocket.subscribe('/message/' + userToken.username, function (res) {
       if (res.body) {
-        let message = $.parseJSON(res.body)
+        let message = JSON.parse(res.body)
         vm.onMessage(message)
       }
     })
