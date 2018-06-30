@@ -1,19 +1,21 @@
 <template>
-  <div class="wc-login">
-    <mt-header fixed :title="$t('msg.login')"></mt-header>
-    <div class="wc-logo">
-      <img src="../assets/img/webchat.png"/>
+  <transition name="fade">
+    <div class="wc-login">
+      <mt-header fixed :title="$t('msg.login')"></mt-header>
+      <div class="wc-logo">
+        <img src="../assets/img/webchat.png"/>
+      </div>
+      <div class="wc-form">
+        <mt-field :label="$t('msg.username')" :placeholder="$t('msg.unameMsg')" v-model="form.username"></mt-field>
+        <mt-field :label="$t('msg.password')" :placeholder="$t('msg.passwdMsg')" type="password"
+                  v-model="form.password"></mt-field>
+      </div>
+      <div class="wc-button">
+        <mt-button size="large" type="primary" @click.native="login">{{$t('msg.login')}}</mt-button>
+        <h3>{{ $t('msg.noAccount') }}<router-link to="/register">{{ $t('msg.registerNow') }}</router-link></h3>
+      </div>
     </div>
-    <div class="wc-form">
-      <mt-field :label="$t('msg.username')" :placeholder="$t('msg.unameMsg')" v-model="form.username"></mt-field>
-      <mt-field :label="$t('msg.password')" :placeholder="$t('msg.passwdMsg')" type="password"
-                v-model="form.password"></mt-field>
-    </div>
-    <div class="wc-button">
-      <mt-button size="large" type="primary" @click.native="login">{{$t('msg.login')}}</mt-button>
-      <h3>{{ $t('msg.noAccount') }}<router-link to="/register">{{ $t('msg.registerNow') }}</router-link></h3>
-    </div>
-  </div>
+  </transition>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'

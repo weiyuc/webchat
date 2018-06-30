@@ -1,45 +1,42 @@
 <template>
-  <div class="wc-index">
-    <mt-header fixed :title="$t(title)"></mt-header>
-    <div class="content" ref="content">
-      <mt-tab-container v-model="active">
-        <mt-tab-container-item id="message">
-          <session-section :height="height"></session-section>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="contact">
-          <contact-section :height="height"></contact-section>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="me">
-          <me-section></me-section>
-        </mt-tab-container-item>
-      </mt-tab-container>
+  <transition name="fade">
+    <div class="wc-index">
+      <mt-header fixed :title="$t(title)"></mt-header>
+      <div class="content" ref="content">
+        <mt-tab-container v-model="active">
+          <mt-tab-container-item id="message">
+            <session-section :height="height"></session-section>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="contact">
+            <contact-section :height="height"></contact-section>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="me">
+            <me-section></me-section>
+          </mt-tab-container-item>
+        </mt-tab-container>
+      </div>
+      <mt-tabbar v-model="active">
+        <mt-tab-item id="message">
+          <mt-badge size="small" color="red" v-show="unreadMsgCount">
+            {{ unreadMsgCountFormat }}
+          </mt-badge>
+          <i slot="icon" class="icon icon-bubble2"></i>
+          {{ $t("msg.message") }}
+        </mt-tab-item>
+        <mt-tab-item id="contact">
+          <i slot="icon" class="icon icon-users"></i>
+          <mt-badge size="small" color="red" v-show="unreadReqCount">
+            {{ unreadReqCountFormat }}
+          </mt-badge>
+          {{ $t("msg.contact") }}
+        </mt-tab-item>
+        <mt-tab-item id="me">
+          <i slot="icon" class="icon icon-user"></i>
+          {{ $t("msg.me") }}
+        </mt-tab-item>
+      </mt-tabbar>
     </div>
-    <mt-tabbar v-model="active">
-      <mt-tab-item id="message">
-        <mt-badge size="small" color="red" v-show="unreadMsgCount">
-          {{ unreadMsgCountFormat }}
-
-        </mt-badge>
-        <i slot="icon" class="icon icon-bubble2"></i>
-        {{ $t("msg.message") }}
-
-      </mt-tab-item>
-      <mt-tab-item id="contact">
-        <i slot="icon" class="icon icon-users"></i>
-        <mt-badge size="small" color="red" v-show="unreadReqCount">
-          {{ unreadReqCountFormat }}
-
-        </mt-badge>
-        {{ $t("msg.contact") }}
-
-      </mt-tab-item>
-      <mt-tab-item id="me">
-        <i slot="icon" class="icon icon-user"></i>
-        {{ $t("msg.me") }}
-
-      </mt-tab-item>
-    </mt-tabbar>
-  </div>
+  </transition>
 </template>
 <script>
   import SessionSection from '../components/SessionSection'
@@ -83,7 +80,7 @@
       }
     },
     created() {
-      this.height = document.documentElement.clientHeight  - 95
+      this.height = document.documentElement.clientHeight - 95
     }
   }
 </script>
@@ -98,13 +95,13 @@
       left: 0;
       height: calc(100% - 95px);
       background-color: #f8f8f8;
-      >.mint-tab-container {
+      > .mint-tab-container {
         width: 100%;
         height: 100%;
-        >.mint-tab-container-wrap {
+        > .mint-tab-container-wrap {
           width: 100%;
           height: 100%;
-          >.mint-tab-container-item {
+          > .mint-tab-container-item {
             width: 100%;
             height: 100%;
             overflow: auto;

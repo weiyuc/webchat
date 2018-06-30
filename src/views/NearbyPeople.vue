@@ -1,30 +1,33 @@
 <template>
-  <div class="nearby-people">
-    <mt-header :title="$t('msg.nearBy')">
-      <a href="javascript:;" slot="left" @click="back">
-        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-      </a>
-      <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
-    </mt-header>
-    <div class="nearby-people-list">
-      <mt-cell v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
-        <wc-profile-photo :username="p.username" :width="35" :height="35">
-        </wc-profile-photo>
-      </mt-cell>
-      <div v-show="nearbyPeoples.length === 0" class="no-data">{{ $t('msg.noData') }}</div>
-    </div>
-    <mt-actionsheet :actions="[
-        {
-          name: this.$t('msg.clearLocation'),
-          method: () => {
-            this.handleClearLocation()
+  <transition name="fade">
+    <div class="nearby-people">
+      <mt-header fixed :title="$t('msg.nearBy')">
+        <a href="javascript:;" slot="left" @click="back">
+          <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+        </a>
+        <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
+      </mt-header>
+      <div style="width: 100%;height: 40px"></div>
+      <div class="nearby-people-list mt-20">
+        <mt-cell v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
+          <wc-profile-photo :username="p.username" :width="35" :height="35">
+          </wc-profile-photo>
+        </mt-cell>
+        <div v-show="nearbyPeoples.length === 0" class="no-data">{{ $t('msg.noData') }}</div>
+      </div>
+      <mt-actionsheet :actions="[
+          {
+            name: this.$t('msg.clearLocation'),
+            method: () => {
+              this.handleClearLocation()
+            }
           }
-        }
-      ]"
-      :cancelText="$t('msg.cancel')"
-      v-model="sheetVisible">
-    </mt-actionsheet>
-  </div>
+        ]"
+        :cancelText="$t('msg.cancel')"
+        v-model="sheetVisible">
+      </mt-actionsheet>
+    </div>
+  </transition>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'

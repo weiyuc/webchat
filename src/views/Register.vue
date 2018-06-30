@@ -1,22 +1,24 @@
 <template>
-  <div class="wc-register">
-    <mt-header fixed :title="$t('msg.register')"></mt-header>
-    <div class="wc-logo">
-      <img src="../assets/img/webchat.png"/>
+  <transition name="fade">
+    <div class="wc-register">
+      <mt-header fixed :title="$t('msg.register')"></mt-header>
+      <div class="wc-logo">
+        <img src="../assets/img/webchat.png"/>
+      </div>
+      <div class="wc-form">
+        <mt-field :state="faultStatus.username ? 'error' : ''" ref="username" :label="$t('msg.username')" :placeholder="$t('msg.unameMsg')" v-model="form.username"></mt-field>
+        <mt-field :state="faultStatus.password ? 'error' : ''" ref="passwd1" :label="$t('msg.password')" :placeholder="$t('msg.passwdMsg')" type="password"
+                  v-model="form.password"></mt-field>
+        <mt-field :state="faultStatus.confirmPassword ? 'error' : ''" ref="passwd2" :label="$t('msg.confirmPassword')" :placeholder="$t('msg.confirmPasswordMsg')" type="password"
+                  v-model="form.confirmPassword"></mt-field>
+      </div>
+      <div class="wc-button">
+        <mt-button size="large" type="primary" @click.native="reg">{{$t('msg.register')}}</mt-button>
+        <h3>{{ $t('msg.hasAccount') }}<router-link to="/login">{{ $t('msg.loginNow') }}</router-link></h3>
+      </div>
+      <wc-show-success v-show="showSuccess" :message="this.$t('msg.regSuccess')"></wc-show-success>
     </div>
-    <div class="wc-form">
-      <mt-field :state="faultStatus.username ? 'error' : ''" ref="username" :label="$t('msg.username')" :placeholder="$t('msg.unameMsg')" v-model="form.username"></mt-field>
-      <mt-field :state="faultStatus.password ? 'error' : ''" ref="passwd1" :label="$t('msg.password')" :placeholder="$t('msg.passwdMsg')" type="password"
-                v-model="form.password"></mt-field>
-      <mt-field :state="faultStatus.confirmPassword ? 'error' : ''" ref="passwd2" :label="$t('msg.confirmPassword')" :placeholder="$t('msg.confirmPasswordMsg')" type="password"
-                v-model="form.confirmPassword"></mt-field>
-    </div>
-    <div class="wc-button">
-      <mt-button size="large" type="primary" @click.native="reg">{{$t('msg.register')}}</mt-button>
-      <h3>{{ $t('msg.hasAccount') }}<router-link to="/login">{{ $t('msg.loginNow') }}</router-link></h3>
-    </div>
-    <wc-show-success v-show="showSuccess" :message="this.$t('msg.regSuccess')"></wc-show-success>
-  </div>
+  </transition>
 </template>
 <script>
   import {Toast, Indicator} from 'mint-ui'

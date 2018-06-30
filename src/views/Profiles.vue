@@ -1,28 +1,30 @@
 <template>
-  <div class="wc-profiles">
-    <mt-header :title="$t('msg.profiles')">
-      <a href="javascript:;" slot="left" @click="back">
-        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-      </a>
-    </mt-header>
+  <transition name="fade">
+    <div class="wc-profiles">
+      <mt-header fixed :title="$t('msg.profiles')">
+        <a href="javascript:;" slot="left" @click="back">
+          <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+        </a>
+      </mt-header>
+      <div style="width: 100%;height: 40px"></div>
+      <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
+        <wc-profile-photo :myself="true" ></wc-profile-photo>
+        <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
+      </mt-cell>
+      <wc-img-upload v-if="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
 
-    <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
-      <wc-profile-photo :myself="true" ></wc-profile-photo>
-      <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
-    </mt-cell>
-    <wc-img-upload v-if="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
+      <mt-cell is-link @click.native="setRealName" :title="$t('msg.realName')" :value="realName"></mt-cell>
+      <mt-cell title="Webchat ID" :value="username"></mt-cell>
+      <mt-cell is-link @click.native="showGenderPicker" :title="$t('msg.gender')" :value="$t(formatGender)"></mt-cell>
+      <mt-cell is-link @click.native="setWhatUp" :title="$t('msg.whatUp')" :value="whatUp"></mt-cell>
 
-    <mt-cell is-link @click.native="setRealName" :title="$t('msg.realName')" :value="realName"></mt-cell>
-    <mt-cell title="Webchat ID" :value="username"></mt-cell>
-    <mt-cell is-link @click.native="showGenderPicker" :title="$t('msg.gender')" :value="$t(formatGender)"></mt-cell>
-    <mt-cell is-link @click.native="setWhatUp" :title="$t('msg.whatUp')" :value="whatUp"></mt-cell>
-
-    <mt-popup
-      v-model="popupVisible"
-      position="bottom" style="width: 100%;">
-      <mt-picker :slots="slots" ref="picker" @change="onValuesChange"></mt-picker>
-    </mt-popup>
-  </div>
+      <mt-popup
+        v-model="popupVisible"
+        position="bottom" style="width: 100%;">
+        <mt-picker :slots="slots" ref="picker" @change="onValuesChange"></mt-picker>
+      </mt-popup>
+    </div>
+  </transition>
 </template>
 <script>
   import Vue from 'vue'

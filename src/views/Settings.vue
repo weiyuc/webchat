@@ -1,21 +1,25 @@
 <template>
-  <div class="wc-settings">
-    <mt-header :title="$t('msg.settings')">
-      <a href="javascript:;" slot="left" @click="back">
-        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-      </a>
-    </mt-header>
+  <transition name="fade">
+    <div class="wc-settings">
+      <mt-header fixed :title="$t('msg.settings')">
+        <a href="javascript:;" slot="left" @click="back">
+          <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+        </a>
+      </mt-header>
 
-    <mt-radio
-      :title="$t('msg.lang')"
-      v-model="lang"
-      :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">
-    </mt-radio>
+      <div style="width: 100%;height: 40px"></div>
 
-    <div class="logout-btn">
-      <mt-button type="danger" size="large" @click.native="logout">{{ $t('msg.logout') }}</mt-button>
+      <mt-radio class="mt-20"
+        :title="$t('msg.lang')"
+        v-model="lang"
+        :options="[{label: $t('msg.zh'), value: 'zh'}, {label: $t('msg.en'), value: 'en'}]">
+      </mt-radio>
+
+      <div class="logout-btn">
+        <mt-button type="danger" size="large" @click.native="logout">{{ $t('msg.logout') }}</mt-button>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 <script>
   import Vue from 'vue'

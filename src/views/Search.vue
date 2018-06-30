@@ -1,42 +1,44 @@
 <template>
-  <div class="wc-search">
-    <mt-search ref="search"
-      :placeholder="searchText"
-      :cancel-text="cancelText"
-      :autofocus="true"
-      @click.native="handleClick"
-      v-model.trim="value"
-      @keyup.enter.native="onSearch">
-      <mt-cell
-        v-if="value"
-        :title="title"
-        is-link
-        @click.native="onSearch">
-      </mt-cell>
-    </mt-search>
-    <div v-if="friendInfo !== null">
-      <div class="line">
+  <transition name="fade">
+    <div class="wc-search">
+      <mt-search ref="search"
+        :placeholder="searchText"
+        :cancel-text="cancelText"
+        :autofocus="true"
+        @click.native="handleClick"
+        v-model.trim="value"
+        @keyup.enter.native="onSearch">
+        <mt-cell
+          v-if="value"
+          :title="title"
+          is-link
+          @click.native="onSearch">
+        </mt-cell>
+      </mt-search>
+      <div v-if="friendInfo !== null">
+        <div class="line">
+        </div>
+        <div class="user-info">
+          <img src="../assets/img/webchat.png"/>
+          <p>
+            {{ friendInfo.friendName || friendInfo.username }}
+          </p>
+          <mt-button v-if="friendInfo.friendName" type="primary" :disabled="true" size="small" @click="addFriend">{{ $t('msg.hasAdded') }}</mt-button>
+          <mt-button v-else type="primary" size="small" @click="addFriend">{{ $t('msg.add') }}</mt-button>
+        </div>
       </div>
-      <div class="user-info">
-        <img src="../assets/img/webchat.png"/>
-        <p>
-          {{ friendInfo.friendName || friendInfo.username }}
-        </p>
-        <mt-button v-if="friendInfo.friendName" type="primary" :disabled="true" size="small" @click="addFriend">{{ $t('msg.hasAdded') }}</mt-button>
-        <mt-button v-else type="primary" size="small" @click="addFriend">{{ $t('msg.add') }}</mt-button>
-      </div>
-    </div>
 
-    <div class="no-data" v-if="hasSearch && friendInfo === null">
-      <div class="line">
+      <div class="no-data" v-if="hasSearch && friendInfo === null">
+        <div class="line">
+        </div>
+        <p>{{ $t('msg.userNotExist') }}</p>
       </div>
-      <p>{{ $t('msg.userNotExist') }}</p>
-    </div>
 
-    <mt-popup v-model="popupVisible" :closeOnClickModal="false" position="top" class="mint-popup-2">
-      <p>{{ $t('msg.reqSuccess') }}</p>
-    </mt-popup>
-  </div>
+      <mt-popup v-model="popupVisible" :closeOnClickModal="false" position="top" class="mint-popup-2">
+        <p>{{ $t('msg.reqSuccess') }}</p>
+      </mt-popup>
+    </div>
+  </transition>
 </template>
 <script>
   import {MessageBox} from 'mint-ui'

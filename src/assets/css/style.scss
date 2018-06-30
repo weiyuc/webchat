@@ -27,6 +27,9 @@ html {
         .mt-30 {
             margin-top: 30px;
         }
+        .mt-40 {
+            margin-top: 40px;
+        }
         .tar {
             text-align: right;
         }
@@ -37,4 +40,11 @@ html {
             background-color: #333;
         }
     }
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
 }

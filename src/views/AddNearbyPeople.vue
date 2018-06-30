@@ -1,23 +1,25 @@
 <template>
-  <div class="add-nearby">
-    <mt-header :title="$t('msg.nearBy')">
-      <a href="javascript:;" slot="left" @click="back">
-        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-      </a>
-    </mt-header>
+  <transition name="fade">
+    <div class="add-nearby">
+      <mt-header fixed :title="$t('msg.nearBy')">
+        <a href="javascript:;" slot="left" @click="back">
+          <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+        </a>
+      </mt-header>
+      <div style="width: 100%;height: 40px"></div>
+      <div class="user-info mt-20">
+        <img width="82px" height="82px" style="border-radius: 5px" :src="`/apis/user/getProfilePhoto/${friendName}`" @error="onLoadError"/>
+        <p>
+          {{ friendName }}
+        </p>
+        <mt-button type="primary" size="small" @click="addFriend">{{ $t('msg.add') }}</mt-button>
+      </div>
 
-    <div class="user-info">
-      <img width="82px" height="82px" style="border-radius: 5px" :src="`/apis/user/getProfilePhoto/${friendName}`" @error="onLoadError"/>
-      <p>
-        {{ friendName }}
-      </p>
-      <mt-button type="primary" size="small" @click="addFriend">{{ $t('msg.add') }}</mt-button>
+      <mt-popup v-model="popupVisible" :closeOnClickModal="false" position="top" class="mint-popup-2">
+        <p>{{ $t('msg.reqSuccess') }}</p>
+      </mt-popup>
     </div>
-
-    <mt-popup v-model="popupVisible" :closeOnClickModal="false" position="top" class="mint-popup-2">
-      <p>{{ $t('msg.reqSuccess') }}</p>
-    </mt-popup>
-  </div>
+  </transition>
 </template>
 <script>
   import {MessageBox} from 'mint-ui'
@@ -71,7 +73,6 @@
     }
     .user-info {
       text-align: center;
-      margin-top: 20px;
       > p {
         font-size: 18px;
       }

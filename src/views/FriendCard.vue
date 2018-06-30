@@ -1,23 +1,26 @@
 <template>
-  <div class="wc-friend-card">
-    <mt-header :title="$t('msg.friendDetails')">
-        <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
-    </mt-header>
-    <mt-cell style="min-height: 60px;" isLink>
-      <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="remark">
-      </wc-profile-photo>
-      <div slot="title" class="info-title">
-        <p>{{ nickname }}</p>
-        <p>{{ $t('msg.remark') + ': ' + remark }}</p>
-      </div>
-    </mt-cell>
-    <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark" isLink>
-    </mt-cell>
-    <mt-cell :title="$t('msg.region')" value="Wuhan, Hubei">
-    </mt-cell>
-    <mt-button class="info-button" type="primary" size="large" @click="switchSession">{{ $t('msg.sendMsg') }}</mt-button>
-    <mt-button class="info-button" type="danger" size="large" @click="deleteFriend">{{ $t('msg.deleteFriend') }}</mt-button>
-  </div>
+  <transition name="fade">
+    <div class="wc-friend-card">
+      <mt-header fixed :title="$t('msg.friendDetails')">
+          <mt-button icon="back" slot="left" @click="back">{{ $t('msg.contact') }}</mt-button>
+      </mt-header>
+      <div style="width: 100%;height: 40px"></div>
+      <mt-cell class="mt-20" style="min-height: 60px;" isLink>
+        <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="remark">
+        </wc-profile-photo>
+        <div slot="title" class="info-title">
+          <p>{{ nickname }}</p>
+          <p>{{ $t('msg.remark') + ': ' + remark }}</p>
+        </div>
+      </mt-cell>
+      <mt-cell :title="$t('msg.setRemark')" isLink @click.native="setRemark" isLink>
+      </mt-cell>
+      <mt-cell :title="$t('msg.region')" value="Wuhan, Hubei">
+      </mt-cell>
+      <mt-button class="info-button" type="primary" size="large" @click="switchSession">{{ $t('msg.sendMsg') }}</mt-button>
+      <mt-button class="info-button" type="danger" size="large" @click="deleteFriend">{{ $t('msg.deleteFriend') }}</mt-button>
+    </div>
+  </transition>
 </template>
 <script>
   import {MessageBox, Toast, Indicator} from 'mint-ui'

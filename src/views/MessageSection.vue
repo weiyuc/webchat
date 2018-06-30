@@ -1,23 +1,25 @@
 <template>
-  <div class="message">
-    <mt-header fixed :title="session.remark || session.from">
-      <a href="javascript:;" slot="left" @click="back">
-        <mt-button icon="back">{{$t('msg.back')}}</mt-button>
-      </a>
-    </mt-header>
-    <div class="message-section">
-      <ul class="message-list" ref="list">
-        <message
-          v-for="message in sortedMessages"
-          :key="message.id"
-          :message="message">
-        </message>
-      </ul>
+  <transition name="fade">
+    <div class="message">
+      <mt-header fixed :title="session.remark || session.from">
+        <a href="javascript:;" slot="left" @click="back">
+          <mt-button icon="back">{{$t('msg.back')}}</mt-button>
+        </a>
+      </mt-header>
+      <div class="message-section">
+        <ul class="message-list" ref="list">
+          <message
+            v-for="message in sortedMessages"
+            :key="message.id"
+            :message="message">
+          </message>
+        </ul>
+      </div>
+      <mt-field v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
+        <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
+      </mt-field>
     </div>
-    <mt-field v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
-      <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
-    </mt-field>
-  </div>
+  </transition>
 </template>
 
 <script>
