@@ -156,6 +156,7 @@
         height: 30px;
         position: absolute;
         top: 8px;
+        left: 50px;
         outline: none;
         border: 0;
         border-radius: 5px;
@@ -166,10 +167,9 @@
         position: absolute;
         top: 8px;
         left: 50px;
-        text-align: center;
-        line-height: 30px;
         border: 1px solid;
         color: #aaa;
+        border-radius: 5px;
       }
     }
   }

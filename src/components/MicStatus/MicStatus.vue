@@ -1,6 +1,6 @@
 <template>
   <div class="mic">
-    <span id="btn-speak">{{ speakBtn.text1 }}</span>
+    <button id="btn-speak">{{ speakBtn.text1 }}</button>
     <div v-show="speakBtn.status" class="mic-status">
       <i :class="'icon icon-' + (speakBtn.cancel ? 'reply' : 'mic')"></i>
       <p :style="speakBtn.cancel ? 'background-color: #AA0000' : ''">{{ speakBtn.text2 }}</p>
@@ -9,8 +9,12 @@
 </template>
 <style lang="scss">
   .mic {
-    >span {
+    >button {
       display: block;
+      text-align: center;
+      line-height: 30px;
+      width: 100%;
+      height: 100%;
     }
     .mic-status {
       top: 40%;
