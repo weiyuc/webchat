@@ -18,7 +18,7 @@
       <div class="message-foot">
         <span @click="switchMode" class="btn-mic"><i :class="'icon icon-' + mode"></i></span>
         <input v-show="mode === 'mic'" v-model="msg" id="msgInput" class="msg" @keyup.enter.native="sendMessage"/>
-        <wc-mic-status v-show="mode === 'keyboard'" class="btn-speak" @onMsg="onMsg"></wc-mic-status>
+        <wc-mic-status v-show="mode === 'keyboard'" class="msg" @onMsg="onMsg"></wc-mic-status>
         <mt-button class="btn-send" type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
       </div>
     </div>
@@ -150,26 +150,20 @@
         position: absolute;
         right: 8px;
         top: 8px;
+        width: 60px;
       }
       .msg {
-        width: calc(100% - 120px);
+        width: calc(100% - 130px);
         height: 30px;
         position: absolute;
-        top: 8px;
+        top: 9px;
         left: 50px;
         outline: none;
-        border: 0;
-        border-radius: 5px;
-      }
-      .btn-speak {
-        width: calc(100% - 120px);
-        height: 30px;
-        position: absolute;
-        top: 8px;
-        left: 50px;
         border: 1px solid;
-        color: #aaa;
         border-radius: 5px;
+        color: #aaa;
+        margin: 0;
+        padding: 0;
       }
     }
   }

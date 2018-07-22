@@ -9,12 +9,20 @@
 </template>
 <style lang="scss">
   .mic {
-    >button {
+    > button {
+      outline: none;
+      margin: 0;
+      padding: 0;
       display: block;
       text-align: center;
       line-height: 30px;
       width: 100%;
       height: 100%;
+      border: 0;
+      border-radius: 5px;
+      -webkit-touch-callout: none;
+      user-select: none;
+      background-color: #fff;
     }
     .mic-status {
       top: 40%;
@@ -35,10 +43,6 @@
         font-size: 60px;
       }
       p {
-        -webkit-user-select:none;
-        -moz-user-select:none;
-        -ms-user-select:none;
-        user-select:none;
         margin-top: 15px;
       }
     }
@@ -67,7 +71,7 @@
     },
     methods: {
       onStart() {
-        this.recorder.start().catch(function(e){
+        this.recorder.start().catch(function (e) {
           console.error(e)
         })
         this.speakBtn.status = true
@@ -103,7 +107,7 @@
       })
 
       const vm = this
-      this.recorder.ondataavailable = function(data) {
+      this.recorder.ondataavailable = function (data) {
         if (!vm.speakBtn.cancel) {
           const res = {
             duration: Math.floor((vm.message.end - vm.message.start) / 1000),
