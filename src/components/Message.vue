@@ -7,7 +7,11 @@
         </path>
       </svg>
       <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
-      {{ message.content }}
+      <span v-if="message.content.duration" :style="'width: ' + (message.content.duration * 30 ) + 'px'">
+        <span class="duration">{{ message.content.duration + "''"}} </span>
+        <i class="icon icon-volume-medium"></i>
+      </span>
+      <font v-if="!message.content.duration">{{ message.content }}</font>
     </div>
 
     <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :username="session.from" :realName="session.remark">
@@ -69,6 +73,10 @@
       text-align: left;
       padding: 8px;
       word-break: break-all;
+      >span {
+        display: inline-block;
+        max-width: 180px;
+      }
     }
 
     .message-text:before {
@@ -84,6 +92,13 @@
       float: right;
       margin-right: 78px;
       background: #62b900;
+      >span {
+        text-align: right;
+      }
+      .duration {
+        position: absolute;
+        left: -25px;
+      }
     }
     .text-right:before {
       right: -7px;
@@ -94,6 +109,13 @@
       float: left;
       margin-left: 78px;
       background: #fff;
+      >span {
+        text-align: left;
+      }
+      .duration {
+        position: absolute;
+        right: -25px;
+      }
     }
     .text-left:before {
       left: -7px;

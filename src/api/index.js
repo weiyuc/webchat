@@ -307,7 +307,10 @@ let api = {
       timeout: false
     }
     if (!store.getters.lostConnect) {
-      this.webSocket.send('/notify', {}, JSON.stringify(message))
+      if (!content.duration) {
+        this.webSocket.send('/notify', {}, JSON.stringify(message))
+      }
+
       message.sent = true
     } else {
       store.commit(mutationTypes.ADD_UN_SEND_MSG, message)

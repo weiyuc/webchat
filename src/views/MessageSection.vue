@@ -9,15 +9,18 @@
       <div class="message-section">
         <ul class="message-list" ref="list">
           <message
-            v-for="message in sortedMessages"
-            :key="message.id"
-            :message="message">
+                  v-for="message in sortedMessages"
+                  :key="message.id"
+                  :message="message">
           </message>
         </ul>
       </div>
-      <mt-field v-model="msg" id="msgInput" @keyup.enter.native="sendMessage" class="bottom-input">
-        <mt-button type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
-      </mt-field>
+      <div class="message-foot">
+        <span @click="switchMode" class="btn-mic"><i :class="'icon icon-' + mode"></i></span>
+        <input v-show="mode === 'mic'" v-model="msg" id="msgInput" class="msg" @keyup.enter.native="sendMessage"/>
+        <wc-mic-status v-show="mode === 'keyboard'" class="btn-speak" @onMsg="onMsg"></wc-mic-status>
+        <mt-button class="btn-send" type="primary" size="small" @click="sendMessage">{{$t('msg.send')}}</mt-button>
+      </div>
     </div>
   </transition>
 </template>
@@ -26,11 +29,14 @@
   import Message from '../components/Message.vue'
   import {mapGetters} from 'vuex'
 
+  import WcMicStatus from "../components/MicStatus/MicStatus";
+
   export default {
     name: 'MessageSection',
-    components: {Message},
+    components: {WcMicStatus, Message},
     data() {
       return {
+        mode: 'mic',
         msg: ''
       }
     },
@@ -54,6 +60,20 @@
       }
     },
     methods: {
+      switchMode() {
+        return this.mode === 'mic' ? this.mode = 'keyboard' : this.mode = 'mic'
+      },
+      onMsg(res) {
+        console.log(res.duration)
+        this.$store.dispatch('sendMessage', {
+          content: res,
+          session: this.session
+        }).then(() => {
+          this.msg = ''
+        }).catch((err) => {
+          console.error(err)
+        })
+      },
       sendMessage () {
         if (this.msg) {
           this.$store.dispatch('sendMessage', {
@@ -101,14 +121,56 @@
         padding: 0 0 20px 0;
         -webkit-overflow-scrolling: touch;
       }
-      background: url("../assets/img/bg.png") no-repeat;
       background-size: 100% 100%;
       -moz-background-size: 100% 100%;
     }
-    .bottom-input {
+    .message-foot {
       width: 100%;
+      min-height: 48px;
       position: fixed;
       bottom: 0;
+      left: 0;
+      background-color: #eee;
+      .btn-mic {
+        width: 30px;
+        height: 30px;
+        color: #aaa;
+        border: 1px solid;
+        border-radius: 20px;
+        font-size: 1.3em;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+        margin: 8px;
+        i {
+          margin: 0;
+        }
+      }
+      .btn-send {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+      }
+      .msg {
+        width: calc(100% - 120px);
+        height: 30px;
+        position: absolute;
+        top: 8px;
+        outline: none;
+        border: 0;
+        border-radius: 5px;
+      }
+      .btn-speak {
+        width: calc(100% - 120px);
+        height: 30px;
+        position: absolute;
+        top: 8px;
+        left: 50px;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid;
+        color: #aaa;
+      }
     }
   }
 </style>
