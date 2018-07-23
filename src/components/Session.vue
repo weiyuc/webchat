@@ -2,7 +2,7 @@
   <div class="wc-session" @click="$emit('switch-session', session.from)">
     <mt-cell
     :title="session.remark || session.from"
-    :label="session.lastMessage.content"
+    :label="session.lastMessage.content.duration ? '[语音]': session.lastMessage.content"
     >
       <wc-profile-photo :username="session.from" :realName="session.remark">
       </wc-profile-photo>

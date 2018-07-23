@@ -1,6 +1,6 @@
 <template>
   <div class="mic">
-    <button id="btn-speak">{{ speakBtn.text1 }}</button>
+    <button id="btn-speak" disabled="true">{{ speakBtn.text1 }}</button>
     <div v-show="speakBtn.status" class="mic-status">
       <i :class="'icon icon-' + (speakBtn.cancel ? 'reply' : 'mic')"></i>
       <p :style="speakBtn.cancel ? 'background-color: #AA0000' : ''">{{ speakBtn.text2 }}</p>
@@ -20,8 +20,8 @@
       height: 100%;
       border: 0;
       border-radius: 5px;
-      -webkit-touch-callout: none;
       user-select: none;
+      -webkit-touch-callout: none;
       background-color: #fff;
     }
     .mic-status {
@@ -120,14 +120,23 @@
       let dom = document.getElementById('btn-speak')
 
       dom.ontouchstart = function (event) {
+        if (!Recorder.isRecordingSupported()) {
+          return false
+        }
         vm.onStart()
         vm.speakBtn.y = event.touches[0].clientY
       }
 
       dom.ontouchend = function () {
+        if (!Recorder.isRecordingSupported()) {
+          return false
+        }
         vm.onCanceled()
       }
       document.ontouchmove = function (event) {
+        if (!Recorder.isRecordingSupported()) {
+          return false
+        }
         if (vm.speakBtn.status) {
           let nowY = event.touches[0].clientY
           let disY = vm.speakBtn.y - nowY

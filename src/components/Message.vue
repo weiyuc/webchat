@@ -7,7 +7,7 @@
         </path>
       </svg>
       <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
-      <span v-if="message.content.duration" :style="'width: ' + (message.content.duration * 30 ) + 'px'">
+      <span v-if="message.content.duration" :style="'width: ' + (message.content.duration * 18 ) + 'px'">
         <span class="duration">{{ message.content.duration + "''"}} </span>
         <i class="icon icon-volume-medium"></i>
       </span>
@@ -114,7 +114,9 @@
       }
       .duration {
         position: absolute;
-        right: -25px;
+        left: -35px;
+        display: inline-block;
+        width: 30px;
       }
     }
     .text-left:before {

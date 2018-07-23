@@ -29,7 +29,9 @@
   import Message from '../components/Message.vue'
   import {mapGetters} from 'vuex'
 
-  import WcMicStatus from "../components/MicStatus/MicStatus";
+  import WcMicStatus from "../components/MicStatus/MicStatus"
+  import Recorder from 'opus-recorder'
+  import { MessageBox } from 'mint-ui'
 
   export default {
     name: 'MessageSection',
@@ -61,7 +63,24 @@
     },
     methods: {
       switchMode() {
-        return this.mode === 'mic' ? this.mode = 'keyboard' : this.mode = 'mic'
+        if (this.mode === 'mic') {
+          this.mode = 'keyboard'
+        } else {
+          this.mode = 'mic'
+          if (!Recorder.isRecordingSupported()) {
+            MessageBox.alert(
+              `Supported: \n
+              Chrome v58 \n
+              Firefox v53 \n
+              Microsoft Edge v41 \n
+              Opera v44 \n
+              macOS Safari v11 \n
+              iOS Safari v11 \n
+              Unsupported: \n
+              IE 11 and below \n
+              iOS 11 Chrome`)
+          }
+        }
       },
       onMsg(res) {
         console.log(res.duration)
