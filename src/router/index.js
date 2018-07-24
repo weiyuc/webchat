@@ -11,13 +11,8 @@ import Settings from '@/views/Settings'
 import Profiles from '@/views/Profiles'
 import NearbyPeople from '@/views/NearbyPeople'
 import AddNearbyPeople from '@/views/AddNearbyPeople'
-import { MessageBox, Toast, Indicator } from 'mint-ui'
-Vue.prototype.$toast = Toast
-Vue.prototype.$loading = Indicator
-Vue.prototype.$alert = MessageBox
 
 import ImgUpload from '@/components/ImageUpload'
-import TestRtc from '@/views/TestRtc'
 
 import store from '../store'
 
@@ -90,11 +85,6 @@ const router = new Router({
       path: '/imgUpload',
       name: 'imgUpload',
       component: ImgUpload
-    },
-    {
-      path: '/testRtc',
-      name: 'testRtc',
-      component: TestRtc
     }
   ]
 })

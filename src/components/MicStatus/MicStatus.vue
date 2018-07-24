@@ -2,7 +2,7 @@
   <div class="mic">
     <button id="btn-speak" disabled="true">{{ speakBtn.text1 }}</button>
     <div v-show="speakBtn.status" class="mic-status">
-      <i :class="'icon icon-' + (speakBtn.cancel ? 'reply' : 'mic')"></i>
+      <i :class="'icon icon-' + speakBtn.icon"></i>
       <p :style="speakBtn.cancel ? 'background-color: #AA0000' : ''">{{ speakBtn.text2 }}</p>
     </div>
   </div>
@@ -50,6 +50,7 @@
 </style>
 <script>
   import Recorder from 'opus-recorder'
+  import {Toast} from 'mint-ui'
 
   export default {
     name: 'wc-mic-status',
@@ -59,6 +60,8 @@
         speakBtn: {
           status: false,
           cancel: false,
+          lock: false,
+          icon: 'mic',
           y: null,
           text1: '按住说话',
           text2: '手指上滑取消发送'
@@ -71,28 +74,46 @@
     },
     methods: {
       onStart() {
-        this.recorder.start().catch(function (e) {
-          console.error(e)
-        })
+        this.recorder.start()
         this.speakBtn.status = true
         this.speakBtn.cancel = false
+        this.speakBtn.icon = 'mic'
         this.speakBtn.text1 = '松开发送'
         this.speakBtn.text2 = '手指上滑取消发送'
         this.message.start = new Date().getTime()
       },
       onSpeak() {
-        this.speakBtn.status = true
         this.speakBtn.cancel = false
+        this.speakBtn.icon = 'mic'
         this.speakBtn.text1 = '松开发送'
         this.speakBtn.text2 = '手指上滑取消发送'
       },
       onCancel() {
         this.speakBtn.cancel = true
+        this.speakBtn.icon = 'reply'
         this.speakBtn.text1 = '松开取消'
         this.speakBtn.text2 = '松开手指取消发送'
       },
-      onCanceled() {
+      onSend() {
         this.message.end = new Date().getTime()
+        const duration =  (this.message.end - this.message.start) / 1000
+        if (duration < 0.8) {
+          this.speakBtn.icon = 'warning'
+          this.speakBtn.text2 = '说话时间太短'
+          this.speakBtn.lock = true
+          setTimeout(() => {
+            this.recorder.stop()
+            this.speakBtn.status = false
+            this.speakBtn.lock = false
+            this.speakBtn.icon = 'mic'
+            this.speakBtn.text1 = '按住说话'
+            this.speakBtn.text2 = '手指上滑取消发送'
+            this.speakBtn.y = 0
+            this.message.start = 0
+            this.message.end = 0
+          }, 1500)
+          return
+        }
         this.recorder.stop()
         this.speakBtn.status = false
         this.speakBtn.text1 = '按住说话'
@@ -109,8 +130,12 @@
       const vm = this
       this.recorder.ondataavailable = function (data) {
         if (!vm.speakBtn.cancel) {
+          const duration =  (vm.message.end - vm.message.start) / 1000
+          if (duration < 0.8) {
+            return
+          }
           const res = {
-            duration: Math.floor((vm.message.end - vm.message.start) / 1000),
+            duration: Math.ceil(duration),
             data: data
           }
           vm.$emit('onMsg', res)
@@ -120,7 +145,8 @@
       let dom = document.getElementById('btn-speak')
 
       dom.ontouchstart = function (event) {
-        if (!Recorder.isRecordingSupported()) {
+        if (vm.speakBtn.lock) {
+          console.log('start lock')
           return false
         }
         vm.onStart()
@@ -128,13 +154,15 @@
       }
 
       dom.ontouchend = function () {
-        if (!Recorder.isRecordingSupported()) {
+        if (vm.speakBtn.lock) {
+          console.log('end lock')
           return false
         }
-        vm.onCanceled()
+        vm.onSend()
       }
       document.ontouchmove = function (event) {
-        if (!Recorder.isRecordingSupported()) {
+        if (vm.speakBtn.lock) {
+          console.log('move lock')
           return false
         }
         if (vm.speakBtn.status) {
