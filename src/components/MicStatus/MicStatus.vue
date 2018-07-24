@@ -1,6 +1,6 @@
 <template>
   <div class="mic">
-    <button id="btn-speak" disabled="true">{{ speakBtn.text1 }}</button>
+    <button id="btn-speak">{{ speakBtn.text1 }}</button>
     <div v-show="speakBtn.status" class="mic-status">
       <i :class="'icon icon-' + speakBtn.icon"></i>
       <p :style="speakBtn.cancel ? 'background-color: #AA0000' : ''">{{ speakBtn.text2 }}</p>
@@ -97,20 +97,20 @@
       onSend() {
         this.message.end = new Date().getTime()
         const duration =  (this.message.end - this.message.start) / 1000
-        if (duration < 0.8) {
+        if (!this.speakBtn.cancel && duration < 1.5) {
           this.speakBtn.icon = 'warning'
           this.speakBtn.text2 = '说话时间太短'
           this.speakBtn.lock = true
           setTimeout(() => {
             this.recorder.stop()
             this.speakBtn.status = false
-            this.speakBtn.lock = false
             this.speakBtn.icon = 'mic'
             this.speakBtn.text1 = '按住说话'
             this.speakBtn.text2 = '手指上滑取消发送'
             this.speakBtn.y = 0
             this.message.start = 0
             this.message.end = 0
+            this.speakBtn.lock = false
           }, 1500)
           return
         }
@@ -145,6 +145,8 @@
       let dom = document.getElementById('btn-speak')
 
       dom.ontouchstart = function (event) {
+        dom.style.backgroundColor = '#666'
+        dom.style.color = '#fff'
         if (vm.speakBtn.lock) {
           console.log('start lock')
           return false
@@ -154,6 +156,8 @@
       }
 
       dom.ontouchend = function () {
+        dom.style.backgroundColor = '#fff'
+        dom.style.color = '#000'
         if (vm.speakBtn.lock) {
           console.log('end lock')
           return false
