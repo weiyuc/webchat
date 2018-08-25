@@ -64,9 +64,6 @@
     methods: {
       switchMode() {
         if (this.mode === 'mic') {
-          this.mode = 'keyboard'
-        } else {
-          this.mode = 'mic'
           if (!Recorder.isRecordingSupported()) {
             MessageBox.alert(
               `Supported: \n
@@ -80,12 +77,15 @@
               IE 11 and below \n
               iOS 11 Chrome`)
           }
+          this.mode = 'keyboard'
+        } else {
+          this.mode = 'mic'
         }
       },
       onMsg(res) {
-        console.log(res.duration)
         this.$store.dispatch('sendMessage', {
-          content: res,
+          data: res.data,
+          duration: res.duration,
           session: this.session
         }).then(() => {
           this.msg = ''

@@ -4,6 +4,11 @@
 export const SMS = 'SMS'
 
 /**
+ * 媒体消息
+ */
+export const MEDIA = 'MEDIA'
+
+/**
  * 添加好友请求
  */
 export const ADD_FRIEND = 'ADD_FRIEND'

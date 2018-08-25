@@ -4,8 +4,7 @@
     :title="session.remark || session.from"
     :label="session.lastMessage.content.duration ? '[语音]': session.lastMessage.content"
     >
-      <wc-profile-photo :username="session.from" :realName="session.remark">
-      </wc-profile-photo>
+      <img v-lazy="'/apis/user/getProfilePhoto/' + session.from" width="44" height="44"/>
     </mt-cell>
     <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
     <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
@@ -15,11 +14,9 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto";
 
   export default {
     name: 'Session',
-    components: {WcProfilePhoto},
     props: {
       session: Object,
       active: Boolean

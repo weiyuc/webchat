@@ -24,6 +24,7 @@ const state = {
   realName: localStorage.realName || '',
   phoneNumber: localStorage.phoneNumber || '',
   profilePhoto: localStorage.profilePhoto || '',
+  profilePhotoVersion: localStorage.profilePhotoVersion || 0,
   expiredTime: localStorage.expiredTime || 0,
 
   connected: false,

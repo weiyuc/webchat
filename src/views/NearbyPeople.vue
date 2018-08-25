@@ -10,8 +10,7 @@
       <div style="width: 100%;height: 40px"></div>
       <div class="nearby-people-list mt-20">
         <mt-cell v-for="(p, i) in nearbyPeoples" isLink :to="(friendsInfo.hasOwnProperty(p.username) ? '/friendCard' : '/AddNearbyPeople') + '?friendName=' + p.username" :key="i" :title="p.username" :label="formatDistance(p.distance)" @click.native="">
-          <wc-profile-photo :username="p.username" :width="35" :height="35">
-          </wc-profile-photo>
+          <img v-lazy="'/apis/user/getProfilePhoto/' + p.username" width="35" height="35"/>
         </mt-cell>
         <div v-show="nearbyPeoples.length === 0" class="no-data">{{ $t('msg.noData') }}</div>
       </div>
@@ -32,12 +31,10 @@
 <script>
   import {Toast, Indicator} from 'mint-ui'
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "../components/ProfilePhoto"
   import api from '../api'
 
   export default {
     name: 'wc-nearby-people',
-    components: {WcProfilePhoto},
     data() {
       return {
         position: {

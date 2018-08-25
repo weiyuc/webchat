@@ -136,7 +136,8 @@
           }
           const res = {
             duration: Math.ceil(duration),
-            data: data
+            data: data,
+            type: 'media'
           }
           vm.$emit('onMsg', res)
         }

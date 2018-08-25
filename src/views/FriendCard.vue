@@ -6,8 +6,7 @@
       </mt-header>
       <div style="width: 100%;height: 40px"></div>
       <mt-cell class="mt-20" style="min-height: 60px;" isLink>
-        <wc-profile-photo style="font-size: 20px" slot="icon" :width="50" :height="50" :username="friendName" :realName="remark">
-        </wc-profile-photo>
+        <img v-lazy="'/apis/user/getProfilePhoto/' + friendName" width="50" height="50"/>
         <div slot="title" class="info-title">
           <p>{{ nickname }}</p>
           <p>{{ $t('msg.remark') + ': ' + remark }}</p>
@@ -24,13 +23,11 @@
 </template>
 <script>
   import {MessageBox, Toast, Indicator} from 'mint-ui'
-  import WcProfilePhoto from "../components/ProfilePhoto"
   import {mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
 
   export default {
     name: 'friend-card',
-    components: {WcProfilePhoto},
     data() {
       return {
         friendRemark: ''

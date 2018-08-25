@@ -75,6 +75,7 @@
           return this.$store.getters.active
         },
         set (value) {
+          this.$Lazyload.lazyLoadHandler()
           this.$store.commit('setActive', value)
         }
       }

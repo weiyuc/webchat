@@ -293,7 +293,7 @@ let api = {
       }
     )
   },
-  createMessage ({content, session}, cb) {
+  createMessage ({content, session, data, duration}, cb) {
     const message = {
       id: 'm_' + uuidv4(),
       from: store.getters.username,
@@ -302,15 +302,18 @@ let api = {
       content,
       remark: session.remark,
       timestamp: Date.now(),
-      messageType: messageType.SMS,
+      messageType: duration ? messageType.MEDIA : messageType.SMS,
+      data,
+      duration,
       sent: false,
       timeout: false
     }
     if (!store.getters.lostConnect) {
-      if (!content.duration) {
+      if (duration) {
+        this.webSocket.send('/voiceNotify', {}, JSON.stringify(message))
+      } else {
         this.webSocket.send('/notify', {}, JSON.stringify(message))
       }
-
       message.sent = true
     } else {
       store.commit(mutationTypes.ADD_UN_SEND_MSG, message)
@@ -320,7 +323,11 @@ let api = {
   resend(message) {
     store.commit(mutationTypes.SET_MESSAGE_TIMEOUT, {id: message.id, timeout: false, timestamp: Date.now()})
     if (!store.getters.lostConnect) {
-      this.webSocket.send('/notify', {}, JSON.stringify(message))
+      if (message.duration) {
+        this.webSocket.send('/voiceNotify', {}, JSON.stringify(message))
+      } else {
+        this.webSocket.send('/notify', {}, JSON.stringify(message))
+      }
       message.sent = true
     } else {
       store.commit(mutationTypes.ADD_UN_SEND_MSG, message)
@@ -342,7 +349,13 @@ let api = {
           continue
         }
         if (store.getters.connected) {
-          this.webSocket.send('/notify', {}, JSON.stringify(message))
+
+          if (message.duration) {
+            this.webSocket.send('/voiceNotify', {}, JSON.stringify(message))
+          } else {
+            this.webSocket.send('/notify', {}, JSON.stringify(message))
+          }
+
           store.commit(mutationTypes.SET_MESSAGE_SENT, message.id)
           store.commit(mutationTypes.REMOVE_UNSENT_MESSAGE, i)
           continue

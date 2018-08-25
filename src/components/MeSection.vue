@@ -2,7 +2,7 @@
   <div class="me-section">
 
     <mt-cell class="mt-20 me" is-link to="/profiles" :title="realName" :label="'Webchat ID: ' + username">
-      <wc-profile-photo :myself="true"></wc-profile-photo>
+      <img :src="'/apis/user/getProfilePhoto/' + username + '?' + profilePhotoVersion" width="44" height="44"/>
     </mt-cell>
 
     <mt-cell class="mt-20" is-link :title="$t('msg.moments')" @click.native="comingSoon">
@@ -21,12 +21,10 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto"
   import {Toast} from 'mint-ui'
 
   export default {
     name: "me-section",
-    components: {WcProfilePhoto},
     data() {
       return {
       }
@@ -34,7 +32,8 @@
     computed: {
       ...mapGetters([
         'username',
-        'realName'
+        'realName',
+        'profilePhotoVersion'
       ])
     },
     methods: {

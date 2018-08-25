@@ -161,6 +161,13 @@ export default {
   },
   setActive(state, active) {
     state.active = active
+  },
+  setProfilePhotoVersion(state, profilePhotoVersion) {
+    state.profilePhotoVersion = profilePhotoVersion
+    try {
+      localStorage.profilePhotoVersion = profilePhotoVersion
+    } catch (e) {
+    }
   }
 }
 

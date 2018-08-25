@@ -4,7 +4,7 @@
       <mt-button icon="back" slot="left" @click.native="$emit('cancel')">{{ $t('msg.cancel') }}</mt-button>
       <mt-button icon="more" slot="right" @click.native="sheetVisible = true"></mt-button>
     </mt-header>
-    <wc-profile-photo :width="canvasWidth/1.5" :height="canvasWidth/1.5" :myself="true" v-show="imgData === ''"></wc-profile-photo>
+    <img v-show="imgData === ''" class="profile-photo" v-lazy="'/apis/user/getProfilePhoto/' + username" :width="canvasWidth/1.5" :height="canvasWidth/1.5"/>
     <input :id="inputId" @change="handleChange" style="display: none" type="file" accept="image/*"/>
     <canvas id="imgCanvas" :width="canvasWidth" :height="canvasHeight" v-show="imgData">
     </canvas>
@@ -30,10 +30,10 @@
   import {uuidv4} from '../utils'
   import lrz from 'lrz'
   import {Toast, Indicator} from 'mint-ui'
-  import WcProfilePhoto from "./ProfilePhoto";
+  import {mapGetters} from 'vuex'
 
   export default {
-    components: {WcProfilePhoto}, name: 'wc-img-upload',
+    name: 'wc-img-upload',
     data() {
       return {
         inputId: uuidv4(),
@@ -50,6 +50,11 @@
         ctx: null,
         btnDisabled: false
       }
+    },
+    computed: {
+      ...mapGetters({
+        username: 'username'
+      }),
     },
     methods: {
       handleChange(e) {
@@ -221,7 +226,7 @@
         width: 80%;
       }
     }
-    .text-icon {
+    .profile-photo {
       position: fixed;
       left: 16.5%;
       top: 130px;

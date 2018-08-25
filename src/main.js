@@ -10,7 +10,13 @@ import i18n from './i18n'
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
-import {Toast, Indicator} from 'mint-ui'
+import {Toast, Indicator, Lazyload} from 'mint-ui'
+Vue.use(Lazyload, {
+  preLoad: 1.3,
+  // error: 'dist/images/default.jpg',
+  attempt: 1
+})
+
 import axios from 'axios'
 
 import './assets/css/style.scss'

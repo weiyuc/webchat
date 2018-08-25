@@ -10,8 +10,7 @@
       </mt-cell>
       <mt-index-section class="contact" v-for="(v, k, i) in contacts" :index="k" :key="i">
         <mt-cell v-for="(n, j) in v" :key="j" :title="(friendsInfo[n.friendName] ? friendsInfo[n.friendName].remark : '') || n.friendName" @click.native="toFriendCard(n.friendName)">
-          <wc-profile-photo :width="35" :height="35" :username="n.friendName" :realName="friendsInfo[n.friendName] ? friendsInfo[n.friendName].remark : ''">
-          </wc-profile-photo>
+          <img v-lazy="'/apis/user/getProfilePhoto/' + n.friendName" width="35" height="35"/>
         </mt-cell>
       </mt-index-section>
     </mt-index-list>
@@ -19,11 +18,9 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto"
 
   export default {
     name: 'contact-section',
-    components: {WcProfilePhoto},
     computed: {
       ...mapGetters([
         'contacts',

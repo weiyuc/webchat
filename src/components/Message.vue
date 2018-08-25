@@ -7,29 +7,26 @@
         </path>
       </svg>
       <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
-      <span v-if="message.content.duration" :style="'width: ' + (message.content.duration * 18 ) + 'px'">
-        <span class="duration">{{ message.content.duration + "''"}} </span>
+      <span v-if="message.duration" :style="'width: ' + (message.duration * 18 ) + 'px'">
+        <span class="duration">{{ message.duration + "''"}} </span>
         <i class="icon icon-volume-medium"></i>
       </span>
-      <font v-if="!message.content.duration">{{ message.content }}</font>
+      <font v-if="!message.duration">{{ message.content }}</font>
     </div>
-
-    <wc-profile-photo :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :myself="message.isMe" :username="session.from" :realName="session.remark">
-    </wc-profile-photo>
+    <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :src="imgSrc">
   </li>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
-  import WcProfilePhoto from "./ProfilePhoto";
 
   export default {
     name: 'Message',
-    components: {WcProfilePhoto},
     computed: {
       ...mapGetters({
         session: 'currentSession',
-        friendsInfo: 'friendsInfo'
+        friendsInfo: 'friendsInfo',
+        profilePhotoVersion: 'profilePhotoVersion'
       }),
       loading() {
         return this.message.isMe && !this.message.sent && !this.message.timeout
@@ -43,6 +40,10 @@
           return info.profilePhoto
         }
         return ''
+      },
+      imgSrc() {
+        let version = this.message.isMe ? ('?' + this.profilePhotoVersion) : ''
+        return `/apis/user/getProfilePhoto/${this.message.from + version}`
       }
     },
     props: {

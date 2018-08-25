@@ -8,8 +8,7 @@
       </mt-header>
       <div style="width: 100%;height: 40px"></div>
       <mt-cell class="mt-20 photo" @click.native="imgUploadShow = true" is-link :title="$t('msg.profilePhoto')">
-        <wc-profile-photo :myself="true" ></wc-profile-photo>
-        <img v-show="imgData !== ''" :src="imgData" width="44" height="44"/>
+        <img v-lazy="'/apis/user/getProfilePhoto/' + username + '?' + profilePhotoVersion" width="44" height="44"/>
       </mt-cell>
       <wc-img-upload v-if="imgUploadShow" @cancel="imgUploadShow = false" @onSelected="onSelected"></wc-img-upload>
 
@@ -32,11 +31,11 @@
   import {MessageBox, Toast, Indicator} from 'mint-ui'
   import {uuidv4} from '../utils'
   import lrz from 'lrz'
-  import WcProfilePhoto from "../components/ProfilePhoto";
   import WcImgUpload from "../components/ImageUpload";
 
   export default {
-    components: {WcImgUpload, WcProfilePhoto}, name: 'wc-settings',
+    components: {WcImgUpload},
+    name: 'wc-settings',
     data() {
       return {
         popupVisible: false,
@@ -53,7 +52,8 @@
         'username',
         'realName',
         'gender',
-        'whatUp'
+        'whatUp',
+        'profilePhotoVersion'
       ]),
       index() {
         return this.gender === 0 ? 2 : this.gender === 1 ? 1 : 0
@@ -159,6 +159,7 @@
         this.$store.dispatch('setProfilePhoto', {
           profilePhoto
         }).then(() => {
+          this.$store.commit('setProfilePhotoVersion', Date.now())
           Indicator.close()
         }).catch(() => {
           Indicator.close()
