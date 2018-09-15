@@ -153,6 +153,10 @@ let api = {
         this.onAddFriendMsg(message)
         return
         break
+      case messageType.MEDIA:
+        store.dispatch('onMessage', {message})
+        return
+        break
       case messageType.SMS:
         store.dispatch('onMessage', {message})
         return

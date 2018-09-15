@@ -2,7 +2,7 @@
   <div class="wc-session" @click="$emit('switch-session', session.from)">
     <mt-cell
     :title="session.remark || session.from"
-    :label="session.lastMessage.content.duration ? '[语音]': session.lastMessage.content"
+    :label="session.lastMessage.duration ? '[语音]': session.lastMessage.content"
     >
       <img v-lazy="'/apis/user/getProfilePhoto/' + session.from" width="44" height="44"/>
     </mt-cell>

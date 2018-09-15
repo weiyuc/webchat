@@ -1,6 +1,6 @@
 <template>
   <li class="message-list-item">
-    <div :class="'message-text ' + (message.isMe ? 'text-right' : 'text-left')">
+    <div :class="'message-text ' + (message.isMe ? 'text-right' : 'text-left')" @click="play">
       <svg v-show="loading" class="loading" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
         <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z" transform="rotate(325.811 25 25)">
           <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform>
@@ -10,6 +10,7 @@
       <span v-if="message.duration" :style="'width: ' + (message.duration * 18 ) + 'px'">
         <span class="duration">{{ message.duration + "''"}} </span>
         <i class="icon icon-volume-medium"></i>
+        <audio style="display: none;" :id="message.id" :src="'/apis/user/getVoice/' + message.id" preload="none"></audio>
       </span>
       <font v-if="!message.duration">{{ message.content }}</font>
     </div>
@@ -52,6 +53,12 @@
     methods: {
       resend() {
         this.$store.dispatch('resend', this.message)
+      },
+      play() {
+        if (this.message.duration) {
+          const audio = document.getElementById(this.message.id)
+          audio.play()
+        }
       }
     }
   }
@@ -115,9 +122,7 @@
       }
       .duration {
         position: absolute;
-        left: -35px;
-        display: inline-block;
-        width: 30px;
+        right: -25px;
       }
     }
     .text-left:before {

@@ -122,7 +122,6 @@
       }
     },
     mounted() {
-
       this.recorder = new Recorder({
         encoderPath: './static/js/encoderWorker.min.js'
       })
@@ -134,12 +133,17 @@
           if (duration < 0.8) {
             return
           }
-          const res = {
-            duration: Math.ceil(duration),
-            data: data,
-            type: 'media'
+          const dataBlob = new Blob( [ data ], { type: "audio/wav" } );
+          const reader = new FileReader();
+          reader.readAsDataURL(dataBlob);
+          reader.onloadend = function() {
+            const res = {
+              duration: Math.ceil(duration),
+              data: reader.result,
+              type: 'media'
+            }
+            vm.$emit('onMsg', res)
           }
-          vm.$emit('onMsg', res)
         }
       }
 

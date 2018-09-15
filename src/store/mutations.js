@@ -182,6 +182,7 @@ function createSession(state, from, remark) {
 }
 
 function addMessage(state, message) {
+  console.log(message)
 
   // add a `isRead` field before adding the message
   let from = message.isMe ? message.to : message.from
