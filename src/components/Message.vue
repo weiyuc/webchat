@@ -10,9 +10,9 @@
       <span v-if="message.duration" :style="'width: ' + (message.duration * 18 ) + 'px'">
         <span class="duration">{{ message.duration + "''"}} </span>
         <i class="icon icon-volume-medium"></i>
-        <audio style="display: none;" :id="message.id" :src="'/apis/user/getVoice/' + message.id" preload="none"></audio>
+        <audio ref="audio" :src="'/apis/user/getVoice/' + message.id" preload="none"></audio>
       </span>
-      <font v-if="!message.duration">{{ message.content }}</font>
+      <i v-if="!message.duration">{{ message.content }}</i>
     </div>
     <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :src="imgSrc">
   </li>
@@ -56,9 +56,26 @@
       },
       play() {
         if (this.message.duration) {
-          const audio = document.getElementById(this.message.id)
-          audio.play()
+          const audio = this.$refs.audio
+          const isPlaying = !audio.paused
+          if (isPlaying) {
+            audio.play()
+          } else {
+            audio.pause()
+          }
         }
+
+
+        if(isPlaying){
+          player.pause();
+          this.isPlaying = false
+        }
+        else {
+          player.play();
+          this.isPlaying = true
+        }
+
+
       }
     }
   }

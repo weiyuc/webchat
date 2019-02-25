@@ -133,7 +133,7 @@
           if (duration < 0.8) {
             return
           }
-          const dataBlob = new Blob( [ data ], { type: "audio/wav" } );
+          const dataBlob = new Blob( [ data ], { type: "audio/ogg" } );
           const reader = new FileReader();
           reader.readAsDataURL(dataBlob);
           reader.onloadend = function() {

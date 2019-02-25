@@ -66,15 +66,15 @@
         if (this.mode === 'mic') {
           if (!Recorder.isRecordingSupported()) {
             MessageBox.alert(
-              `Supported: \n
-              Chrome v58 \n
-              Firefox v53 \n
-              Microsoft Edge v41 \n
-              Opera v44 \n
-              macOS Safari v11 \n
-              iOS Safari v11 \n
-              Unsupported: \n
-              IE 11 and below \n
+              `Supported: \r\n
+              Chrome v58 \r\n
+              Firefox v53 \r\n
+              Microsoft Edge v41 \r\n
+              Opera v44 \r\n
+              macOS Safari v11 \r\n
+              iOS Safari v11 \r\n
+              Unsupported: \r\n
+              IE 11 and below \r\n
               iOS 11 Chrome`)
           }
           this.mode = 'keyboard'
