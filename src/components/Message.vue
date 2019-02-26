@@ -10,7 +10,7 @@
       <span v-if="message.duration" :style="'width: ' + (message.duration * 18 ) + 'px'">
         <span class="duration">{{ message.duration + "''"}} </span>
         <i class="icon icon-volume-medium"></i>
-        <audio ref="audio" :src="'/apis/user/getVoice/' + message.id" preload="none"></audio>
+        <audio ref="audio" :src="host + '/apis/user/getVoice/' + message.id + '.wav'" preload="none"></audio>
       </span>
       <i v-if="!message.duration">{{ message.content }}</i>
     </div>
@@ -23,17 +23,19 @@
 
   export default {
     name: 'Message',
+    data() {
+      return {
+        host: window.location.protocol + "//" + window.location.host,
+        playing: false
+      }
+    },
     computed: {
       ...mapGetters({
         session: 'currentSession',
         friendsInfo: 'friendsInfo',
         profilePhotoVersion: 'profilePhotoVersion'
       }),
-      data() {
-        return {
-          playing: false
-        }
-      },
+
       loading() {
         return this.message.isMe && !this.message.sent && !this.message.timeout
       },
@@ -60,13 +62,19 @@
         this.$store.dispatch('resend', this.message)
       },
       play() {
-        const audio = this.$refs.audio
-        if (this.playing) {
-          audio.pause()
-          this.playing = false
-        } else {
-          audio.play()
-          this.playing = true
+        try {
+          const audio = this.$refs.audio
+          window.console.log(audio)
+          if (this.playing) {
+            audio.pause()
+            this.playing = false
+          } else {
+            audio.play()
+            this.playing = true
+          }
+        } catch (e) {
+          window.console.log(111111)
+          window.console.error(e)
         }
       }
     }
@@ -90,7 +98,7 @@
       text-align: left;
       padding: 8px;
       word-break: break-all;
-      >span {
+      > span {
         display: inline-block;
         max-width: 180px;
       }
@@ -109,7 +117,7 @@
       float: right;
       margin-right: 78px;
       background: #62b900;
-      >span {
+      > span {
         text-align: right;
       }
       .duration {
@@ -126,7 +134,7 @@
       float: left;
       margin-left: 78px;
       background: #fff;
-      >span {
+      > span {
         text-align: left;
       }
       .duration {
