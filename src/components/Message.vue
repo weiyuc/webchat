@@ -29,6 +29,11 @@
         friendsInfo: 'friendsInfo',
         profilePhotoVersion: 'profilePhotoVersion'
       }),
+      data() {
+        return {
+          playing: false
+        }
+      },
       loading() {
         return this.message.isMe && !this.message.sent && !this.message.timeout
       },
@@ -55,27 +60,14 @@
         this.$store.dispatch('resend', this.message)
       },
       play() {
-        if (this.message.duration) {
-          const audio = this.$refs.audio
-          const isPlaying = !audio.paused
-          if (isPlaying) {
-            audio.play()
-          } else {
-            audio.pause()
-          }
+        const audio = this.$refs.audio
+        if (this.playing) {
+          audio.pause()
+          this.playing = false
+        } else {
+          audio.play()
+          this.playing = true
         }
-
-
-        if(isPlaying){
-          player.pause();
-          this.isPlaying = false
-        }
-        else {
-          player.play();
-          this.isPlaying = true
-        }
-
-
       }
     }
   }

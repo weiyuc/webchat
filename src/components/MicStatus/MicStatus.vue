@@ -96,7 +96,7 @@
       },
       onSend() {
         this.message.end = new Date().getTime()
-        const duration =  (this.message.end - this.message.start) / 1000
+        const duration = (this.message.end - this.message.start) / 1000
         if (!this.speakBtn.cancel && duration < 1.5) {
           this.speakBtn.icon = 'warning'
           this.speakBtn.text2 = '说话时间太短'
@@ -129,14 +129,14 @@
       const vm = this
       this.recorder.ondataavailable = function (data) {
         if (!vm.speakBtn.cancel) {
-          const duration =  (vm.message.end - vm.message.start) / 1000
+          const duration = (vm.message.end - vm.message.start) / 1000
           if (duration < 0.8) {
             return
           }
-          const dataBlob = new Blob( [ data ], { type: "audio/ogg" } );
+          const dataBlob = new Blob([data], {type: "audio/ogg"});
           const reader = new FileReader();
           reader.readAsDataURL(dataBlob);
-          reader.onloadend = function() {
+          reader.onloadend = function () {
             const res = {
               duration: Math.ceil(duration),
               data: reader.result,
@@ -149,7 +149,8 @@
 
       let dom = document.getElementById('btn-speak')
 
-      dom.ontouchstart = function (event) {
+
+      const startFun = function (event) {
         dom.style.backgroundColor = '#666'
         dom.style.color = '#fff'
         if (vm.speakBtn.lock) {
@@ -160,7 +161,8 @@
         vm.speakBtn.y = event.touches[0].clientY
       }
 
-      dom.ontouchend = function () {
+
+      const endFun = function () {
         dom.style.backgroundColor = '#fff'
         dom.style.color = '#000'
         if (vm.speakBtn.lock) {
@@ -169,7 +171,8 @@
         }
         vm.onSend()
       }
-      document.ontouchmove = function (event) {
+
+      const moveFun = function (event) {
         if (vm.speakBtn.lock) {
           console.log('move lock')
           return false
@@ -186,6 +189,13 @@
           }
         }
       }
+      dom.ontouchstart = startFun
+      dom.ontouchend = endFun
+      document.ontouchmove = moveFun
+
+      dom.mousedown = startFun
+      dom.mouseup = endFun
+      document.mousemove = moveFun
     }
   }
 </script>
