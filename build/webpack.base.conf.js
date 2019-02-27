@@ -65,7 +65,8 @@ module.exports = {
     plugins: [
       new CopyWebpackPlugin([
         {from: './node_modules/opus-recorder/dist/encoderWorker.min.js', to: './static/js/encoderWorker.min.js'},
-        {from: './node_modules/opus-recorder/dist/encoderWorker.min.wasm', to: './static/js/encoderWorker.min.wasm'}
+        {from: './node_modules/opus-recorder/dist/encoderWorker.min.wasm', to: './static/js/encoderWorker.min.wasm'},
+        {from: './node_modules/opus-recorder/dist/waveWorker.min.js', to: './static/js/waveWorker.min.js'}
       ])
     ]
 }

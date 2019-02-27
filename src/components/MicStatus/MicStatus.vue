@@ -123,7 +123,7 @@
     },
     mounted() {
       this.recorder = new Recorder({
-        encoderPath: './static/js/encoderWorker.min.js'
+        encoderPath: './static/js/waveWorker.min.js'
       })
 
       const vm = this
