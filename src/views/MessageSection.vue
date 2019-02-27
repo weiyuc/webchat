@@ -9,9 +9,9 @@
       <div class="message-section">
         <ul class="message-list" ref="list">
           <message
-                  v-for="message in sortedMessages"
-                  :key="message.id"
-                  :message="message">
+            v-for="message in sortedMessages"
+            :key="message.id"
+            :message="message">
           </message>
         </ul>
       </div>

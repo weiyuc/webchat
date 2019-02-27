@@ -62,19 +62,13 @@
         this.$store.dispatch('resend', this.message)
       },
       play() {
-        try {
-          const audio = this.$refs.audio
-          window.console.log(audio)
-          if (this.playing) {
-            audio.pause()
-            this.playing = false
-          } else {
-            audio.play()
-            this.playing = true
-          }
-        } catch (e) {
-          window.console.log(111111)
-          window.console.error(e)
+        const audio = this.$refs.audio
+        if (this.playing) {
+          audio.pause()
+          this.playing = false
+        } else {
+          audio.play()
+          this.playing = true
         }
       }
     }
