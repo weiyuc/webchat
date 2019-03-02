@@ -9,7 +9,7 @@
       <i v-show="isTimeout" @click="resend" style="color: #F56C6C" class="icon icon-notification loading"></i>
       <span v-if="message.duration" :style="'width: ' + (message.duration * 18 ) + 'px'">
         <span class="duration">{{ message.duration + "''"}} </span>
-        <i class="icon icon-volume-medium"></i>
+        <i :class="'icon icon-' + (playing ? 'pause2' : 'play3')"></i>
         <audio ref="audio" :src="host + '/apis/user/getVoice/' + message.id + '.wav'" preload="none"></audio>
       </span>
       <i v-if="!message.duration">{{ message.content }}</i>
@@ -64,11 +64,19 @@
       play() {
         const audio = this.$refs.audio
         if (this.playing) {
+          clearTimeout(this.cleanId)
           audio.pause()
+          audio.currentTime = 0
           this.playing = false
         } else {
           audio.play()
           this.playing = true
+          this.cleanId = setTimeout(() => {
+            clearTimeout(this.cleanId)
+            audio.pause()
+            audio.currentTime = 0
+            this.playing = false
+          }, (this.message.duration + 1) * 1000)
         }
       }
     }

@@ -111,7 +111,7 @@
             this.message.start = 0
             this.message.end = 0
             this.speakBtn.lock = false
-          }, 1500)
+          }, 0)
           return
         }
         this.recorder.stop()

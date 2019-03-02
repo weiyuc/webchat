@@ -9,9 +9,9 @@
       <div class="message-section">
         <ul class="message-list" ref="list">
           <message
-            v-for="message in sortedMessages"
-            :key="message.id"
-            :message="message">
+                  v-for="message in sortedMessages"
+                  :key="message.id"
+                  :message="message">
           </message>
         </ul>
       </div>
@@ -31,7 +31,7 @@
 
   import WcMicStatus from "../components/MicStatus/MicStatus"
   import Recorder from 'opus-recorder'
-  import { MessageBox } from 'mint-ui'
+  import {MessageBox} from 'mint-ui'
 
   export default {
     name: 'MessageSection',
