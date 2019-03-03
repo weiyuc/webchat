@@ -12,7 +12,7 @@
         <i :class="'icon icon-' + (playing ? 'pause2' : 'play3')"></i>
         <audio ref="audio" :src="host + '/apis/user/getVoice/' + message.id + '.wav'" preload="none"></audio>
       </span>
-      <i v-if="!message.duration">{{ message.content }}</i>
+      <font v-if="!message.duration">{{ message.content }}</font>
     </div>
     <img :class="'user-icon ' + (message.isMe ? 'icon-right' : 'icon-left')" :src="imgSrc">
   </li>

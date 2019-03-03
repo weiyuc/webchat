@@ -30,7 +30,7 @@
     name: 'wc-settings',
     data() {
       return {
-        lang: Vue.config.lang,
+        lang: null,
       }
     },
     computed: {
@@ -41,6 +41,7 @@
     watch: {
       lang: function(newLang) {
         this.$i18n.locale = newLang
+        Vue.config.lang = newLang
         try {
           window.localStorage.lang = newLang
         } catch (e) {
@@ -48,6 +49,9 @@
             alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.')
         }
       }
+    },
+    created() {
+      this.lang = Vue.config.lang
     },
     methods: {
       back() {

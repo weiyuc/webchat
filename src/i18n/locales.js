@@ -9,7 +9,7 @@ export default {
       search: "搜索",
       settings: "设置",
       noData: "暂无数据",
-      noMessage: "暂无消息",
+      noMessage: "暂时没有新消息",
       back: "返回",
       send: "发送",
       newFriends: "新的朋友",
