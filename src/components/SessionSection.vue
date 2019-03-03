@@ -6,7 +6,10 @@
         <div class="lost-msg" v-show="lostConnect">
           <p>{{ $t('msg.lostConnect') }}</p>
         </div>
-        <div class="no-message" v-show="showNoMsg">{{ $t('msg.noMessage') }}</div>
+        <div class="no-message" v-show="showNoMsg">
+          <i class="icon icon-bubble2"></i>
+          {{ $t('msg.noMessage') }}
+        </div>
         <session
                 v-for="session in sessions"
                 v-if="session.lastMessage"
@@ -119,8 +122,12 @@
         }
       }
       .no-message {
-        height: 40px;
-        padding-top: 20px;
+        i {
+          display: block;
+          margin: 50% auto 10px auto;
+          font-size: 40px;
+        }
+        height: 100%;
         text-align: center;
       }
       @keyframes spin {

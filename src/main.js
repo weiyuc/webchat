@@ -9,13 +9,7 @@ import i18n from './i18n'
 
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
-
 import {Toast, Indicator, Lazyload} from 'mint-ui'
-Vue.use(Lazyload, {
-  preLoad: 1.3,
-  // error: 'dist/images/default.jpg',
-  attempt: 1
-})
 
 import axios from 'axios'
 
@@ -24,6 +18,11 @@ import './assets/css/icon.css'
 import store from './store'
 
 Vue.use(Mint)
+
+Vue.use(Lazyload, {
+  preLoad: 1.3,
+  attempt: 1
+})
 
 axios.interceptors.request.use(function (config) {
   config.headers.token = store.getters.token

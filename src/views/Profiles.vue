@@ -41,7 +41,7 @@
         popupVisible: false,
         slots: [
         ],
-        checkIndex: this.index,
+        checkIndex: null,
         inputId: uuidv4(),
         imgData: '',
         imgUploadShow: false
@@ -56,7 +56,7 @@
         'profilePhotoVersion'
       ]),
       index() {
-        return this.gender === 0 ? 2 : this.gender === 1 ? 1 : 0
+        return this.gender === 0 ? 2 : (this.gender === 1 ? 1 : 0)
       },
       formatGender() {
         return this.gender === 0 ? 'msg.female' : this.gender === 1 ? 'msg.male' : 'msg.empty'
@@ -65,14 +65,15 @@
     watch: {
       popupVisible: function(newVal) {
         if (!newVal) {
-          if (this.checkIndex !== this.index) {
-            let gender = this.checkIndex === 0 ? null : this.checkIndex === 1 ? 1 : 0
-            this.$store.dispatch('setGender', {
-              gender
-            })
-          }
+          let gender = this.checkIndex === 0 ? null : this.checkIndex === 1 ? 1 : 0
+          this.$store.dispatch('setGender', {
+            gender
+          })
         }
       }
+    },
+    created() {
+      this.checkIndex = this.gender === 0 ? 2 : (this.gender === 1 ? 1 : 0)
     },
     methods: {
       back() {
