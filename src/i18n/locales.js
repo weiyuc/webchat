@@ -119,7 +119,7 @@ export default {
       passwordLengthMsg: 'The password length of 6 to 18',
       twicePasswdNotSame: 'Twice passwords were not same',
       enterWith20: 'Enter within 20 words',
-      enterWith150: 'Enter within 20 words',
+      enterWith150: 'Enter within 150 words',
       confirmPassword: 'Confirm password',
       confirmPasswordMsg: 'Please re-enter password',
       confirmLogout: 'Do you want to log out?',
