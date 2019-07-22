@@ -1,13 +1,7 @@
-* {
-    font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-    -webkit-tap-highlight-color: transparent;
-}
-
 html {
     width: 100%;
     height: 100%;
     body {
-        background-color: #f8f8f8;
         width: 100%;
         height: 100%;
         margin: 0;
@@ -16,35 +10,44 @@ html {
         input, input:focus, input:active {
             user-select: text;
         }
-        .mt-10 {
-            margin-top: 10px;
-        }
+    }
+}
 
-        .mt-20 {
-            margin-top: 20px;
+.wc-login,.wc-register {
+    width: 100%;
+    height: 100%;
+    .wc-logo {
+        text-align: center;
+        img {
+            width: 230px;
         }
-
-        .mt-30 {
-            margin-top: 30px;
+    }
+    form {
+        margin: auto;
+        width: 80%;
+    }
+    .wc-button {
+        width: 80%;
+        padding-top: 20px;
+        margin: auto;
+        button {
+            width: 100%;
+            margin: 0;
         }
-        .mt-40 {
-            margin-top: 40px;
-        }
-        .tar {
-            text-align: right;
-        }
-        .tal {
-            text-align: left;
-        }
-        .mint-header {
-            background-color: #333;
+        > h3 {
+            margin: 20px 0 0 0;
+            text-align: center;
+            a {
+                text-decoration: none;
+            }
         }
     }
 }
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .3s;
+#nprogress .bar {
+    background: var(--v-primary-base) !important;
 }
-.fade-enter, .fade-leave-to {
-    opacity: 0;
+
+#nprogress .peg {
+    box-shadow: 0 0 15px var(--v-primary-base), 0 0 10px var(--v-primary-base) !important;
 }

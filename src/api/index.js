@@ -2,7 +2,7 @@ import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import * as messageType from './messageType'
 import * as mutationTypes from '../store/mutation-types'
-import { MessageBox, Toast, Indicator } from 'mint-ui'
+// import { MessageBox, Toast, Indicator } from 'mint-ui'
 import store from '../store'
 import axios from 'axios'
 import i18n from '../i18n'
@@ -180,20 +180,20 @@ let api = {
   onPushOut() {
     store.commit(mutationTypes.LOGOUT)
     this.disconnect()
-    MessageBox.close()
-    let config = {
-      confirmButtonText: i18n.t('msg.confirm'),
-      cancelButtonText: i18n.t('msg.cancel')
-    }
-    MessageBox.alert(
-      i18n.t('msg.accountLoginOthPlace'),
-      i18n.t('msg.tips'),
-      config
-    ).then(
-      () => {
-        window.location.reload()
-      }
-    )
+    // MessageBox.close()
+    // let config = {
+    //   confirmButtonText: i18n.t('msg.confirm'),
+    //   cancelButtonText: i18n.t('msg.cancel')
+    // }
+    // MessageBox.alert(
+    //   i18n.t('msg.accountLoginOthPlace'),
+    //   i18n.t('msg.tips'),
+    //   config
+    // ).then(
+    //   () => {
+    //     window.location.reload()
+    //   }
+    // )
   },
   onAddFriendMsg(message) {
     store.commit(mutationTypes.ADD_REQ_CONTACT, message.from)
@@ -209,10 +209,10 @@ let api = {
     )
   },
   setRemark({remark, friendName}, cb) {
-    Indicator.open()
+    // Indicator.open()
     axios.post('/apis/friend/setRemark', {remark: remark, friendName}).then(
       () => {
-        Indicator.close()
+        // Indicator.close()
         cb(true)
       },
       () => {
@@ -221,10 +221,10 @@ let api = {
     )
   },
   setRealName({realName}, cb) {
-    Indicator.open()
+    // Indicator.open()
     axios.post('/apis/user/setRealName', {realName}).then(
       () => {
-        Indicator.close()
+        // Indicator.close()
         cb(true)
       },
       () => {
@@ -233,10 +233,10 @@ let api = {
     )
   },
   setGender({gender}, cb) {
-    Indicator.open()
+    // Indicator.open()
     axios.post('/apis/user/setGender', {gender}).then(
       () => {
-        Indicator.close()
+        // Indicator.close()
         cb(true)
       },
       () => {
@@ -245,10 +245,10 @@ let api = {
     )
   },
   setWhatUp({whatUp}, cb) {
-    Indicator.open()
+    // Indicator.open()
     axios.post('/apis/user/setWhatUp', {whatUp}).then(
       () => {
-        Indicator.close()
+        // Indicator.close()
         cb(true)
       },
       () => {
@@ -376,7 +376,6 @@ let api = {
         if (Date.now() - message.timestamp > 60000) {
           store.commit(mutationTypes.SET_MESSAGE_TIMEOUT, {id: message.id, timeout: true})
           store.commit(mutationTypes.REMOVE_UNSENT_MESSAGE, i)
-          continue
         }
       }
     }

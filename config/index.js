@@ -12,12 +12,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/apis/**": {
-        target: "http://localhost:8085",
+        target: "http://120.79.243.91:8085",
         pathRewrite: {'^/apis': ''},
         secure: false
       },
       "/webchat": {
-        target: "http://localhost:8085",
+        target: "http://120.79.243.91:8085",
         secure: false
       }
     },

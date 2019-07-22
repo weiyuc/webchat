@@ -1,16 +1,24 @@
 <template>
-  <div class="wc-session" @click="$emit('switch-session', session.from)">
-    <mt-cell
-    :title="session.remark || session.from"
-    :label="session.lastMessage.duration ? '[语音]': session.lastMessage.content"
-    >
-      <img v-lazy="'/apis/user/getProfilePhoto/' + session.from" width="44" height="44"/>
-    </mt-cell>
-    <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
-    <mt-badge size="small" color="red" v-show="session.unreadMsgCount">
-      {{ session.unreadMsgCount > 99 ? '99+' : session.unreadMsgCount}}
-    </mt-badge>
-  </div>
+  <v-list-tile
+    avatar
+    @click="$emit('switch-session', session.from)">
+    <v-list-tile-avatar>
+      <img v-lazy="'/apis/user/getProfilePhoto/' + session.from"/>
+    </v-list-tile-avatar>
+
+    <v-list-tile-content>
+      <v-list-tile-title>{{session.remark || session.from}}</v-list-tile-title>
+      <v-list-tile-sub-title class="wc-sub-title">
+        <span class='text--primary'>{{session.lastMessage.duration ? '[语音]': session.lastMessage.content}}</span>
+        <span  class="time">{{ session.lastMessage.timestamp | time }}</span>
+      </v-list-tile-sub-title>
+      <v-badge>
+        <template v-slot:badge>
+          <span>{{ session.unreadMsgCount > 99 ? '99+' : session.unreadMsgCount}}</span>
+        </template>
+      </v-badge>
+    </v-list-tile-content>
+  </v-list-tile>
 </template>
 <script>
   import {mapGetters} from 'vuex'
@@ -35,53 +43,17 @@
     }
   }
 </script>
-<style lang="scss">
-  .wc-session {
+<style lang="scss" scoped>
+  .v-list__tile__content {
     position: relative;
-    height: 60px;
-    .mint-cell {
-      .mint-cell-value {
-        position: absolute;
-        left: 10px;
-        top: 7px;
-        img {
-          border-radius: 5px;
-        }
-      }
-      > .mint-cell-wrapper {
-        height: 60px !important;
-        .mint-cell-title {
-          position: absolute;
-          left: 65px;
-          height: 45px;
-          top: 8px;
-          width: 100%;
-          .mint-cell-text {
-            font-size: 16px;
-          }
-          .mint-cell-label {
-            font-size: 14px;
-            margin-top: 9px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 80%;
-          }
-        }
-      }
-    }
-    .time {
+    .v-badge {
       position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 14px;
-      color: #888;
-    }
-    .mint-badge {
-      position: absolute;
-      top: 2px;
-      left: 45px;
+      right: 24px;
+      top: 12px;
     }
   }
-
+  .wc-sub-title {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>

@@ -7,21 +7,39 @@ import App from './App'
 import router from './router'
 import i18n from './i18n'
 
-import Mint from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import {Toast, Indicator, Lazyload} from 'mint-ui'
+
+import Toast from './components/toast'
+Vue.prototype.$toast = Toast
+
+import Loading from './components/loading'
+Vue.prototype.$loading = Loading
+
+import Vuetify from 'vuetify'
+import VueLazyload from 'vue-lazyload'
 
 import axios from 'axios'
 
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import './assets/css/style.scss'
-import './assets/css/icon.css'
+import 'nprogress/nprogress.css'
 import store from './store'
 
-Vue.use(Mint)
-
-Vue.use(Lazyload, {
+Vue.use(VueLazyload, {
   preLoad: 1.3,
   attempt: 1
+})
+
+import colors from 'vuetify/es5/util/colors'
+
+Vue.use(Vuetify, {
+  iconfont: 'md',
+  theme: {
+    primary: colors.teal.lighten1
+  },
+  options: {
+    customProperties: true
+  }
 })
 
 axios.interceptors.request.use(function (config) {
@@ -34,7 +52,7 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (res) {
   if (res.data.responseCode !== 0) {
-    Indicator.close()
+    Loading.close()
     if (~[4003, 4004, 403].indexOf(res.data.responseCode)) {
       Toast(res.data.responseMsg)
       store.dispatch('logout').then(() => {
@@ -49,7 +67,7 @@ axios.interceptors.response.use(function (res) {
 }, function (error) {
   console.error(error)
   Toast(i18n.t('msg.networkErr'))
-  Indicator.close()
+  Loading.close()
   return Promise.reject(error)
 })
 

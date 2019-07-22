@@ -1,18 +1,11 @@
 import Vue from 'vue'
+import NProgress from 'nprogress'
+NProgress.configure({ showSpinner: false })
+
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Index from '@/views/Index'
-import MessageSection from '@/views/MessageSection'
-import NewFriend from '@/views/NewFriend'
-import Search from '@/views/Search'
-import FriendCard from '@/views/FriendCard'
-import Settings from '@/views/Settings'
-import Profiles from '@/views/Profiles'
-import NearbyPeople from '@/views/NearbyPeople'
-import AddNearbyPeople from '@/views/AddNearbyPeople'
-
-import ImgUpload from '@/components/ImageUpload'
 
 import store from '../store'
 
@@ -34,57 +27,6 @@ const router = new Router({
       path: '/',
       name: 'index',
       component: Index
-    },
-    {
-      path: '/messageSection',
-      name: 'messageSection',
-      component: MessageSection
-    },
-    {
-      path: '/newFriend',
-      name: 'newFriend',
-      component: NewFriend
-    },
-    {
-      path: '/search',
-      name: 'search',
-      component: Search
-    },
-    {
-      path: '/friendCard',
-      name: 'friendCard',
-      component: FriendCard,
-      props: (route) => ({
-        friendName: route.query.friendName
-      })
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings
-    },
-    {
-      path: '/nearbyPeople',
-      name: 'nearbyPeople',
-      component: NearbyPeople
-    },
-    {
-      path: '/AddNearbyPeople',
-      name: 'AddNearbyPeople',
-      component: AddNearbyPeople,
-      props: (route) => ({
-        friendName: route.query.friendName
-      })
-    },
-    {
-      path: '/profiles',
-      name: 'profiles',
-      component: Profiles
-    },
-    {
-      path: '/imgUpload',
-      name: 'imgUpload',
-      component: ImgUpload
     }
   ]
 })
@@ -111,6 +53,7 @@ function subscribe() {
 const un_check_url = ['/login', '/register', '/testRtc']
 
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   if (!~un_check_url.indexOf(to.fullPath)) {
     if (!store.getters.token) {
       return next({path: '/login'})
@@ -137,6 +80,12 @@ router.beforeEach((to, from, next) => {
     }
     return next()
   }
+})
+
+router.afterEach(() => {
+  setTimeout(() => {
+    NProgress.done()
+  }, 300)
 })
 
 export default router
