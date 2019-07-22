@@ -8,10 +8,10 @@ import router from './router'
 import i18n from './i18n'
 
 
-import Toast from './components/toast'
+import Toast from './components/Toast'
 Vue.prototype.$toast = Toast
 
-import Loading from './components/loading'
+import Loading from './components/Loading'
 Vue.prototype.$loading = Loading
 
 import Vuetify from 'vuetify'
