@@ -10,19 +10,18 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "vue": "^2.5.16",
+    "vue-i18n": "^7.3.2",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuetify": "^1.5.16",
+    "material-design-icons-iconfont": "^5.0.1",
     "axios": "^0.17.1",
     "lrz": "^4.9.40",
-    "material-design-icons-iconfont": "^5.0.1",
     "net": "^1.0.2",
     "nprogress": "^0.2.0",
     "sockjs-client": "^1.1.4",
-    "stompjs": "^2.3.3",
-    "vue": "^2.5.16",
-    "vue-i18n": "^7.3.2",
-    "vue-lazyload": "^1.3.1",
-    "vue-router": "^3.0.1",
-    "vuetify": "^1.5.16",
-    "vuex": "^3.0.1"
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

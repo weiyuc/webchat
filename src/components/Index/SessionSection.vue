@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-  import Session from '../Session.vue'
+  import Session from './Session.vue'
   import {mapGetters} from 'vuex'
 
   export default {

@@ -15,7 +15,6 @@ import Loading from './components/Loading'
 Vue.prototype.$loading = Loading
 
 import Vuetify from 'vuetify'
-import VueLazyload from 'vue-lazyload'
 
 import axios from 'axios'
 
@@ -24,11 +23,6 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import './assets/css/style.scss'
 import 'nprogress/nprogress.css'
 import store from './store'
-
-Vue.use(VueLazyload, {
-  preLoad: 1.3,
-  attempt: 1
-})
 
 import colors from 'vuetify/es5/util/colors'
 

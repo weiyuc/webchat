@@ -1,9 +1,23 @@
 <template>
   <div class="me-section">
+    <v-avatar :size="70" style="position: absolute; top: 80px; left: 50%;transform: translateX(-50%)">
+      <wc-lazy-img :lazy-src="`/apis/user/getProfilePhoto/${username}?${profilePhotoVersion}`"></wc-lazy-img>
+    </v-avatar>
 
-    <mt-cell class="mt-20 me" is-link to="/profiles" :title="realName" :label="'Webchat ID: ' + username">
-      <img :src="'/apis/user/getProfilePhoto/' + username + '?' + profilePhotoVersion" width="44" height="44"/>
-    </mt-cell>
+    <!--<v-list>-->
+      <!--<v-list-tile @click="$router.push({path: '/profiles'})">-->
+        <!--<v-list-tile-avatar>-->
+          <!--<v-avatar>-->
+            <!--<wc-lazy-img :lazy-src="`/apis/user/getProfilePhoto/${username}?${profilePhotoVersion}`"></wc-lazy-img>-->
+          <!--</v-avatar>-->
+        <!--</v-list-tile-avatar>-->
+        <!--<v-list-tile-content>-->
+          <!--<v-list-tile-title>{{`Webchat ID:${username}`}}</v-list-tile-title>-->
+        <!--</v-list-tile-content>-->
+        <!--<v-list-tile-sub-title>{{realName}}</v-list-tile-sub-title>-->
+      <!--</v-list-tile>-->
+    <!--</v-list>-->
+
 
     <mt-cell class="mt-20" is-link :title="$t('msg.moments')" @click.native="comingSoon">
       <span slot="icon" class="cell-icon moments icon icon-camera">
@@ -21,9 +35,10 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import WcLazyImg from "../LazyImage";
 
   export default {
-    name: "me-section",
+    components: {WcLazyImg}, name: "me-section",
     data() {
       return {
       }

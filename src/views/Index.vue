@@ -1,10 +1,10 @@
 <template>
   <div class="wc-index">
-    <v-toolbar color="primary" dark>
-      <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-toolbar-title>{{$t(title)}}</v-toolbar-title>
+    <v-toolbar color="primary" :extended="active === 'me'" dark>
+      <v-toolbar-side-icon v-show="active !== 'me'"></v-toolbar-side-icon>
+      <v-toolbar-title v-show="active !== 'me'">{{$t(title)}}</v-toolbar-title>
     </v-toolbar>
-    <div class="content" ref="content">
+    <div class="content" ref="content" :style="{height: `calc(100% - ${active === 'me' ? 177 : 121}px)`}">
       <session-section v-show="active === 'message'"></session-section>
       <contact-section v-show="active === 'contact'"></contact-section>
       <me-section v-show="active === 'me'"></me-section>
@@ -20,7 +20,7 @@
         flat
         value="message">
         <span>{{ $t("msg.message") }}</span>
-        <v-badge left>
+        <v-badge overlap>
           <template v-if="unreadMsgCount > 0" v-slot:badge>
             <span>{{unreadMsgCountFormat}}</span>
           </template>
@@ -95,7 +95,6 @@
           return this.$store.getters.active
         },
         set (value) {
-          this.$Lazyload.lazyLoadHandler()
           this.$store.commit('setActive', value)
         }
       }
@@ -106,9 +105,9 @@
   .wc-index {
     width: 100%;
     height: 100%;
+    position: relative;
     > .content {
       width: 100%;
-      height: calc(100% - 121px);
       overflow-y: auto;
     }
     .v-bottom-nav {
