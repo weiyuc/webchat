@@ -40,7 +40,7 @@ github: [https://github.com/weiyuc/webchat-backend](https://github.com/weiyuc/we
 码云: [https://gitee.com/yuwei149/webchat-backend](https://gitee.com/yuwei149/webchat-backend)
 
 ## 在线例子
-[https://120.79.243.91](https://120.79.243.91/#/)
+[https://weiyuc.cn](https://weiyuc.cn)
 
 ## QQ交流群
 431588188
